@@ -242,6 +242,7 @@ CFiguras fig1;
 CFiguras fig3;
 
 //Figuras a "mano"
+CFiguras brick;
 CFiguras pisoGeneral;
 CFiguras silla;
 CFiguras mesa;
@@ -496,7 +497,7 @@ void InitGL(GLvoid)     // Inicializamos parametros
 	**********	LUCES	**********
 	//gLightfv(light,pname,params)
 */
-//Puntual		Foco de lampara de exterior
+	//Puntual		Foco de lampara de exterior
 	glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);					// Setup The Ambient Light
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);					// Setup The Diffuse Light
 	glLightfv(GL_LIGHT1, GL_SPECULAR, LightSpecular);				// Setup The Diffuse Light
@@ -524,49 +525,10 @@ void InitGL(GLvoid)     // Inicializamos parametros
 	cielo.BuildGLTexture();
 	cielo.ReleaseImage();
 
-	t_piso.LoadTGA("Resources/Texturas/piso.tga");
-	t_piso.BuildGLTexture();
-	t_piso.ReleaseImage();
-
-	t_pared1.LoadTGA("Resources/Texturas/pared1.tga");
-	t_pared1.BuildGLTexture();
-	t_pared1.ReleaseImage();
-
-	t_pared2.LoadTGA("Resources/Texturas/pared2.tga");
-	t_pared2.BuildGLTexture();
-	t_pared2.ReleaseImage();
-
-	t_door.LoadTGA("Resources/Texturas/door.tga");
-	t_door.BuildGLTexture();
-	t_door.ReleaseImage();
-
-	t_wall.LoadTGA("Resources/Texturas/wall.tga");
-	t_wall.BuildGLTexture();
-	t_wall.ReleaseImage();
-
-	t_pisoM.LoadTGA("Resources/Texturas/pisoMadera.tga");
-	t_pisoM.BuildGLTexture();
-	t_pisoM.ReleaseImage();
-
-	t_silla.LoadTGA("Resources/Texturas/sillaWood.tga");
-	t_silla.BuildGLTexture();
-	t_silla.ReleaseImage();
-
-	t_mesa.LoadTGA("Resources/Texturas/mesaWood.tga");
-	t_mesa.BuildGLTexture();
-	t_mesa.ReleaseImage();
-
-	t_ventana.LoadTGA("Resources/Texturas/ventana.tga");
-	t_ventana.BuildGLTexture();
-	t_ventana.ReleaseImage();
-
-	t_techo.LoadTGA("Resources/Texturas/techo.tga");
-	t_techo.BuildGLTexture();
-	t_techo.ReleaseImage();
-
-	t_dado.LoadTGA("Resources/Texturas/Dado.tga");
+	t_dado.LoadTGA("Resources/Texturas/piso.tga");
 	t_dado.BuildGLTexture();
-	t_techo.ReleaseImage();
+	t_dado.ReleaseImage();
+	
 	/*
 		********** FIGURAS **********
 
@@ -575,45 +537,7 @@ void InitGL(GLvoid)     // Inicializamos parametros
 		Algunas veces crashea en la ejecución, asi que se abre en 3D MAX y se vuelve a exportar como 3DS, esperando que funcione
 	*/
 
-	foco._3dsLoad("Resources/Modelos/foco.3DS");
-	foco.VertexNormals();
-	lampara._3dsLoad("Resources/Modelos/lampara.3DS");
-	lampara.VertexNormals();
-	lamparaCalle._3dsLoad("Resources/Modelos/lamparaCalle.3DS");
-	lamparaCalle.VertexNormals();
-
-	sofa._3dsLoad("Resources/Modelos/sofa2.3DS");
-	sofa.VertexNormals();
-	tv._3dsLoad("Resources/Modelos/TVs.3DS");
-	tv.VertexNormals();
-	librero._3dsLoad("Resources/Modelos/estante.3DS");
-	librero.VertexNormals();
-	chess._3dsLoad("Resources/Modelos/Chess/chessboard.3DS");
-	chess.VertexNormals();
-	bPeon._3dsLoad("Resources/Modelos/Chess/pawnB.3DS");
-	bPeon.VertexNormals();
-	nPeon._3dsLoad("Resources/Modelos/Chess/pawnN.3DS");
-	nPeon.VertexNormals();
-	bTorre._3dsLoad("Resources/Modelos/Chess/towerB.3DS");
-	bTorre.VertexNormals();
-	nTorre._3dsLoad("Resources/Modelos/Chess/towerN.3DS");
-	nTorre.VertexNormals();
-	bAlfil._3dsLoad("Resources/Modelos/Chess/bishopB.3DS");
-	bAlfil.VertexNormals();
-	nAlfil._3dsLoad("Resources/Modelos/Chess/bishopN.3DS");
-	nAlfil.VertexNormals();
-	bCaballo._3dsLoad("Resources/Modelos/Chess/horseB.3DS");
-	bCaballo.VertexNormals();
-	nCaballo._3dsLoad("Resources/Modelos/Chess/horseN.3DS");
-	nCaballo.VertexNormals();
-	bRey._3dsLoad("Resources/Modelos/Chess/kingB.3DS");
-	bRey.VertexNormals();
-	nRey._3dsLoad("Resources/Modelos/Chess/kingN.3DS");
-	nRey.VertexNormals();
-	bReina._3dsLoad("Resources/Modelos/Chess/queenB.3DS");
-	bReina.VertexNormals();
-	nReina._3dsLoad("Resources/Modelos/Chess/queenN.3DS");
-	nReina.VertexNormals();
+	
 
 	/*
 			********** CAMARAS **********
@@ -684,170 +608,6 @@ void InitGL(GLvoid)     // Inicializamos parametros
 		KeyFrame[i].pFzInc = 0;
 		KeyFrame[i].pGzInc = 0;
 	}
-
-	// Frame 0
-	KeyFrame[0].pBz = 0;
-	KeyFrame[0].pCx = 0;
-	KeyFrame[0].pCz = 0;
-	KeyFrame[0].pDx = 0;
-	KeyFrame[0].pDz = 0;
-	KeyFrame[0].pFx = 0;
-	KeyFrame[0].pFy = 0;
-	KeyFrame[0].pFz = 0;
-	KeyFrame[0].pGz = 0;
-
-	KeyFrame[0].pBzInc = -0.05;
-	KeyFrame[0].pCxInc = 0;
-	KeyFrame[0].pCzInc = 0;
-	KeyFrame[0].pDxInc = 0;
-	KeyFrame[0].pDzInc = 0;
-	KeyFrame[0].pFxInc = 0;
-	KeyFrame[0].pFyInc = 0;
-	KeyFrame[0].pFzInc = 0;
-	KeyFrame[0].pGzInc = 0;
-	// Frame 1
-	KeyFrame[1].pBz = -4.5;
-	KeyFrame[1].pCx = 0;
-	KeyFrame[1].pCz = 0;
-	KeyFrame[1].pDx = 0;
-	KeyFrame[1].pDz = 0;
-	KeyFrame[1].pFx = 0;
-	KeyFrame[1].pFy = 0;
-	KeyFrame[1].pFz = 0;
-	KeyFrame[1].pGz = 0;
-
-	KeyFrame[1].pBzInc = 0;
-	KeyFrame[1].pCxInc = 0;
-	KeyFrame[1].pCzInc = 0;
-	KeyFrame[1].pDxInc = 0;
-	KeyFrame[1].pDzInc = 0;
-	KeyFrame[1].pFxInc = 0;
-	KeyFrame[1].pFyInc = 0;
-	KeyFrame[1].pFzInc = 0;
-	KeyFrame[1].pGzInc = 0.1;
-	// Frame 2
-	KeyFrame[2].pBz = -4.5;
-	KeyFrame[2].pCx = 0;
-	KeyFrame[2].pCz = 0;
-	KeyFrame[2].pDx = 0;
-	KeyFrame[2].pDz = 0;
-	KeyFrame[2].pFx = 0;
-	KeyFrame[2].pFy = 0;
-	KeyFrame[2].pFz = 0;
-	KeyFrame[2].pGz = 9.0;
-
-	KeyFrame[2].pBzInc = 0;
-	KeyFrame[2].pCxInc = -0.05;
-	KeyFrame[2].pCzInc = -0.05;
-	KeyFrame[2].pDxInc = 0;
-	KeyFrame[2].pDzInc = 0;
-	KeyFrame[2].pFxInc = 0;
-	KeyFrame[2].pFyInc = 0;
-	KeyFrame[2].pFzInc = 0;
-	KeyFrame[2].pGzInc = 0;
-	// Frame 3
-	KeyFrame[3].pBz = -4.5;
-	KeyFrame[3].pCx = -4.5;
-	KeyFrame[3].pCz = -4.5;
-	KeyFrame[3].pDx = 0;
-	KeyFrame[3].pDz = 0;
-	KeyFrame[3].pFx = 0;
-	KeyFrame[3].pFy = 0;
-	KeyFrame[3].pFz = 0;
-	KeyFrame[3].pGz = 9.0;
-
-	KeyFrame[3].pBzInc = 0;
-	KeyFrame[3].pCxInc = 0;
-	KeyFrame[3].pCzInc = 0;
-	KeyFrame[3].pDxInc = 0.05;
-	KeyFrame[3].pDzInc = 0.1;
-	KeyFrame[3].pFxInc = 0;
-	KeyFrame[3].pFyInc = 0;
-	KeyFrame[3].pFzInc = 0;
-	KeyFrame[3].pGzInc = 0;
-	// Frame 4
-	KeyFrame[4].pBz = -4.5;
-	KeyFrame[4].pCx = -4.5;
-	KeyFrame[4].pCz = -4.5;
-	KeyFrame[4].pDx = 4.5;
-	KeyFrame[4].pDz = 9.0;
-	KeyFrame[4].pFx = 0;
-	KeyFrame[4].pFy = 0;
-	KeyFrame[4].pFz = 0;
-	KeyFrame[4].pGz = 9.0;
-
-	KeyFrame[4].pBzInc = 0;
-	KeyFrame[4].pCxInc = 0.25;
-	KeyFrame[4].pCzInc = -0.25;
-	KeyFrame[4].pDxInc = 0;
-	KeyFrame[4].pDzInc = 0;
-	KeyFrame[4].pFxInc = 0;
-	KeyFrame[4].pFyInc = 0;
-	KeyFrame[4].pFzInc = 0;
-	KeyFrame[4].pGzInc = 0;
-	// Frame 5
-	KeyFrame[5].pBz = -4.5;
-	KeyFrame[5].pCx = 18.0;
-	KeyFrame[5].pCz = -27.0;
-	KeyFrame[5].pDx = 4.5;
-	KeyFrame[5].pDz = 9.0;
-	KeyFrame[5].pFx = 0;
-	KeyFrame[5].pFy = 0;
-	KeyFrame[5].pFz = 0;
-	KeyFrame[5].pGz = 9.0;
-
-	KeyFrame[5].pBzInc = 0;
-	KeyFrame[5].pCxInc = 0;
-	KeyFrame[5].pCzInc = 0;
-	KeyFrame[5].pDxInc = 0;
-	KeyFrame[5].pDzInc = 0;
-	KeyFrame[5].pFxInc = 0.005556;
-	KeyFrame[5].pFyInc = 0.066667;
-	KeyFrame[5].pFzInc = 0.005556;
-	KeyFrame[5].pGzInc = 0;
-
-	// Frame 6
-	KeyFrame[6].pBz = -4.5;
-	KeyFrame[6].pCx = 18.0;
-	KeyFrame[6].pCz = -27.0;
-	KeyFrame[6].pDx = 4.5;
-	KeyFrame[6].pDz = 9.0;
-	KeyFrame[6].pFx = 0.5;
-	KeyFrame[6].pFy = 6.0;
-	KeyFrame[6].pFz = 0.5;
-	KeyFrame[6].pGz = 9.0;
-
-	KeyFrame[6].pBzInc = 0;
-	KeyFrame[6].pCxInc = 0;
-	KeyFrame[6].pCzInc = 0;
-	KeyFrame[6].pDxInc = 0;
-	KeyFrame[6].pDzInc = 0;
-	KeyFrame[6].pFxInc = -0.094444;
-	KeyFrame[6].pFyInc = -0.077778;
-	KeyFrame[6].pFzInc = -0.094444;
-	KeyFrame[6].pGzInc = 0;
-	// Frame 7
-	KeyFrame[7].pBz = -4.5;
-	KeyFrame[7].pCx = 18.0;
-	KeyFrame[7].pCz = -27.0;
-	KeyFrame[7].pDx = 4.5;
-	KeyFrame[7].pDz = 9.0;
-	KeyFrame[7].pFx = -8.0;
-	KeyFrame[7].pFy = -1.0;
-	KeyFrame[7].pFz = -8.0;
-	KeyFrame[7].pGz = 9.0;
-
-	KeyFrame[7].pBzInc = 0;
-	KeyFrame[7].pCxInc = 0;
-	KeyFrame[7].pCzInc = 0;
-	KeyFrame[7].pDxInc = 0;
-	KeyFrame[7].pDzInc = 0;
-	KeyFrame[7].pFxInc = 0;
-	KeyFrame[7].pFyInc = 0;
-	KeyFrame[7].pFzInc = 0;
-	KeyFrame[7].pGzInc = 0;
-
-	FrameIndex = 8;
 }
 
 void pintaTexto(float x, float y, float z, void* font, char* string)
@@ -860,467 +620,6 @@ void pintaTexto(float x, float y, float z, void* font, char* string)
 	{
 		glutBitmapCharacter(font, *c); //imprime
 	}
-}
-
-void patas() {
-	float disx = 1.0;
-	float disy = 0.4;
-	float disz = 0.4;
-	glPushMatrix();
-	glTranslatef(-0.7, 0.0, 0.0);
-	glScalef(disx, disy, disz);
-	mesa.mesa(t_mesa.GLindex, 1.0, 0.5, 0.5);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(0.7, 0.0, 0.0);
-	glScalef(disx, disy, disz);
-	mesa.mesa(t_mesa.GLindex, 1.0, 0.5, 0.5);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(0.0, 0.0, -0.7);
-	glRotatef(90.0, 0.0, 1.0, 0.0);
-	glScalef(disx, disy, disz);
-	mesa.mesa(t_mesa.GLindex, 1.0, 0.5, 0.5);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(0.0, 0.0, 0.7);
-	glRotatef(90.0, 0.0, 1.0, 0.0);
-	glScalef(disx, disy, disz);
-	mesa.mesa(t_mesa.GLindex, 1.0, 0.5, 0.5);
-	glPopMatrix();
-}
-
-void palo() {
-	glPushMatrix();
-	float scaleX = -0.6;
-	float scaleY = 3.45;
-	float scaleZ = -0.6;
-	//glScalef(1.0, 4.0, 1.0);
-	glScalef(1.0 + scaleX, 1.0 + scaleY, 1.0 + scaleZ);
-	mesa.mesa(t_mesa.GLindex, 1.0, 0.3, 0.3);
-	glPopMatrix();
-}
-
-void tabla() {
-	float scaleX = 2.0;
-	float scaleY = -0.6;
-	float scaleZ = 2.0;
-	glPushMatrix();
-	glTranslatef(0.0, 0.5, 0.0);
-	glScalef(1.0 + scaleX, 1.0 + scaleY, 1.0 + scaleZ);
-	mesa.mesa(t_mesa.GLindex, 1.0, 0.95, 0.2);
-	glPopMatrix();
-}
-
-void createMesa() {
-	/*Jerarquía:
-		* Pivote central
-		* Patas
-		* Soporte
-		* Mesa cuadrada
-
-		De modo que, si gira el pivote, gira todo el modelo.
-		Si gira la mesa cuadrada, solo gira ésta.
-	*/
-	glPushMatrix();
-	glTranslatef(1.35, 0.0, -0.3);
-	glTranslatef(-5.0, 0.4, -1.0);
-	glRotatef(rotSillon, 0.0, 1.0, 0.0);
-	glScalef(1.3, 1.3, 1.3);
-	patas();
-	glTranslatef(0.0, 2.0, 0.0);
-	palo();
-	glTranslatef(0.0, 1.925, 0.0);
-	tabla();
-	glPopMatrix();
-}
-
-void createCuarto() {
-	glPushMatrix();
-	glTranslatef(0.0, 9.15, -1.0);
-	glScalef(18.0, 18.0, 18.0);
-	set_material(perl);
-	cuarto.cuarto(t_pared1.GLindex, t_pared2.GLindex, t_pisoM.GLindex, t_techo.GLindex, -1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(0.0, 9.195, -1.0);
-	glScalef(18.1, 18.1, 18.1);
-	set_material(polishedSilver);
-	cuarto.cuarto(t_wall.GLindex, t_wall.GLindex, t_wall.GLindex, t_wall.GLindex, 1.0);
-	glPopMatrix();
-}
-
-void createPuerta() {
-	glPushMatrix();
-	glTranslatef(3.6, 4.7, 8.05);
-	glRotatef(rotPuerta, 0.0, 1.0, 0.0);	//rotPuerta sirve para la animación de abrir y cerrar puerta con tecla 3
-	glScalef(18.1, 18.1, 1.0);
-	//glDisable(GL_LIGHTING);
-	puerta.puerta(t_door.GLindex);
-	//glEnable(GL_LIGHTING);
-	glPopMatrix();
-}
-
-void createVentana() {
-	glPushMatrix();
-	glTranslatef(0.0, 14.5, -10.0);
-	glRotatef(rotVentana, 1.0, 0.0, 0.0);	//rotVentana sirve para la animación de abrir y cerrar puerta con tecla 4
-	glScalef(18.0 + scaleX, 18.0 + scaleY, 1.0);
-	//glDisable(GL_LIGHTING);
-	puerta.ventana(t_ventana.GLindex, 0.0, 0.0);
-	//glEnable(GL_LIGHTING);
-	glPopMatrix();
-}
-
-void createMuebles() {
-	glPushMatrix();
-	glPushMatrix();
-	//SOFA
-	glPushMatrix();
-	glTranslatef(39.0, 0.0, -61.5);
-	glScalef(0.003, 0.007, 0.004);
-	glRotatef(180.0, 0.0, 1.0, 0.0);
-	sofa.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	//TV
-	glPushMatrix();
-	glTranslatef(8.52, 6.0, 5.0);
-	glScalef(0.01, 0.012, 0.01);
-	glRotatef(-90.0, 0.0, 1.0, 0.0);
-	tv.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	//LIBRERO
-	glScalef(0.03, 0.08, 0.08);
-	glRotatef(90.0, 0.0, 1.0, 0.0);
-	//glTranslatef(0.0, 0.0, -95.0);
-	glTranslatef(7.0, 0.0, -281.0);
-	librero.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	glPopMatrix();
-}
-
-void cSilla(float rotS) {
-	glPushMatrix();
-	//Pivote a 3.1 de distancia del centro del origen de la mesa
-	glTranslatef(3.1, 0.0, 0.0);
-	glRotatef(rotS, 0.0, 1.0, 0.0);
-	//glTranslatef(0.0 + trax, 0.0 + tray, 0.0 + traz);
-	//PATAS
-	float xx = 2.4;
-	float yy = 0.35;
-	float zz = 2.35;
-	glPushMatrix();
-	glTranslatef(0.0, 0.55, 0.0);
-	//P1
-	glPushMatrix();
-	glTranslatef(1.0, 1.5, -1.0);
-	//glScalef(xx, yy, zz);
-	glScalef(0.25, 3.8, 0.25);
-	silla.mesa(t_silla.GLindex, 1.0, 0.2, 0.3);
-	glPopMatrix();
-	//P2
-	glPushMatrix();
-	glTranslatef(1.0, 1.5, 1.0);
-	glScalef(0.25, 3.8, 0.25);
-	silla.mesa(t_silla.GLindex, 1.0, 0.2, 0.3);
-	glPopMatrix();
-	//P3
-	glPushMatrix();
-	glTranslatef(-1.0, 1.5, 1.0);
-	glScalef(0.25, 3.8, 0.25);
-	silla.mesa(t_silla.GLindex, 1.0, 0.2, 0.3);
-	glPopMatrix();
-	//P4
-	glPushMatrix();
-	glTranslatef(-1.0, 1.5, -1.0);
-	glScalef(0.25, 3.8, 0.25);
-	silla.mesa(t_silla.GLindex, 1.0, 0.2, 0.3);
-	glPopMatrix();
-	glPopMatrix();
-
-	//Base
-	glPushMatrix();
-	glTranslatef(0.0, 0.55, 0.0);
-	glTranslatef(0.0, 3.6, 0.0);
-	glScalef(2.4, 0.35, 2.35);
-	silla.mesa(t_silla.GLindex, 1.0, 1.55, 0.06);
-	glPopMatrix();
-	//Respaldo
-	glPushMatrix();
-	glTranslatef(0.0, 0.55, 0.0);
-	glPushMatrix();
-	glTranslatef(1.1, 7.6, -0.01);
-	glScalef(0.25, 0.3, 2.33);
-	silla.mesa(t_silla.GLindex, 1.0, 1.45, 0.25);
-	glPopMatrix();
-	glTranslatef(1.1, 5.6, -1.1);
-	glScalef(0.25, 3.7, 0.15);
-	silla.mesa(t_silla.GLindex, 1.0, 0.4, 0.35);
-	glTranslatef(0.0, 0.0, 2.5);
-	silla.mesa(t_silla.GLindex, 1.0, 0.4, 0.35);
-	glTranslatef(0.0, 0.0, 2.5);
-	silla.mesa(t_silla.GLindex, 1.0, 0.4, 0.35);
-	glTranslatef(0.0, 0.0, 2.5);
-	silla.mesa(t_silla.GLindex, 1.0, 0.4, 0.35);
-	glTranslatef(0.0, 0.0, 2.5);
-	silla.mesa(t_silla.GLindex, 1.0, 0.4, 0.35);
-	glTranslatef(0.0, 0.0, 2.5);
-	silla.mesa(t_silla.GLindex, 1.0, 0.4, 0.35);
-	glTranslatef(0.0, 0.0, 2.0);
-	silla.mesa(t_silla.GLindex, 1.0, 0.4, 0.35);
-	glPopMatrix();
-	//silla.prisma(1.0, 1.0, 1.0, 0);
-	glPopMatrix();
-}
-
-void createSillas() {
-	glPushMatrix();
-	//Origen
-	glTranslatef(-3.65, 0.0, -1.3);
-	glPushMatrix();
-	//Rotacion de una silla
-	cSilla(0.0);
-	glRotatef(90.0, 0.0, 1.0, 0.0);
-	cSilla(0.0);
-	glRotatef(90.0, 0.0, 1.0, 0.0);
-	cSilla(0.0);
-	glPushMatrix();
-	glTranslatef(0.0, 0.0, 0.0 + transSilla);
-	glRotatef(90.0, 0.0, 1.0, 0.0);
-	cSilla(rotSilla);
-	glPopMatrix();
-	glPopMatrix();
-	glPopMatrix();
-}
-
-void peonBl() {
-	glPushMatrix();
-	glTranslatef(0.0, 0.0, 0.0);
-	bPeon.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(4.5, 0.0, 0.0 + pBz);
-	bPeon.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(9.0, 0.0, 0.0);
-	bPeon.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(13.5, 0.0, 0.0);
-	bPeon.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(18.0, 0.0, 0.0);
-	bPeon.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(22.5, 0.0, 0.0);
-	bPeon.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(27.0, 0.0, 0.0);
-	bPeon.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(31.5, 0.0, 0.0);
-	bPeon.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	/*glPushMatrix();
-		glTranslatef(0.0, 0.0, 0.0);
-		bPeon.GLrender(NULL, _SHADED, 1.0);
-		glPushMatrix();
-			glTranslatef(4.5+trax, 0.0, 0.0+traz);
-			bPeon.GLrender(NULL, _SHADED, 1.0);
-			glPushMatrix();
-				glTranslatef(4.5, 0.0, 0.0);
-				bPeon.GLrender(NULL, _SHADED, 1.0);
-				glPushMatrix();
-					glTranslatef(4.5, 0.0, 0.0);
-					bPeon.GLrender(NULL, _SHADED, 1.0);
-					glPushMatrix();
-						glTranslatef(4.5, 0.0, 0.0);
-						bPeon.GLrender(NULL, _SHADED, 1.0);
-						glPushMatrix();
-							glTranslatef(4.5, 0.0, 0.0);
-							bPeon.GLrender(NULL, _SHADED, 1.0);
-							glPushMatrix();
-								glTranslatef(4.5, 0.0, 0.0);
-								bPeon.GLrender(NULL, _SHADED, 1.0);
-								glPushMatrix();
-									glTranslatef(4.5, 0.0, 0.0);
-									bPeon.GLrender(NULL, _SHADED, 1.0);
-								glPopMatrix();
-							glPopMatrix();
-						glPopMatrix();
-					glPopMatrix();
-				glPopMatrix();
-			glPopMatrix();
-		glPopMatrix();
-	glPopMatrix();*/
-
-	/*for (int i = 0; i <= 7; i++) {
-		bPeon.GLrender(NULL, _SHADED, 1.0);
-		glTranslatef(4.5,0.0,0.0);
-	}*/
-}
-
-void peonNe() {
-	glPushMatrix();
-	glTranslatef(0.0, 0.0, 0.0 + pGz);
-	nPeon.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(-4.5 + pFx, 0.0 + pFy, 0.0 + pFz);
-	nPeon.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(-9.0, 0.0, 0.0);
-	nPeon.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(-13.5, 0.0, 0.0);
-	nPeon.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(-18.0, 0.0, 0.0);
-	nPeon.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(-22.5, 0.0, 0.0);
-	nPeon.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(-27.0, 0.0, 0.0);
-	nPeon.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(-31.5, 0.0, 0.0);
-	nPeon.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	/*glPushMatrix();
-		glTranslatef(0.0, 0.0, 0.0);
-		nPeon.GLrender(NULL, _SHADED, 1.0);
-		glPushMatrix();
-			glTranslatef(-4.5, 0.0, 0.0);
-			nPeon.GLrender(NULL, _SHADED, 1.0);
-			glPushMatrix();
-				glTranslatef(-4.5, 0.0, 0.0);
-				nPeon.GLrender(NULL, _SHADED, 1.0);
-				glPushMatrix();
-					glTranslatef(-4.5, 0.0, 0.0);
-					nPeon.GLrender(NULL, _SHADED, 1.0);
-					glPushMatrix();
-						glTranslatef(-4.5, 0.0, 0.0);
-						nPeon.GLrender(NULL, _SHADED, 1.0);
-						glPushMatrix();
-							glTranslatef(-4.5, 0.0, 0.0);
-							nPeon.GLrender(NULL, _SHADED, 1.0);
-							glPushMatrix();
-								glTranslatef(-4.5, 0.0, 0.0);
-								nPeon.GLrender(NULL, _SHADED, 1.0);
-								glPushMatrix();
-									glTranslatef(-4.5, 0.0, 0.0);
-									nPeon.GLrender(NULL, _SHADED, 1.0);
-								glPopMatrix();
-							glPopMatrix();
-						glPopMatrix();
-					glPopMatrix();
-				glPopMatrix();
-			glPopMatrix();
-		glPopMatrix();
-	glPopMatrix();*/
-
-	/*for (int i = 0; i <= 7; i++) {
-		bPeon.GLrender(NULL, _SHADED, 1.0);
-		glTranslatef(4.5,0.0,0.0);
-	}*/
-}
-
-void caballoBl() {
-	glPushMatrix();
-	glTranslatef(0.0, 0.0, 0.0);
-	bCaballo.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(22.5, 0.0, 0.0);
-	bCaballo.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-}
-
-void caballoNe() {
-	glPushMatrix();
-	glTranslatef(0.0 + pDx, 0.0, 0.0 + pDz);
-	nCaballo.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(22.5, 0.0, 0.0);
-	nCaballo.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-}
-
-void alfilBl() {
-	glPushMatrix();
-	glTranslatef(0.0 + pCx, 0.0, 0.0 + pCz);	/////////////////////////
-	bAlfil.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(13.5, 0.0, 0.0);
-	bAlfil.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-}
-
-void alfilNe() {
-	glPushMatrix();
-	glTranslatef(0.0, 0.0, 0.0);
-	nAlfil.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(13.5, 0.0, 0.0);
-	nAlfil.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-}
-
-void torreBl() {
-	glPushMatrix();
-	glTranslatef(0.0, 0.0, 0.0);
-	bTorre.GLrender(NULL, _SHADED, 1.0);
-	glPushMatrix();
-	glTranslatef(31.5, 0.0, 0.0);
-	bTorre.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	glPopMatrix();
-}
-
-void torreNe() {
-	glPushMatrix();
-	glTranslatef(0.0, 0.0, 0.0);
-	nTorre.GLrender(NULL, _SHADED, 1.0);
-	glPushMatrix();
-	glTranslatef(31.5, 0.0, 0.0);
-	nTorre.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-	glPopMatrix();
-}
-
-void createChess() {
-	glPushMatrix();
-	glTranslatef(-3.6, 6.4, -1.4);
-	glScalef(0.08, 0.08, 0.08);
-	chess.GLrender(NULL, _SHADED, 1.0);
-	peonBl();
-	peonNe();
-	alfilBl();
-	alfilNe();
-	caballoBl();
-	caballoNe();
-	torreBl();
-	torreNe();
-	bReina.GLrender(NULL, _SHADED, 1.0);
-	bRey.GLrender(NULL, _SHADED, 1.0);
-	nReina.GLrender(NULL, _SHADED, 1.0);
-	nRey.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
 }
 
 void createFoco1() {
@@ -1421,22 +720,21 @@ void foc3() {
 }
 
 void luz() {
-
 	glPushMatrix();
-	glPushMatrix();
-	if (!light) {
-		glDisable(GL_LIGHTING);
-		glDisable(GL_LIGHT1);
-		glDisable(GL_LIGHT2);
-		glDisable(GL_LIGHT3);
-	}
-	else {
-		glEnable(GL_LIGHTING);
-	}
-	glPopMatrix();
-	foc1();
-	foc2();
-	foc3();
+		glPushMatrix();
+			if (!light) {
+				glDisable(GL_LIGHTING);
+				glDisable(GL_LIGHT1);
+				glDisable(GL_LIGHT2);
+				glDisable(GL_LIGHT3);
+			}
+			else {
+				glEnable(GL_LIGHTING);
+			}
+		glPopMatrix();
+		foc1();
+		foc2();
+		foc3();
 	glPopMatrix();
 }
 
@@ -1453,57 +751,21 @@ void display(void)   // Creamos la funcion donde se dibuja
 		objCamera.mUp.x, objCamera.mUp.y, objCamera.mUp.z);
 
 	luz();
+	glPushMatrix();
+		glPushMatrix(); //Creamos cielo
+			glTranslatef(0, 60, 0);
+			fig1.skybox(130.0, 130.0, 130.0, cielo.GLindex);
+		glPopMatrix();
+	glPopMatrix();
+
+
 	glPushMatrix(); //Piso primario
-	glTranslatef(0.0, 0.0, 0.0);
-	glScalef(20, 0.2, 40);
-	set_material(chrome);
-	pisoGeneral.piso(t_piso.GLindex);
+		glTranslatef(0.0, 0.0, 0.0);
+		set_material(polishedCopper);
+		//brick.cilindro(2.0, 10.0, 10, t_dado.GLindex);
+		brick.brick2_3_1(t_dado.GLindex);
 	glPopMatrix();
 
-	glPushMatrix();
-	glPushMatrix(); //Creamos cielo
-	glTranslatef(0, 60, 0);
-	fig1.skybox(130.0, 130.0, 130.0, cielo.GLindex);
-	glPopMatrix();
-	glPopMatrix();
-
-	//Pivot 0,0,0
-	set_material(perl);
-	createCuarto();
-	set_material(bronze);
-	createPuerta();
-	set_material(perl);
-	createVentana();
-	if (light == false) {
-		glEnable(GL_LIGHTING);
-		glEnable(GL_LIGHT0);
-		createMuebles();
-		createChess();
-		createFoco1();
-		createFoco2();
-		createFoco3();
-		glDisable(GL_LIGHTING);
-		glDisable(GL_LIGHT0);
-	}
-	else {
-		createMuebles();
-		createChess();
-		createFoco1();
-		createFoco2();
-		createFoco3();
-	}
-	set_material(gold);
-	createMesa();
-	set_material(polishedCopper);
-	createSillas();
-
-	glPushMatrix();
-	set_material(perl);
-	glTranslatef(3.0, 9.2, -0.4);
-	//glTranslatef(0.0 + trax, 0.0 + tray, 0.0 + traz);
-	glRotatef(rotDado, ranX, ranY, ranZ);
-	mesa.prisma(0.5, 0.5, 0.5, t_dado.GLindex);
-	glPopMatrix();
 
 	glPopMatrix();	//General
 
@@ -1513,7 +775,7 @@ void display(void)   // Creamos la funcion donde se dibuja
 	// Pintar texto en pantalla
 	glColor3f(1.0, 0.0, 0.0);
 	pintaTexto(-12, 12.0, -14.0, (void*)font, "Proyecto Final");
-	pintaTexto(-12, 10.5, -14, (void*)font, "Cuarto de Juegos");
+	pintaTexto(-12, 10.5, -14, (void*)font, "Alameda Lego");
 	glColor3f(1.0, 1.0, 1.0);
 	//glEnable(GL_LIGHTING);
 	glEnable(GL_TEXTURE_2D);

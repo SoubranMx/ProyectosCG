@@ -1,0 +1,12 @@
+Piezas de Lego Básicas
+Bricks:
+- Brick1x1
+- Brick1x2
+- Brick1x4
+- Brick1x8 ?
+- Brick2x2
+- Brick2x3
+
+Bricks Slopes
+- Roof Tile 2x2
+- Corner Brick 2x2

@@ -21,21 +21,17 @@ class CFiguras
 	void prisma2 (GLuint text, GLuint text2);
 	void prisma3 (GLuint text, GLuint text2);
 	void skybox(float altura, float largo, float profundidad, GLuint text);	//Funcion creacion cielo
-	
-
 	//void torus(GLfloat radioM, GLfloat radiom, int meridianos, int paralelos, GLuint text );
 	void torus(GLfloat radioM, GLfloat radiom, int meridianos, int paralelos);
 
-	void piso(GLuint text);
-	void mesa(GLuint text, float f, float lx, float ly);
-	void silla(GLuint text, float f, float lx, float ly);
-	void cuarto(GLuint pared1, GLuint pared2, GLuint piso, GLuint techo, float normal);
-	void puerta(GLuint text);
-	void ventana(GLuint text, float textX, float textY);
+	/***************	A MANO	***************/
+
+	void brick1_1_1(GLuint text);	//Brick 1x1x1
+	void brick1_2_1(GLuint text);	//Brick 1x2x1
+	void brick1_4_1(GLuint text);	//Brick 1x4x1
+	void brick1_8_1(GLuint text);	//Brick 1x8x1
+	void brick2_2_1(GLuint text);	//Brick 2x2x1
+	void brick2_3_1(GLuint text);	//Brick 2x3x1
+	void roofTile2_2(GLuint text);
+	void cornerBrick2_2(GLuint text);
 };
-/*
-	00,01,11,10		0471	00,10,11,01
-	00,10,11,01		0354	00,10,11,01
-	01,11,10,00		6532	00,10,11,01
-	10,11,01,00		1762	00,10,11,01
-*/

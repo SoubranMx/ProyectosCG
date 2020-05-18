@@ -214,20 +214,26 @@ materialStruct perl{
 
 	Texturas utilizadas en el proyecto.
 		En Photoshop, no aparece TGA como export option, por tanto, => guardar como => cambiar extensión a Targa
+
+	Necesito 2 colores diferentes pero del mismo tono (?) para diferenciar el cubo del cilindro, y que se note que es lego.
 */
 CTexture cielo;
 
 CTexture t_piso;
-CTexture t_pared1;
-CTexture t_pared2;
-CTexture t_pisoM;
-CTexture t_wall;
-CTexture t_door;
-CTexture t_mesa;
-CTexture t_silla;
-CTexture t_ventana;
-CTexture t_techo;
+CTexture t_piso2;
 CTexture t_dado;
+CTexture t_madera;
+CTexture t_madera2;
+CTexture t_maderaO;
+CTexture t_maderaO2;
+CTexture t_rojo;
+CTexture t_rojo2;
+CTexture t_naranja;
+CTexture t_naranja2;
+CTexture t_carbon;
+CTexture t_carbon2;
+CTexture t_pasto;
+CTexture t_pasto2;
 
 
 /*
@@ -520,6 +526,14 @@ void InitGL(GLvoid)     // Inicializamos parametros
 
 		Carga de texturas.
 		Debe ser cuadrada o casi cuadrada porque si no ... crashea el programa.
+		CTexture t_piso;
+		CTexture t_dado;
+		CTexture t_madera;
+		CTexture t_maderaO;
+		CTexture t_rojo;
+		CTexture t_naranja;
+		CTexture carbon;
+		CTexture pasto;
 	*/
 	cielo.LoadBMP("Resources/Texturas/cielo.bmp");
 	cielo.BuildGLTexture();
@@ -528,7 +542,56 @@ void InitGL(GLvoid)     // Inicializamos parametros
 	t_dado.LoadTGA("Resources/Texturas/piso.tga");
 	t_dado.BuildGLTexture();
 	t_dado.ReleaseImage();
+
+	t_piso.LoadTGA("Resources/Texturas/cemento.tga");
+	t_piso.BuildGLTexture();
+	t_piso.ReleaseImage();
+
+	t_piso2.LoadTGA("Resources/Texturas/piso2.tga");
+	t_piso2.BuildGLTexture();
+	t_piso2.ReleaseImage();
+
+	t_carbon.LoadTGA("Resources/Texturas/carbon.tga");
+	t_carbon.BuildGLTexture();
+	t_carbon.ReleaseImage();
+	t_carbon2.LoadTGA("Resources/Texturas/carbon2.tga");
+	t_carbon2.BuildGLTexture();
+	t_carbon2.ReleaseImage();
+
+	t_naranja.LoadTGA("Resources/Texturas/naranja.tga");
+	t_naranja.BuildGLTexture();
+	t_naranja.ReleaseImage();
+	t_naranja2.LoadTGA("Resources/Texturas/naranja2.tga");
+	t_naranja2.BuildGLTexture();
+	t_naranja2.ReleaseImage();
 	
+	t_rojo.LoadTGA("Resources/Texturas/rojo.tga");
+	t_rojo.BuildGLTexture();
+	t_rojo.ReleaseImage();
+	t_rojo2.LoadTGA("Resources/Texturas/rojo2.tga");
+	t_rojo2.BuildGLTexture();
+	t_rojo2.ReleaseImage();
+
+	t_madera.LoadTGA("Resources/Texturas/madera.tga");
+	t_madera.BuildGLTexture();
+	t_madera.ReleaseImage();
+	t_madera2.LoadTGA("Resources/Texturas/madera2.tga");
+	t_madera2.BuildGLTexture();
+	t_madera2.ReleaseImage();
+
+	t_maderaO.LoadTGA("Resources/Texturas/maderaOscura.tga");
+	t_maderaO.BuildGLTexture();
+	t_maderaO.ReleaseImage();
+	t_maderaO2.LoadTGA("Resources/Texturas/maderaOscura2.tga");
+	t_maderaO2.BuildGLTexture();
+	t_maderaO2.ReleaseImage();
+
+	t_pasto.LoadTGA("Resources/Texturas/pasto.tga");
+	t_pasto.BuildGLTexture();
+	t_pasto.ReleaseImage();
+	t_pasto2.LoadTGA("Resources/Texturas/pasto2.tga");
+	t_pasto2.BuildGLTexture();
+	t_pasto2.ReleaseImage();
 	/*
 		********** FIGURAS **********
 
@@ -621,6 +684,162 @@ void pintaTexto(float x, float y, float z, void* font, char* string)
 		glutBitmapCharacter(font, *c); //imprime
 	}
 }
+
+void fence3(GLuint text, GLuint text2) {
+	glPushMatrix();
+		brick.brick1_1_1(text, text2);
+		glTranslatef(0.0, 1.0, 0.0);
+		brick.brick1_1_1(text, text2);
+		glPushMatrix();
+			glTranslatef(1.0, 0.0, 0.0);
+			brick.brick1_1_1(text, text2);
+			glTranslatef(1.0, 0.0, 0.0);
+			brick.brick1_1_1(text, text2);
+		glPopMatrix();
+		glTranslatef(0.0, 1.0, 0.0);
+		brick.brick1_1_1(text, text2);
+	glPopMatrix();
+}
+
+void fence4(GLuint text, GLuint text2) {
+	glPushMatrix();
+		brick.brick1_1_1(text, text2);
+		glTranslatef(0.0, 1.0, 0.0);
+		brick.brick1_1_1(text, text2);
+		glPushMatrix();
+			glTranslatef(1.0, 0.0, 0.0);
+			brick.brick1_1_1(text, text2);
+			glTranslatef(1.0, 0.0, 0.0);
+			brick.brick1_1_1(text, text2);
+			glTranslatef(1.0, 0.0, 0.0);
+			brick.brick1_1_1(text, text2);
+		glPopMatrix();
+		glTranslatef(0.0, 1.0, 0.0);
+		brick.brick1_1_1(text, text2);
+	glPopMatrix();
+}
+
+void fenceA() {
+	glPushMatrix();
+		glTranslatef(23.0, 0.0, 0.0);
+		glRotatef(-90.0, 0.0, 1.0, 0.0);
+		for (int i = 0; i < 10; i++) {
+			fence3(t_madera.GLindex, t_madera2.GLindex);
+			glTranslatef(3.0, 0.0, 0.0);
+		}
+		glRotatef(90.0, 0.0, 1.0, 0.0);
+		for (int j = 0; j < 10; j++) {
+			fence4(t_madera.GLindex, t_madera2.GLindex);
+			glTranslatef(4.0, 0.0, 0.0);
+		}
+		glRotatef(90.0, 0.0, 1.0, 0.0);
+		for (int i = 0; i < 10; i++) {
+			fence3(t_madera.GLindex, t_madera2.GLindex);
+			glTranslatef(3.0, 0.0, 0.0);
+		}
+		glPushMatrix();
+			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+			glTranslatef(0.0, 1.0, 0.0);
+			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+			glTranslatef(0.0, 1.0, 0.0);
+			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+		glPopMatrix();
+	glPopMatrix();
+}
+
+void fenceB() {
+	glPushMatrix();
+		glTranslatef(83.0, 0.0, 0.0);
+		glRotatef(-90.0, 0.0, 1.0, 0.0);
+		for (int i = 0; i < 10; i++) {
+			fence3(t_madera.GLindex, t_madera2.GLindex);
+			glTranslatef(3.0, 0.0, 0.0);
+		}
+		glRotatef(90.0, 0.0, 1.0, 0.0);
+		for (int j = 0; j < 20; j++) {
+			fence4(t_madera.GLindex, t_madera2.GLindex);
+			glTranslatef(4.0, 0.0, 0.0);
+		}
+		glRotatef(90.0, 0.0, 1.0, 0.0);
+		for (int i = 0; i < 10; i++) {
+			fence3(t_madera.GLindex, t_madera2.GLindex);
+			glTranslatef(3.0, 0.0, 0.0);
+		}
+		glPushMatrix();
+			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+			glTranslatef(0.0, 1.0, 0.0);
+			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+			glTranslatef(0.0, 1.0, 0.0);
+			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+		glPopMatrix();
+	glPopMatrix();
+}
+
+void fenceC() {
+	glPushMatrix();
+		glTranslatef(83.0, 0.0, 89.0);
+		glRotatef(90.0, 0.0, 1.0, 0.0);
+		for (int i = 0; i < 10; i++) {
+			fence3(t_madera.GLindex, t_madera2.GLindex);
+			glTranslatef(3.0, 0.0, 0.0);
+		}
+		glRotatef(-90.0, 0.0, 1.0, 0.0);
+		for (int j = 0; j < 20; j++) {
+			fence4(t_madera.GLindex, t_madera2.GLindex);
+			glTranslatef(4.0, 0.0, 0.0);
+		}
+		glRotatef(-90.0, 0.0, 1.0, 0.0);
+		for (int i = 0; i < 10; i++) {
+			fence3(t_madera.GLindex, t_madera2.GLindex);
+			glTranslatef(3.0, 0.0, 0.0);
+		}
+		glPushMatrix();
+			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+			glTranslatef(0.0, 1.0, 0.0);
+			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+			glTranslatef(0.0, 1.0, 0.0);
+			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+		glPopMatrix();
+	glPopMatrix();
+}
+
+void fenceD() {
+	glPushMatrix();
+		glTranslatef(23.0, 0.0, 89.0);
+		glRotatef(90.0, 0.0, 1.0, 0.0);
+		for (int i = 0; i < 10; i++) {
+			fence3(t_madera.GLindex, t_madera2.GLindex);
+			glTranslatef(3.0, 0.0, 0.0);
+		}
+		glRotatef(-90.0, 0.0, 1.0, 0.0);
+		for (int j = 0; j < 10; j++) {
+			fence4(t_madera.GLindex, t_madera2.GLindex);
+			glTranslatef(4.0, 0.0, 0.0);
+		}
+		glRotatef(-90.0, 0.0, 1.0, 0.0);
+		for (int i = 0; i < 10; i++) {
+			fence3(t_madera.GLindex, t_madera2.GLindex);
+			glTranslatef(3.0, 0.0, 0.0);
+		}
+		glPushMatrix();
+			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+			glTranslatef(0.0, 1.0, 0.0);
+			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+			glTranslatef(0.0, 1.0, 0.0);
+			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+		glPopMatrix();
+	glPopMatrix();
+}
+void createFences() {
+	glPushMatrix();
+		glTranslatef(-81.5, 0.0, -44.5);
+		//fence3(t_madera.GLindex, t_madera2.GLindex);
+		fenceA();
+		fenceB();
+		fenceC();
+		fenceD();
+	glPopMatrix();
+};
 
 void createFoco1() {
 	glPushMatrix();
@@ -761,9 +980,11 @@ void display(void)   // Creamos la funcion donde se dibuja
 
 	glPushMatrix(); //Piso primario
 		glTranslatef(0.0, 0.0, 0.0);
-		set_material(polishedCopper);
-		//brick.cilindro(2.0, 10.0, 10, t_dado.GLindex);
-		brick.brick2_3_1(t_dado.GLindex);
+		glScalef(0.5, 0.5, 0.5);
+		//set_material(polishedCopper);
+		brick.plancha(t_piso.GLindex, t_piso2.GLindex);
+		glTranslatef(0.0, 0.6, 0.0);
+		createFences();
 	glPopMatrix();
 
 

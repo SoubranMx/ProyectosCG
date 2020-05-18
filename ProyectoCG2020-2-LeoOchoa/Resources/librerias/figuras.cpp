@@ -93,55 +93,55 @@ void CFiguras::prisma (float altura, float largo, float profundidad, GLuint text
 		glBegin(GL_POLYGON);	//Front
 			//glColor3f(0.0,0.0,1.0);
 			glNormal3f( 0.0f, 0.0f, 1.0f);
-			glTexCoord2f(0.5f, 0.66f); glVertex3fv(vertice[0]);
-			glTexCoord2f(0.5f, 1.0f); glVertex3fv(vertice[4]);
-			glTexCoord2f(0.25f, 1.0f); glVertex3fv(vertice[7]);
-			glTexCoord2f(0.25f, 0.66f); glVertex3fv(vertice[1]);
+			glTexCoord2f(1.0f, 0.0f); glVertex3fv(vertice[0]);
+			glTexCoord2f(1.0f, 1.0f); glVertex3fv(vertice[4]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[7]);
+			glTexCoord2f(0.0f, 0.0f); glVertex3fv(vertice[1]);
 		glEnd();
 
 		glBegin(GL_POLYGON);	//Right
 			//glColor3f(0.0,0.0,1.0);
 			glNormal3f( 1.0f, 0.0f, 0.0f);
-			glTexCoord2f(0.5f, 0.66f); glVertex3fv(vertice[0]);
-			glTexCoord2f(0.5f, 0.33f); glVertex3fv(vertice[3]);
-			glTexCoord2f(0.75f, 0.33f); glVertex3fv(vertice[5]);
-			glTexCoord2f(0.75f, 0.66f); glVertex3fv(vertice[4]);
+			glTexCoord2f(0.0f, 0.0f); glVertex3fv(vertice[0]);
+			glTexCoord2f(1.0f, 0.0f); glVertex3fv(vertice[3]);
+			glTexCoord2f(1.0f, 1.0f); glVertex3fv(vertice[5]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[4]);
 		glEnd();
 
 		glBegin(GL_POLYGON);	//Back
 			//glColor3f(0.0,1.0,0.0);
 			glNormal3f( 0.0f, 0.0f,-1.0f);
-			glTexCoord2f(0.25f, 0.0f); glVertex3fv(vertice[6]);
-			glTexCoord2f(0.5f, 0.0f); glVertex3fv(vertice[5]);
-			glTexCoord2f(0.5f, 0.33f); glVertex3fv(vertice[3]);
-			glTexCoord2f(0.25f, 0.33f); glVertex3fv(vertice[2]);
+			glTexCoord2f(1.0f, 1.0f); glVertex3fv(vertice[6]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[5]);
+			glTexCoord2f(0.0f, 0.0f); glVertex3fv(vertice[3]);
+			glTexCoord2f(1.0f, 0.0f); glVertex3fv(vertice[2]);
 		glEnd();
 
 		glBegin(GL_POLYGON);  //Left
 			//glColor3f(1.0,1.0,1.0);
 			glNormal3f(-1.0f, 0.0f, 0.0f);
-			glTexCoord2f(0.25f, 0.66f); glVertex3fv(vertice[1]);
-			glTexCoord2f(0.0f, 0.66f); glVertex3fv(vertice[7]);
-			glTexCoord2f(0.0f, 0.33f); glVertex3fv(vertice[6]);
-			glTexCoord2f(0.25f, 0.33f); glVertex3fv(vertice[2]);
+			glTexCoord2f(1.0f, 0.0f); glVertex3fv(vertice[1]);
+			glTexCoord2f(1.0f, 1.0f); glVertex3fv(vertice[7]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[6]);
+			glTexCoord2f(0.0f, 0.0f); glVertex3fv(vertice[2]);
 		glEnd();
 
 		glBegin(GL_POLYGON);  //Bottom
 			//glColor3f(0.4,0.2,0.6);
 			glNormal3f( 0.0f,-1.0f, 0.0f);
-			glTexCoord2f(0.5f, 0.66f); glVertex3fv(vertice[0]);
-			glTexCoord2f(0.25f, 0.66f); glVertex3fv(vertice[1]);
-			glTexCoord2f(0.25f, 0.33f); glVertex3fv(vertice[2]);
-			glTexCoord2f(0.5f, 0.33f); glVertex3fv(vertice[3]);
+			glTexCoord2f(1.0f, 1.0f); glVertex3fv(vertice[0]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[1]);
+			glTexCoord2f(0.0f, 0.0f); glVertex3fv(vertice[2]);
+			glTexCoord2f(1.0f, 0.0f); glVertex3fv(vertice[3]);
 		glEnd();
 
 		glBegin(GL_POLYGON);  //Top
 			//glColor3f(0.8,0.2,0.4);
 			glNormal3f( 0.0f, 1.0f, 0.0f);
-			glTexCoord2f(0.75f, 0.66f); glVertex3fv(vertice[4]);
-			glTexCoord2f(0.75f, 0.33f); glVertex3fv(vertice[5]);
-			glTexCoord2f(1.0f, 0.33f); glVertex3fv(vertice[6]);
-			glTexCoord2f(1.0f, 0.66f); glVertex3fv(vertice[7]);
+			glTexCoord2f(1.0f, 0.0f); glVertex3fv(vertice[4]);
+			glTexCoord2f(1.0f, 1.0f); glVertex3fv(vertice[5]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[6]);
+			glTexCoord2f(0.0f, 0.0f); glVertex3fv(vertice[7]);
 		glEnd();
 }
 
@@ -651,88 +651,134 @@ void CFiguras::cilindro(float radio, float altura, int resolucion, GLuint text)
 
 /***************	A MANO	***************/
 
-void CFiguras::brick1_1_1(GLuint text) {
+void CFiguras::brick1_1_1(GLuint text, GLuint text2) {
 	glPushMatrix();
 		prisma(1.0, 1.0, 1.0, text);
 		glTranslatef(0.0, 0.5, 0.0);
-		cilindro(0.25, 0.3, 32, text);
+		cilindro(0.25, 0.3, 8, text2);
 	glPopMatrix();
 }
 
-void CFiguras::brick1_2_1(GLuint text) {
+void CFiguras::brick1_2_1(GLuint text, GLuint text2) {
 	glPushMatrix();
-		brick1_1_1(text);
+		brick1_1_1(text,text2);
 		glTranslatef(1.0, 0.0, 0.0);
-		brick1_1_1(text);
+		brick1_1_1(text,text2);
 	glPopMatrix();
 }
 
-void CFiguras::brick1_4_1(GLuint text) {
+void CFiguras::brick1_4_1(GLuint text, GLuint text2) {
 	glPushMatrix();
-		brick1_1_1(text);
+		brick1_1_1(text, text2);
 		glTranslatef(1.0, 0.0, 0.0);
-		brick1_1_1(text);
+		brick1_1_1(text, text2);
 		glTranslatef(1.0, 0.0, 0.0);
-		brick1_1_1(text);
+		brick1_1_1(text, text2);
 		glTranslatef(1.0, 0.0, 0.0);
-		brick1_1_1(text);
+		brick1_1_1(text, text2);
 	glPopMatrix();
 }
 
-void CFiguras::brick1_8_1(GLuint text) {
+void CFiguras::brick1_8_1(GLuint text, GLuint text2) {
 	glPushMatrix();
-		brick1_1_1(text);
+		brick1_1_1(text, text2);
 		glTranslatef(1.0, 0.0, 0.0);
-		brick1_1_1(text);
+		brick1_1_1(text, text2);
 		glTranslatef(1.0, 0.0, 0.0);
-		brick1_1_1(text);
+		brick1_1_1(text, text2);
 		glTranslatef(1.0, 0.0, 0.0);
-		brick1_1_1(text);
+		brick1_1_1(text, text2);
 		glTranslatef(1.0, 0.0, 0.0);
-		brick1_1_1(text);
+		brick1_1_1(text, text2);
 		glTranslatef(1.0, 0.0, 0.0);
-		brick1_1_1(text);
+		brick1_1_1(text, text2);
 		glTranslatef(1.0, 0.0, 0.0);
-		brick1_1_1(text);
+		brick1_1_1(text, text2);
 		glTranslatef(1.0, 0.0, 0.0);
-		brick1_1_1(text);
+		brick1_1_1(text, text2);
 	glPopMatrix();
 }
 
-void CFiguras::brick2_2_1(GLuint text) {
+void CFiguras::brick2_2_1(GLuint text, GLuint text2) {
 	glPushMatrix();
 		glPushMatrix();
-			brick1_1_1(text);
+			brick1_1_1(text, text2);
 			glTranslatef(1.0, 0.0, 0.0);
-			brick1_1_1(text);
+			brick1_1_1(text, text2);
 		glPopMatrix();
 		glTranslatef(0.0, 0.0, 1.0);
 		glPushMatrix();
-			brick1_1_1(text);
+			brick1_1_1(text, text2);
 			glTranslatef(1.0, 0.0, 0.0);
-			brick1_1_1(text);
+			brick1_1_1(text, text2);
 		glPopMatrix();
 	glPopMatrix();
 }
 
-void CFiguras::brick2_3_1(GLuint text) {
+void CFiguras::brick2_3_1(GLuint text, GLuint text2) {
 	glPushMatrix();
 		glPushMatrix();
-			brick1_1_1(text);
+			brick1_1_1(text, text2);
 			glTranslatef(1.0, 0.0, 0.0);
-			brick1_1_1(text);
+			brick1_1_1(text, text2);
 		glPopMatrix();
 		glTranslatef(0.0, 0.0, 1.0);
 		glPushMatrix();
-			brick1_1_1(text);
+			brick1_1_1(text, text2);
 			glTranslatef(1.0, 0.0, 0.0);
-			brick1_1_1(text);
+			brick1_1_1(text, text2);
 		glPopMatrix();
 		glTranslatef(0.0, 0.0, 1.0);
 		glPushMatrix();
-			brick1_1_1(text);
+			brick1_1_1(text, text2);
 			glTranslatef(1.0, 0.0, 0.0);
-			brick1_1_1(text);
+			brick1_1_1(text, text2);
 		glPopMatrix();
+	glPopMatrix();
+}
+
+void CFiguras::flat4_4(GLuint text, GLuint text2) {
+	glPushMatrix();
+		glPushMatrix();
+			prisma(0.2, 4.0, 4.0, text);
+			glTranslatef(-1.5, 0.1, -1.5);
+			
+			for (int i = 0; i < 4; i++) {
+				glPushMatrix();
+					for (int j = 0; j < 4; j++) {
+						cilindro(0.25, 0.3, 8, text2);
+						glTranslatef(1.0, 0.0, 0.0);
+					}
+				glPopMatrix();
+				glTranslatef(0.0, 0.0, 1.0);
+			}
+		glPopMatrix();
+	glPopMatrix();
+}
+
+void CFiguras::plancha(GLuint text, GLuint text2) {
+	/*glPushMatrix();
+	for (int i = 0; i < 41; i++) {
+		glPushMatrix();
+		for (int j = 0; j < 20; j++) {
+			flat4_4(text, text2);
+			glTranslatef(4.0, 0.0, 0.0);
+		}
+		glPopMatrix();
+		glTranslatef(0.0, 0.0, 4.0);
+	}
+	glPopMatrix();*/
+	glPushMatrix();
+		prisma(0.2, 164.0, 90.0, text);
+		glTranslatef(-81.5, 0.1, -44.5);
+		for (int i = 0; i < 90; i++) {
+			glPushMatrix();
+				for (int j = 0; j < 164; j++) {
+					cilindro(0.25, 0.3, 8, text2);
+					glTranslatef(1.0, 0.0, 0.0);
+				}
+			glPopMatrix();
+			glTranslatef(0.0, 0.0, 1.0);
+		}
 	glPopMatrix();
 }

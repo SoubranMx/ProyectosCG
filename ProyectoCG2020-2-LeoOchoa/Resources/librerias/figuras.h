@@ -26,12 +26,14 @@ class CFiguras
 
 	/***************	A MANO	***************/
 
-	void brick1_1_1(GLuint text);	//Brick 1x1x1
-	void brick1_2_1(GLuint text);	//Brick 1x2x1
-	void brick1_4_1(GLuint text);	//Brick 1x4x1
-	void brick1_8_1(GLuint text);	//Brick 1x8x1
-	void brick2_2_1(GLuint text);	//Brick 2x2x1
-	void brick2_3_1(GLuint text);	//Brick 2x3x1
-	void roofTile2_2(GLuint text);
-	void cornerBrick2_2(GLuint text);
+	void brick1_1_1(GLuint text, GLuint text2);	//Brick 1x1x1
+	void brick1_2_1(GLuint text, GLuint text2);	//Brick 1x2x1
+	void brick1_4_1(GLuint text, GLuint text2);	//Brick 1x4x1
+	void brick1_8_1(GLuint text, GLuint text2);	//Brick 1x8x1
+	void brick2_2_1(GLuint text, GLuint text2);	//Brick 2x2x1
+	void brick2_3_1(GLuint text, GLuint text2);	//Brick 2x3x1
+	void slope1_2(GLuint text, GLuint text2);
+	void cornerBrick2_2(GLuint text, GLuint text2);
+	void flat4_4(GLuint text, GLuint text2);
+	void CFiguras::plancha(GLuint text, GLuint text2);
 };

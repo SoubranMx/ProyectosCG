@@ -788,3 +788,120 @@ void CFiguras::flatV(float x, float z, GLuint text, GLuint text2) {
 		}
 	glPopMatrix();
 }
+
+void CFiguras::slope1_2(GLuint text, GLuint text2) {
+	GLfloat vertice[10][3] = {
+		{0.5 ,-0.5, 0.5},    //Coordenadas Vértice 0 V0
+		{-0.5 ,-0.5, 0.5},    //Coordenadas Vértice 1 V1
+		{-0.5 ,-0.5, -0.5},    //Coordenadas Vértice 2 V2
+		{0.5 ,-0.5, -0.5},    //Coordenadas Vértice 3 V3
+		{0.5 ,0.5, 0.5},    //Coordenadas Vértice 4 V4
+		{0.5 ,0.5, -0.5},    //Coordenadas Vértice 5 V5
+		{-0.5 ,0.5, -0.5},    //Coordenadas Vértice 6 V6
+		{-0.5 ,0.5, 0.5},    //Coordenadas Vértice 7 V7
+		{-0.5 ,-0.5, 1.5},    //Coordenadas Vértice 8 V7
+		{0.5 ,-0.5, 1.5},    //Coordenadas Vértice 9 V7
+	};
+	glPushMatrix();
+		//prisma(1.0, 1.0, 1.0, text);
+		brick1_1_1(text, text2);
+		glBindTexture(GL_TEXTURE_2D, text);   // choose the texture to use.
+		glBegin(GL_POLYGON);	//Alfa
+			//glColor3f(0.0,0.0,1.0);
+			// 8 7 1
+			glNormal3f(0.0f, 0.0f, 1.0f);
+			glTexCoord2f(1.0f, 0.0f); glVertex3fv(vertice[8]);
+			glTexCoord2f(1.0f, 1.0f); glVertex3fv(vertice[7]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[1]);
+		glEnd();
+		glBegin(GL_POLYGON);	//Beta
+			//glColor3f(0.0,0.0,1.0);
+			// 9 4 7 8
+			glNormal3f(0.0f, 0.0f, 1.0f);
+			glTexCoord2f(1.0f, 0.0f); glVertex3fv(vertice[9]);
+			glTexCoord2f(1.0f, 1.0f); glVertex3fv(vertice[4]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[7]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[8]);
+		glEnd();
+		glBegin(GL_POLYGON);	//Gamma
+			//glColor3f(0.0,0.0,1.0);
+			// 9 8 1 0
+			glNormal3f(0.0f, 0.0f, 1.0f);
+			glTexCoord2f(1.0f, 0.0f); glVertex3fv(vertice[9]);
+			glTexCoord2f(1.0f, 1.0f); glVertex3fv(vertice[8]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[1]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[0]);
+		glEnd();
+		glBegin(GL_POLYGON);	//Delta
+			//glColor3f(0.0,0.0,1.0);
+			// 0 9 4
+			glNormal3f(0.0f, 0.0f, 1.0f);
+			glTexCoord2f(1.0f, 0.0f); glVertex3fv(vertice[0]);
+			glTexCoord2f(1.0f, 1.0f); glVertex3fv(vertice[9]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[4]);
+		glEnd();
+	glPopMatrix();
+}
+
+void CFiguras::slopeV(float x, float z, GLuint text, GLuint text2) {
+	GLfloat vertice[10][3] = {
+		{0.5 * x ,-0.5 * 1.0, 0.5 * z},    //Coordenadas Vértice 1 V0
+		{-0.5 * x ,-0.5 * 1.0 , 0.5 * z},    //Coordenadas Vértice 2 V1
+		{-0.5 * x ,-0.5 * 1.0 , -0.5 * z},    //Coordenadas Vértice 3 V2
+		{0.5 * x ,-0.5 * 1.0 , -0.5 * z},    //Coordenadas Vértice 4 V3
+		{0.5 * x ,0.5 * 1.0 , 0.5 * z},    //Coordenadas Vértice 5 V4
+		{0.5 * x ,0.5 * 1.0 , -0.5 * z},    //Coordenadas Vértice 6 V5
+		{-0.5 * x ,0.5 * 1.0 , -0.5 * z},    //Coordenadas Vértice 7 V6
+		{-0.5 * x ,0.5 * 1.0 , 0.5 * z},    //Coordenadas Vértice 8 V7
+		{-0.5 * x,-0.5 * 1.0 , 0.5 * z + 1.0},    //Coordenadas Vértice 9 V8
+		{0.5 * x ,-0.5 * 1.0 , 0.5 * z + 1.0},    //Coordenadas Vértice 10 V9
+	};
+	glPushMatrix();
+		prisma(1.0, x, z, text);
+		glBindTexture(GL_TEXTURE_2D, text);   // choose the texture to use.
+		glBegin(GL_POLYGON);	//Alfa
+			//glColor3f(0.0,0.0,1.0);
+			// 8 7 1
+		glNormal3f(0.0f, 0.0f, 1.0f);
+			glTexCoord2f(1.0f, 0.0f); glVertex3fv(vertice[8]);
+			glTexCoord2f(1.0f, 1.0f); glVertex3fv(vertice[7]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[1]);
+		glEnd();
+		glBegin(GL_POLYGON);	//Beta
+			//glColor3f(0.0,0.0,1.0);
+			// 9 4 7 8
+		glNormal3f(0.0f, 0.0f, 1.0f);
+			glTexCoord2f(1.0f, 0.0f); glVertex3fv(vertice[9]);
+			glTexCoord2f(1.0f, 1.0f); glVertex3fv(vertice[4]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[7]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[8]);
+		glEnd();
+		glBegin(GL_POLYGON);	//Gamma
+			//glColor3f(0.0,0.0,1.0);
+			// 9 8 1 0
+		glNormal3f(0.0f, 0.0f, 1.0f);
+			glTexCoord2f(1.0f, 0.0f); glVertex3fv(vertice[9]);
+			glTexCoord2f(1.0f, 1.0f); glVertex3fv(vertice[8]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[1]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[0]);
+		glEnd();
+		glBegin(GL_POLYGON);	//Delta
+			//glColor3f(0.0,0.0,1.0);
+			// 0 9 4
+			glNormal3f(0.0f, 0.0f, 1.0f);
+			glTexCoord2f(1.0f, 0.0f); glVertex3fv(vertice[0]);
+			glTexCoord2f(1.0f, 1.0f); glVertex3fv(vertice[9]);
+			glTexCoord2f(0.0f, 1.0f); glVertex3fv(vertice[4]);
+		glEnd();
+		glTranslatef(-(x / 2 - 0.5), 0.5, -(z / 2 - 0.5));
+		for (int i = 0; i < int(z); i++) {
+			glPushMatrix();
+			for (int j = 0; j < int(x); j++) {
+				cilindro(0.25, 0.3, 8, text2);
+				glTranslatef(1.0, 0.0, 0.0);
+			}
+			glPopMatrix();
+			glTranslatef(0.0, 0.0, 1.0);
+		}
+	glPopMatrix();
+}

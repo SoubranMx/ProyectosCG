@@ -752,9 +752,11 @@ void createPlancha() {
 /*********** FENCES ***********/
 void fence3(GLuint text, GLuint text2) {
 	glPushMatrix();
-		brick.brick1_1_1(text, text2);
+		//brick.brick1_1_1(text, text2);
+		brick.prisma(1.0, 1.0, 1.0, text);
 		glTranslatef(0.0, 1.0, 0.0);
-		brick.brick1_1_1(text, text2);
+		//brick.brick1_1_1(text, text2);
+		brick.prisma(1.0, 1.0, 1.0, text);
 		glPushMatrix();
 			glTranslatef(1.0, 0.0, 0.0);
 			brick.brick1_1_1(text, text2);
@@ -767,9 +769,11 @@ void fence3(GLuint text, GLuint text2) {
 }
 void fence4(GLuint text, GLuint text2) {
 	glPushMatrix();
-		brick.brick1_1_1(text, text2);
+		//brick.brick1_1_1(text, text2);
+		brick.prisma(1.0, 1.0, 1.0, text);
 		glTranslatef(0.0, 1.0, 0.0);
-		brick.brick1_1_1(text, text2);
+		brick.prisma(1.0, 1.0, 1.0, text);
+		//brick.brick1_1_1(text, text2);
 		glPushMatrix();
 			glTranslatef(1.0, 0.0, 0.0);
 			brick.brick1_1_1(text, text2);
@@ -787,25 +791,25 @@ void fenceA() {
 		glTranslatef(23.0, 0.0, 0.0);
 		glRotatef(-90.0, 0.0, 1.0, 0.0);
 		for (int i = 0; i < 10; i++) {
-			fence3(t_madera.GLindex, t_madera2.GLindex);
+			fence3(t_madera.GLindex, t_maderaO.GLindex);
 			glTranslatef(3.0, 0.0, 0.0);
 		}
 		glRotatef(90.0, 0.0, 1.0, 0.0);
 		for (int j = 0; j < 10; j++) {
-			fence4(t_madera.GLindex, t_madera2.GLindex);
+			fence4(t_madera.GLindex, t_maderaO.GLindex);
 			glTranslatef(4.0, 0.0, 0.0);
 		}
 		glRotatef(90.0, 0.0, 1.0, 0.0);
 		for (int i = 0; i < 10; i++) {
-			fence3(t_madera.GLindex, t_madera2.GLindex);
+			fence3(t_madera.GLindex, t_maderaO.GLindex);
 			glTranslatef(3.0, 0.0, 0.0);
 		}
 		glPushMatrix();
-			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+			brick.prisma(1.0, 1.0, 1.0, t_madera.GLindex);
 			glTranslatef(0.0, 1.0, 0.0);
-			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+			brick.prisma(1.0, 1.0, 1.0, t_madera.GLindex);
 			glTranslatef(0.0, 1.0, 0.0);
-			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+			brick.brick1_1_1(t_madera.GLindex, t_maderaO.GLindex);
 		glPopMatrix();
 	glPopMatrix();
 }
@@ -814,25 +818,25 @@ void fenceB() {
 		glTranslatef(83.0, 0.0, 0.0);
 		glRotatef(-90.0, 0.0, 1.0, 0.0);
 		for (int i = 0; i < 10; i++) {
-			fence3(t_madera.GLindex, t_madera2.GLindex);
+			fence3(t_madera.GLindex, t_maderaO.GLindex);
 			glTranslatef(3.0, 0.0, 0.0);
 		}
 		glRotatef(90.0, 0.0, 1.0, 0.0);
 		for (int j = 0; j < 20; j++) {
-			fence4(t_madera.GLindex, t_madera2.GLindex);
+			fence4(t_madera.GLindex, t_maderaO.GLindex);
 			glTranslatef(4.0, 0.0, 0.0);
 		}
 		glRotatef(90.0, 0.0, 1.0, 0.0);
 		for (int i = 0; i < 10; i++) {
-			fence3(t_madera.GLindex, t_madera2.GLindex);
+			fence3(t_madera.GLindex, t_maderaO.GLindex);
 			glTranslatef(3.0, 0.0, 0.0);
 		}
 		glPushMatrix();
-			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+			brick.prisma(1.0, 1.0, 1.0, t_madera.GLindex);
 			glTranslatef(0.0, 1.0, 0.0);
-			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+			brick.prisma(1.0, 1.0, 1.0, t_madera.GLindex);
 			glTranslatef(0.0, 1.0, 0.0);
-			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+			brick.brick1_1_1(t_madera.GLindex, t_maderaO.GLindex);
 		glPopMatrix();
 	glPopMatrix();
 }
@@ -841,25 +845,25 @@ void fenceC() {
 		glTranslatef(83.0, 0.0, 89.0);
 		glRotatef(90.0, 0.0, 1.0, 0.0);
 		for (int i = 0; i < 10; i++) {
-			fence3(t_madera.GLindex, t_madera2.GLindex);
+			fence3(t_madera.GLindex, t_maderaO.GLindex);
 			glTranslatef(3.0, 0.0, 0.0);
 		}
 		glRotatef(-90.0, 0.0, 1.0, 0.0);
 		for (int j = 0; j < 20; j++) {
-			fence4(t_madera.GLindex, t_madera2.GLindex);
+			fence4(t_madera.GLindex, t_maderaO.GLindex);
 			glTranslatef(4.0, 0.0, 0.0);
 		}
 		glRotatef(-90.0, 0.0, 1.0, 0.0);
 		for (int i = 0; i < 10; i++) {
-			fence3(t_madera.GLindex, t_madera2.GLindex);
+			fence3(t_madera.GLindex, t_maderaO.GLindex);
 			glTranslatef(3.0, 0.0, 0.0);
 		}
 		glPushMatrix();
-			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+			brick.prisma(1.0, 1.0, 1.0, t_madera.GLindex);
 			glTranslatef(0.0, 1.0, 0.0);
-			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+			brick.prisma(1.0, 1.0, 1.0, t_madera.GLindex);
 			glTranslatef(0.0, 1.0, 0.0);
-			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+			brick.brick1_1_1(t_madera.GLindex, t_maderaO.GLindex);
 		glPopMatrix();
 	glPopMatrix();
 }
@@ -868,25 +872,25 @@ void fenceD() {
 		glTranslatef(23.0, 0.0, 89.0);
 		glRotatef(90.0, 0.0, 1.0, 0.0);
 		for (int i = 0; i < 10; i++) {
-			fence3(t_madera.GLindex, t_madera2.GLindex);
+			fence3(t_madera.GLindex, t_maderaO.GLindex);
 			glTranslatef(3.0, 0.0, 0.0);
 		}
 		glRotatef(-90.0, 0.0, 1.0, 0.0);
 		for (int j = 0; j < 10; j++) {
-			fence4(t_madera.GLindex, t_madera2.GLindex);
+			fence4(t_madera.GLindex, t_maderaO.GLindex);
 			glTranslatef(4.0, 0.0, 0.0);
 		}
 		glRotatef(-90.0, 0.0, 1.0, 0.0);
 		for (int i = 0; i < 10; i++) {
-			fence3(t_madera.GLindex, t_madera2.GLindex);
+			fence3(t_madera.GLindex, t_maderaO.GLindex);
 			glTranslatef(3.0, 0.0, 0.0);
 		}
 		glPushMatrix();
-			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+			brick.prisma(1.0, 1.0, 1.0, t_madera.GLindex);
 			glTranslatef(0.0, 1.0, 0.0);
-			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+			brick.prisma(1.0, 1.0, 1.0, t_madera.GLindex);
 			glTranslatef(0.0, 1.0, 0.0);
-			brick.brick1_1_1(t_madera.GLindex, t_madera2.GLindex);
+			brick.brick1_1_1(t_madera.GLindex, t_maderaO.GLindex);
 		glPopMatrix();
 	glPopMatrix();
 }
@@ -901,6 +905,75 @@ void createFences() {
 	glPopMatrix();
 };
 /*********** TIENDAS ***********/
+/*********** BANCAS	 ***********/
+void createBanca(GLuint text, GLuint text2, GLuint text3) {
+	glPushMatrix();
+		// Pata izquierda
+		glPushMatrix();
+			glTranslatef(-1.5, 0.5, 0.0);
+			brick.prisma(1.0, 1.0, 1.0, text);
+			glTranslatef(0.0, 1.0, 0.0);
+			brick.prisma(1.0, 1.0, 1.0, text);
+		glPopMatrix();
+		// Pata Derecha
+		glPushMatrix();
+			glTranslatef(1.5, 0.5, 0.0);
+			brick.prisma(1.0, 1.0, 1.0, text);
+			glTranslatef(0.0, 1.0, 0.0);
+			brick.prisma(1.0, 1.0, 1.0, text);
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(0.0, 2.15, 0.0);
+			brick.flatV(8.0, 3.0, text3, text2);
+		glPopMatrix();
+	glPopMatrix();
+}
+void createBancas(GLuint text, GLuint text2, GLuint text3) {
+	// textura de prisma, textura de flat, textura de cilindro
+	glPushMatrix();
+		glTranslatef(-82.0, -0.5, 0.0);
+		// Sector A1
+		glTranslatef(24.0 + 10.0, 0.0, -12.0);
+		createBanca(text, text2, text3);
+		glPushMatrix();
+			// Sector B1
+			glTranslatef(0.0, 0.0, 24.0);
+			createBanca(text, text2, text3);
+		glPopMatrix();
+		//Sector A2
+		glTranslatef(19.0, 0.0, 0.0);
+		createBanca(text, text2, text3);
+		glPushMatrix();
+			//Sector B2
+			glTranslatef(0.0, 0.0, 24.0);
+			createBanca(text, text2, text3);
+		glPopMatrix();
+		//Sector C1
+		glTranslatef(42.0, 0.0, 0.0);
+		createBanca(text, text2, text3);
+		glPushMatrix();
+			//Sector D1
+			glTranslatef(0.0, 0.0, 24.0);
+			createBanca(text, text2, text3);
+		glPopMatrix();
+		//Sector C2
+		glTranslatef(18.0, 0.0, 0.0);
+		createBanca(text, text2, text3);
+		glPushMatrix();
+			//Sector D2
+			glTranslatef(0.0, 0.0, 24.0);
+			createBanca(text, text2, text3);
+		glPopMatrix();
+		//Sector C3
+		glTranslatef(18.0, 0.0, 0.0);
+		createBanca(text, text2, text3);
+		glPushMatrix();
+			//Sector D3
+			glTranslatef(0.0, 0.0, 24.0);
+			createBanca(text, text2, text3);
+		glPopMatrix();
+	glPopMatrix();
+}
 /*********** KIOSKO	 ***********/
 /*********** FUENTE	 ***********/
 /*********** FACHADA ***********/
@@ -1044,6 +1117,12 @@ void display(void)   // Creamos la funcion donde se dibuja
 		createPlancha();
 		glTranslatef(0.0, 0.6, 0.0);
 		createFences();
+		glPushMatrix();
+			//glTranslatef(0.0, 2.0, 0.0);
+			//brick.slope1_2(t_madera.GLindex, t_madera2.GLindex);
+			//brick.slopeV(10.0, 1.0, t_madera.GLindex, t_madera2.GLindex);
+			createBancas(t_carbon.GLindex, t_madera.GLindex, t_maderaO.GLindex);
+		glPopMatrix();
 	glPopMatrix();
 
 

@@ -603,10 +603,10 @@ void InitGL(GLvoid)     // Inicializamos parametros
 	
 
 	/*
-			********** CAMARAS **********
+		********** CAMARAS **********
 
-			Inicialización de las posiciones de las cámaras: original (cuando carga), cuarto y juego.
-			Teniendo en cuenta los parámteros:
+		Inicialización de las posiciones de las cámaras: original (cuando carga), cuarto y juego.
+		Teniendo en cuenta los parámteros:
 
 		Posición de cámara inicial
 
@@ -685,6 +685,71 @@ void pintaTexto(float x, float y, float z, void* font, char* string)
 	}
 }
 
+/*********** PLANCHA ***********/
+void createCemento() {
+	glPushMatrix();
+		glTranslatef(-82.0, 0.0, 0.0);
+		//Parte A
+		glPushMatrix();
+			glTranslatef(2.0, 0.0, 0.0);
+			brick.flatV(4.0, 90.0, t_piso.GLindex, t_piso2.GLindex);
+		glPopMatrix();
+		//Parte B
+		glPushMatrix();
+			glTranslatef(34.0, 0.0, 0.0);
+			brick.flatV(60.0, 30.0, t_piso.GLindex, t_piso2.GLindex);
+		glPopMatrix();
+		//Parte C
+		glPushMatrix();
+			glTranslatef(74.0, 0.0, 0.0);
+			brick.flatV(20.0, 90.0, t_piso.GLindex, t_piso2.GLindex);
+		glPopMatrix();
+		//Parte D
+		glPushMatrix();
+			glTranslatef(124.0, 0.0, 0.0);
+			brick.flatV(80.0, 30.0, t_piso.GLindex, t_piso2.GLindex);
+		glPopMatrix();
+	glPopMatrix();
+}
+void createCesped() {
+	glPushMatrix();
+		glPushMatrix();
+			glTranslatef(-82.0, 0.0, 0.0);
+			//Parte B
+			glPushMatrix();
+				glTranslatef(34.0, 0.0, 30.0);
+				brick.flatV(60.0, 30.0, t_pasto.GLindex, t_pasto2.GLindex);
+			glPopMatrix();
+			//Parte A
+			glPushMatrix();
+				glTranslatef(34.0, 0.0, -30.0);
+				brick.flatV(60.0, 30.0, t_pasto.GLindex, t_pasto2.GLindex);
+			glPopMatrix();
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(82.0, 0.0, 0.0);
+			//Parte D
+			glPushMatrix();
+				glTranslatef(-40.0, 0.0, 30.0);
+				brick.flatV(80.0, 30.0, t_pasto.GLindex, t_pasto2.GLindex);
+			glPopMatrix();
+			//Parte C
+			glPushMatrix();
+				glTranslatef(-40.0, 0.0, -30.0);
+				brick.flatV(80.0, 30.0, t_pasto.GLindex, t_pasto2.GLindex);
+			glPopMatrix();
+		glPopMatrix();
+	glPopMatrix();
+}
+void createPlancha() {
+	glPushMatrix();
+		set_material(brass);
+		createCesped();
+		set_material(polishedSilver);
+		createCemento();
+	glPopMatrix();
+}
+/*********** FENCES ***********/
 void fence3(GLuint text, GLuint text2) {
 	glPushMatrix();
 		brick.brick1_1_1(text, text2);
@@ -700,7 +765,6 @@ void fence3(GLuint text, GLuint text2) {
 		brick.brick1_1_1(text, text2);
 	glPopMatrix();
 }
-
 void fence4(GLuint text, GLuint text2) {
 	glPushMatrix();
 		brick.brick1_1_1(text, text2);
@@ -718,7 +782,6 @@ void fence4(GLuint text, GLuint text2) {
 		brick.brick1_1_1(text, text2);
 	glPopMatrix();
 }
-
 void fenceA() {
 	glPushMatrix();
 		glTranslatef(23.0, 0.0, 0.0);
@@ -746,7 +809,6 @@ void fenceA() {
 		glPopMatrix();
 	glPopMatrix();
 }
-
 void fenceB() {
 	glPushMatrix();
 		glTranslatef(83.0, 0.0, 0.0);
@@ -774,7 +836,6 @@ void fenceB() {
 		glPopMatrix();
 	glPopMatrix();
 }
-
 void fenceC() {
 	glPushMatrix();
 		glTranslatef(83.0, 0.0, 89.0);
@@ -802,7 +863,6 @@ void fenceC() {
 		glPopMatrix();
 	glPopMatrix();
 }
-
 void fenceD() {
 	glPushMatrix();
 		glTranslatef(23.0, 0.0, 89.0);
@@ -833,14 +893,20 @@ void fenceD() {
 void createFences() {
 	glPushMatrix();
 		glTranslatef(-81.5, 0.0, -44.5);
-		//fence3(t_madera.GLindex, t_madera2.GLindex);
+		set_material(bronze);
 		fenceA();
 		fenceB();
 		fenceC();
 		fenceD();
 	glPopMatrix();
 };
-
+/*********** TIENDAS ***********/
+/*********** KIOSKO	 ***********/
+/*********** FUENTE	 ***********/
+/*********** FACHADA ***********/
+/*********** AVATAR1 ***********/
+/*********** AVATAR2 ***********/
+/*********** LUCES	 ***********/
 void createFoco1() {
 	glPushMatrix();
 	float s = 0.001;
@@ -850,7 +916,6 @@ void createFoco1() {
 	foco.GLrender(NULL, _SHADED, 1.0);
 	glPopMatrix();
 }
-
 void createFoco2() {
 	glPushMatrix();
 	//float s = 0.01;
@@ -863,7 +928,6 @@ void createFoco2() {
 	lampara.GLrender(NULL, _SHADED, 1.0);
 	glPopMatrix();
 }
-
 void createFoco3() {
 	glPushMatrix();
 	float s = 0.04;
@@ -873,7 +937,6 @@ void createFoco3() {
 	lamparaCalle.GLrender(NULL, _SHADED, 1.0);
 	glPopMatrix();
 }
-
 void foc1() {
 	if (foco1)
 		glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 180.0);			// Position The Light
@@ -892,7 +955,6 @@ void foc1() {
 	}
 	glPopMatrix();
 }
-
 void foc2() {
 	//	LUZ SPOTLIGHT
 	if (foco2)
@@ -918,7 +980,6 @@ void foc2() {
 	}
 	glPopMatrix();
 }
-
 void foc3() {
 	if (foco3)
 		glLightf(GL_LIGHT3, GL_SPOT_CUTOFF, 180.0);			// Position The Light
@@ -937,7 +998,6 @@ void foc3() {
 	}
 	glPopMatrix();
 }
-
 void luz() {
 	glPushMatrix();
 		glPushMatrix();
@@ -981,8 +1041,7 @@ void display(void)   // Creamos la funcion donde se dibuja
 	glPushMatrix(); //Piso primario
 		glTranslatef(0.0, 0.0, 0.0);
 		glScalef(0.5, 0.5, 0.5);
-		//set_material(polishedCopper);
-		brick.plancha(t_piso.GLindex, t_piso2.GLindex);
+		createPlancha();
 		glTranslatef(0.0, 0.6, 0.0);
 		createFences();
 	glPopMatrix();

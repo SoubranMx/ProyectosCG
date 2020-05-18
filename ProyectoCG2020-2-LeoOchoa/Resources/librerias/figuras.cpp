@@ -757,17 +757,6 @@ void CFiguras::flat4_4(GLuint text, GLuint text2) {
 }
 
 void CFiguras::plancha(GLuint text, GLuint text2) {
-	/*glPushMatrix();
-	for (int i = 0; i < 41; i++) {
-		glPushMatrix();
-		for (int j = 0; j < 20; j++) {
-			flat4_4(text, text2);
-			glTranslatef(4.0, 0.0, 0.0);
-		}
-		glPopMatrix();
-		glTranslatef(0.0, 0.0, 4.0);
-	}
-	glPopMatrix();*/
 	glPushMatrix();
 		prisma(0.2, 164.0, 90.0, text);
 		glTranslatef(-81.5, 0.1, -44.5);
@@ -777,6 +766,23 @@ void CFiguras::plancha(GLuint text, GLuint text2) {
 					cilindro(0.25, 0.3, 8, text2);
 					glTranslatef(1.0, 0.0, 0.0);
 				}
+			glPopMatrix();
+			glTranslatef(0.0, 0.0, 1.0);
+		}
+	glPopMatrix();
+}
+
+void CFiguras::flatV(float x, float z, GLuint text, GLuint text2) {
+	glPushMatrix();
+		prisma(0.2, x, z, text);
+		//glTranslatef(-33.5, 0.1, -29.5);
+		glTranslatef(-(x / 2 - 0.5), 0.1, -(z / 2 - 0.5));
+		for (int i = 0; i < int(z); i++) {
+			glPushMatrix();
+			for (int j = 0; j < int(x); j++) {
+				cilindro(0.25, 0.3, 8, text2);
+				glTranslatef(1.0, 0.0, 0.0);
+			}
 			glPopMatrix();
 			glTranslatef(0.0, 0.0, 1.0);
 		}

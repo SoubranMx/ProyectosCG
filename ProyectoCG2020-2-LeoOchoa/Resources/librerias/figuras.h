@@ -35,5 +35,6 @@ class CFiguras
 	void slope1_2(GLuint text, GLuint text2);
 	void cornerBrick2_2(GLuint text, GLuint text2);
 	void flat4_4(GLuint text, GLuint text2);
-	void CFiguras::plancha(GLuint text, GLuint text2);
+	void plancha(GLuint text, GLuint text2);
+	void flatV(float x, float z, GLuint text, GLuint text2);
 };

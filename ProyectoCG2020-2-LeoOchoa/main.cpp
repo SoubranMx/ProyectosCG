@@ -974,6 +974,68 @@ void createBancas(GLuint text, GLuint text2, GLuint text3) {
 		glPopMatrix();
 	glPopMatrix();
 }
+/*********** MESAS	 ***********/
+void createMesa(GLuint text, GLuint text2, GLuint text3, GLuint text4) {
+	//text para el soporte, text2 para color mesa, text3 cilindros mesa, text4 cilindros sillas?
+	glPushMatrix();
+		glPushMatrix();
+			brick.prisma(1.0, 1.0, 1.0, text);
+			glTranslatef(0.0, 1.0, 0.0);
+			brick.prisma(1.0, 1.0, 1.0, text);
+			glTranslatef(0.0, 0.6, 0.0);
+			brick.flatV(6.0, 6.0, text2, text4);
+		glPopMatrix();
+		// Sillas
+		glPushMatrix();
+			glTranslatef(3.3 + 1.5, 0.0, 0.0);
+			brick.prisma(1.0, 1.0, 3.0, text);
+			glTranslatef(-0.5, 0.6, 0.0);
+			brick.flatV(2.0, 3.0, text4, text2);
+		glPopMatrix();
+		glRotatef(90.0, 0.0, 1.0, 0.0);
+		glPushMatrix();
+			glTranslatef(3.3 + 1.5, 0.0, 0.0);
+			brick.prisma(1.0, 1.0, 3.0, text);
+			glTranslatef(-0.5, 0.6, 0.0);
+			brick.flatV(2.0, 3.0, text4, text2);
+		glPopMatrix();
+		glRotatef(90.0, 0.0, 1.0, 0.0);
+		glPushMatrix();
+			glTranslatef(3.3 + 1.5, 0.0, 0.0);
+			brick.prisma(1.0, 1.0, 3.0, text);
+			glTranslatef(-0.5, 0.6, 0.0);
+			brick.flatV(2.0, 3.0, text4, text2);
+		glPopMatrix();
+		glRotatef(90.0, 0.0, 1.0, 0.0);
+		glPushMatrix();
+			glTranslatef(3.3 + 1.5, 0.0, 0.0);
+			brick.prisma(1.0, 1.0, 3.0, text);
+			glTranslatef(-0.5, 0.6, 0.0);
+			brick.flatV(2.0, 3.0, text4, text2);
+		glPopMatrix();
+	glPopMatrix();
+}
+void createMesas() {
+	glPushMatrix();
+		glPushMatrix();
+			glTranslatef(-8.0, 0.0, 25.0);
+			createMesa(t_carbon.GLindex, t_naranja.GLindex, t_naranja2.GLindex, t_rojo.GLindex);
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(-8.0, 0.0, -25.0);
+			createMesa(t_carbon.GLindex, t_naranja.GLindex, t_naranja2.GLindex, t_rojo.GLindex);
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(-68.0, 0.0, 33.0);
+			createMesa(t_carbon.GLindex, t_naranja.GLindex, t_naranja2.GLindex, t_rojo.GLindex);
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(-68.0, 0.0, -33.0);
+			createMesa(t_carbon.GLindex, t_naranja.GLindex, t_naranja2.GLindex, t_rojo.GLindex);
+		glPopMatrix();
+		//glTranslatef(0.0 + trax, 0.0 + tray, 0.0 + traz);
+	glPopMatrix();
+}
 /*********** KIOSKO	 ***********/
 /*********** FUENTE	 ***********/
 /*********** FACHADA ***********/
@@ -1121,8 +1183,9 @@ void display(void)   // Creamos la funcion donde se dibuja
 			//glTranslatef(0.0, 2.0, 0.0);
 			//brick.slope1_2(t_madera.GLindex, t_madera2.GLindex);
 			//brick.slopeV(10.0, 1.0, t_madera.GLindex, t_madera2.GLindex);
-			createBancas(t_carbon.GLindex, t_madera.GLindex, t_maderaO.GLindex);
+			createMesas();
 		glPopMatrix();
+		createBancas(t_carbon.GLindex, t_madera.GLindex, t_maderaO.GLindex);
 	glPopMatrix();
 
 
@@ -1323,16 +1386,16 @@ void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 		objCamera.Strafe_Camera(CAMERASPEED + 0.4);
 		break;
 
-		/*case ' ':		//Poner algo en movimiento
-			//Commit?
-			printf("mPos.x = %f\tmPos.y = %f\tmPos.z = %f\n",objCamera.mPos.x, objCamera.mPos.y, objCamera.mPos.z);
-			printf("mView.x = %f\tmView.y = %f\tmView.z = %f\n", objCamera.mView.x, objCamera.mView.y, objCamera.mView.z);
-			printf("mUp.x = %f\tmUp.y = %f\tmUp.z = %f\n", objCamera.mUp.x, objCamera.mUp.y, objCamera.mUp.z);
-			printf("glookupdown = %f\n", g_lookupdown);
-			printf("CAMERASPEED: %f\n", CAMERASPEED);
-			printf("******************************************\n");
+	/*case ' ':		//Poner algo en movimiento
+		//Commit?
+		printf("mPos.x = %f\tmPos.y = %f\tmPos.z = %f\n",objCamera.mPos.x, objCamera.mPos.y, objCamera.mPos.z);
+		printf("mView.x = %f\tmView.y = %f\tmView.z = %f\n", objCamera.mView.x, objCamera.mView.y, objCamera.mView.z);
+		printf("mUp.x = %f\tmUp.y = %f\tmUp.z = %f\n", objCamera.mUp.x, objCamera.mUp.y, objCamera.mUp.z);
+		printf("glookupdown = %f\n", g_lookupdown);
+		printf("CAMERASPEED: %f\n", CAMERASPEED);
+		printf("******************************************\n");
 
-			break;*/
+		break;*/
 	case '0':	//Original
 		banderaCO = true;	//Estamos en camara original
 		//Posiciona la camara a la posición original. Si viene de cualquier otra cámara, no debe borrar los anteriores estados.
@@ -1557,7 +1620,30 @@ void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 		printf("Ang = %f\n", LightAngle);
 		break;
 
-
+	case 'j':
+		trax += 1.0;
+		printf("traX = %f\n", trax);
+		break;
+	case 'J':
+		trax -= 1.0;
+		printf("traX = %f\n", trax);
+		break;
+	case 'k':
+		tray += 1.0;
+		printf("traY = %f\n", tray);
+		break;
+	case 'K':
+		tray -= 1.0;
+		printf("traY = %f\n", tray);
+		break;
+	case 'i':
+		traz += 1.0;
+		printf("traZ = %f\n", traz);
+		break;
+	case 'I':
+		printf("traZ = %f\n", traz);
+		traz -= 1.0;
+		break;
 	case 27:        // Cuando Esc es presionado...
 		exit(0);   // Salimos del programa
 		break;

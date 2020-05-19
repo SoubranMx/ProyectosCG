@@ -234,6 +234,16 @@ CTexture t_carbon;
 CTexture t_carbon2;
 CTexture t_pasto;
 CTexture t_pasto2;
+CTexture t_amarillo;
+CTexture t_amarillo2;
+CTexture t_morado;
+CTexture t_morado2;
+CTexture t_rosa;
+CTexture t_rosa2;
+CTexture t_azul;
+CTexture t_azul2;
+CTexture t_turquesa;
+CTexture t_turquesa2;
 
 
 /*
@@ -592,6 +602,42 @@ void InitGL(GLvoid)     // Inicializamos parametros
 	t_pasto2.LoadTGA("Resources/Texturas/pasto2.tga");
 	t_pasto2.BuildGLTexture();
 	t_pasto2.ReleaseImage();
+
+	t_amarillo.LoadTGA("Resources/Texturas/amarillo.tga");
+	t_amarillo.BuildGLTexture();
+	t_amarillo.ReleaseImage();
+	t_amarillo2.LoadTGA("Resources/Texturas/amarillo2.tga");
+	t_amarillo2.BuildGLTexture();
+	t_amarillo2.ReleaseImage();
+
+	t_morado.LoadTGA("Resources/Texturas/morado.tga");
+	t_morado.BuildGLTexture();
+	t_morado.ReleaseImage();
+	t_morado2.LoadTGA("Resources/Texturas/morado2.tga");
+	t_morado2.BuildGLTexture();
+	t_morado2.ReleaseImage();
+
+	t_rosa.LoadTGA("Resources/Texturas/rosa.tga");
+	t_rosa.BuildGLTexture();
+	t_rosa.ReleaseImage();
+	t_rosa2.LoadTGA("Resources/Texturas/rosa2.tga");
+	t_rosa2.BuildGLTexture();
+	t_rosa2.ReleaseImage();
+
+	t_azul.LoadTGA("Resources/Texturas/azul.tga");
+	t_azul.BuildGLTexture();
+	t_azul.ReleaseImage();
+	t_azul2.LoadTGA("Resources/Texturas/azul2.tga");
+	t_azul2.BuildGLTexture();
+	t_azul2.ReleaseImage();
+
+	t_turquesa.LoadTGA("Resources/Texturas/turquesa.tga");
+	t_turquesa.BuildGLTexture();
+	t_turquesa.ReleaseImage();
+	t_turquesa2.LoadTGA("Resources/Texturas/turquesa2.tga");
+	t_turquesa2.BuildGLTexture();
+	t_turquesa2.ReleaseImage();
+
 	/*
 		********** FIGURAS **********
 
@@ -904,7 +950,6 @@ void createFences() {
 		fenceD();
 	glPopMatrix();
 };
-/*********** TIENDAS ***********/
 /*********** BANCAS	 ***********/
 void createBanca(GLuint text, GLuint text2, GLuint text3) {
 	glPushMatrix();
@@ -1036,6 +1081,576 @@ void createMesas() {
 		//glTranslatef(0.0 + trax, 0.0 + tray, 0.0 + traz);
 	glPopMatrix();
 }
+/*********** Arboles ***********/
+/*void layerUno(GLuint text) {
+	glPushMatrix();
+		glPushMatrix();
+			glTranslatef(1.35, 0.0, 0.0);
+			brick.prisma(0.7, 0.7, 1.4, text);
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(-1.35, 0.0, 0.0);
+			brick.prisma(0.7, 0.7, 1.4, text);
+		glPopMatrix();
+	glPopMatrix();
+}
+void layerDos(GLuint text) {
+	glPushMatrix();
+		//Lado derecho
+		glPushMatrix();
+			//1er bloque
+			glTranslatef(1.45, 0.0, 0.0);
+			brick.prisma(0.7, 0.9, 2.7, text);
+		glPopMatrix();
+		glPushMatrix();
+			// Union 1a expansion
+			glTranslatef(2.05, 0.0, 0.0);
+			brick.prisma(0.7, 0.3, 0.3, text);
+		glPopMatrix();
+	glPopMatrix();
+}
+void layerTres(GLuint text) {
+	glPushMatrix();
+		//Lado derecho
+		glPushMatrix();
+			glTranslatef(1.45, 0.0, 0.0);
+			brick.prisma(0.7, 0.9, 4.0, text);
+		glPopMatrix();
+		glPushMatrix();
+			//Union 2a expansion
+			glTranslatef(2.15, 0.0, 0.0);
+			brick.prisma(0.7, 0.5, 0.5, text);
+		glPopMatrix();
+	glPopMatrix();
+}
+void layerCuatro(GLuint text) {
+	glPushMatrix();
+		//Lado derecho
+		glPushMatrix();
+			// Primer bloque, pegado al tronco
+			glTranslatef(1.45, 0.0, 0.0);
+			brick.prisma(0.7, 0.9, 5.3, text);
+		glPopMatrix();
+		glPushMatrix();
+			// Union entre bloques
+			glTranslatef(2.15, 0.0, 0.0);
+			brick.prisma(0.7, 0.5, 0.5, text);
+			glPushMatrix();
+				//Segundo bloque, 1er crecimiento
+				glTranslatef(0.25 + 0.15, 0.0, 0.0);
+				brick.prisma(0.7, 0.3, 1.3, text);
+			glPopMatrix();
+		glPopMatrix();
+	glPopMatrix();
+}
+void layerCinco(GLuint text) {
+	glPushMatrix();
+		//Lado derecho
+		glPushMatrix();
+			// Primer bloque, pegado al tronco
+			glTranslatef(1.45, 0.0, 0.0);
+			brick.prisma(0.7, 0.9, 6.6, text);
+		glPopMatrix();
+		glPushMatrix();
+			// Union entre bloques
+			glTranslatef(2.15, 0.0, 0.0);
+			brick.prisma(0.7, 0.5, 0.5, text);
+			glPushMatrix();
+				//Segundo bloque, 2do crecimiento
+				glTranslatef(0.70, 0.0, 0.0);
+				brick.prisma(0.7, 0.9, 2.6, text);
+			glPopMatrix();
+		glPopMatrix();
+	glPopMatrix();
+}
+void layerSeis(GLuint text) {
+	glPushMatrix();
+		//Lado derecho
+		glPushMatrix();
+			// Primer bloque, pegado al tronco
+			glTranslatef(1.45, 0.0, 0.0);
+			brick.prisma(0.7, 0.9, 7.9, text);
+		glPopMatrix();
+		glPushMatrix();
+			// Union entre bloques
+			glTranslatef(2.15, 0.0, 0.0);
+			brick.prisma(0.7, 0.5, 0.5, text);
+			glPushMatrix();
+				//Segundo bloque
+				glTranslatef(0.70, 0.0, 0.0);
+				brick.prisma(0.7, 0.9, 3.9, text);
+				glPushMatrix();
+					//Union, 1a expansion
+					glTranslatef(0.45 + 0.15, 0.0, 0.0);
+					brick.prisma(0.7, 0.3, 0.3, text);
+				glPopMatrix();
+			glPopMatrix();
+		glPopMatrix();
+	glPopMatrix();
+}
+void layerSiete(GLuint text) {
+	glPushMatrix();
+		//Lado derecho
+		glPushMatrix();
+			// Primer bloque, pegado al tronco
+			glTranslatef(1.45, 0.0, 0.0);
+			brick.prisma(0.7, 0.9, 9.2, text);
+		glPopMatrix();
+		glPushMatrix();
+			// Union entre bloques
+			glTranslatef(2.15, 0.0, 0.0);
+			brick.prisma(0.7, 0.5, 0.5, text);
+			glPushMatrix();
+				//Segundo bloque
+				glTranslatef(0.70, 0.0, 0.0);
+				brick.prisma(0.7, 0.9, 5.2, text);
+				glPushMatrix();
+					//Union, 2a expansion
+					glTranslatef(0.45 + 0.25, 0.0, 0.0);
+					brick.prisma(0.7, 0.5, 0.5, text);
+				glPopMatrix();
+			glPopMatrix();
+		glPopMatrix();
+	glPopMatrix();
+}
+void layerOcho(GLuint text) {
+	glPushMatrix();
+		//Lado derecho
+		glPushMatrix();
+			// Primer bloque, pegado al tronco
+			glTranslatef(1.45, 0.0, 0.0);
+			brick.prisma(0.7, 0.9, 10.5, text);
+		glPopMatrix();
+		glPushMatrix();
+			// Union entre bloques
+			glTranslatef(2.15, 0.0, 0.0);
+			brick.prisma(0.7, 0.5, 0.5, text);
+			glPushMatrix();
+				//Segundo bloque
+				glTranslatef(0.70, 0.0, 0.0);
+				brick.prisma(0.7, 0.9, 6.5, text);
+				glPushMatrix();
+					//Union
+					glTranslatef(0.45 + 0.25, 0.0, 0.0);
+					brick.prisma(0.7, 0.5, 0.5, text);
+					glPushMatrix();
+						//Tercer bloque 1a exp
+						glTranslatef(0.25 + 0.15, 0.0, 0.0);
+						brick.prisma(0.7, 0.3, 1.3, text);
+					glPopMatrix();
+				glPopMatrix();
+			glPopMatrix();
+		glPopMatrix();
+	glPopMatrix();
+}
+void layerNueve(GLuint text) {
+	glPushMatrix();
+		//Lado derecho
+		glPushMatrix();
+			// Primer bloque, pegado al tronco
+			glTranslatef(1.45, 0.0, 0.0);
+			brick.prisma(0.7, 0.9, 11.8, text);
+		glPopMatrix();
+		glPushMatrix();
+			// Union entre bloques
+			glTranslatef(2.15, 0.0, 0.0);
+			brick.prisma(0.7, 0.5, 0.5, text);
+			glPushMatrix();
+				//Segundo bloque
+				glTranslatef(0.70, 0.0, 0.0);
+				brick.prisma(0.7, 0.9, 7.8, text);
+				glPushMatrix();
+					//Union
+					glTranslatef(0.45 + 0.25, 0.0, 0.0);
+					brick.prisma(0.7, 0.5, 0.5, text);
+					glPushMatrix();
+						//Tercer bloque 2a exp
+						glTranslatef(0.70, 0.0, 0.0);
+						brick.prisma(0.7, 0.9, 2.6, text);
+					glPopMatrix();
+				glPopMatrix();
+			glPopMatrix();
+		glPopMatrix();
+	glPopMatrix();
+}*/
+void layerGeneral(int layer,int lado, GLuint text, GLuint text2) {
+	float bloqueAz = 1.4, unionAB = 0.3, bloqueBz = 1.4, unionBC = 0.3, bloqueCz = 1.4, escalaX1 = 0.3, escalaX2 = 0.9;
+	float distTronco = 0.6;
+	switch (layer) {
+		case 1:
+			//BloqueA inicial
+			escalaX1 = 0.7;
+			break;
+		case 2:
+			//BloqueA exp unionAB inicial
+			bloqueAz *= 2;
+			break;
+		case 3:
+			//BloqueA exp, unionAB estable
+			bloqueAz *= 3;
+			unionAB *= 2;
+			break;
+		case 4:
+			//BloqueA exp, unionAB estable, BloqueB inicial
+			bloqueAz *= 4;
+			unionAB *= 2;
+			break;
+		case 5:
+			//BloqueA exp, unionAB estable, BloqueB exp
+			bloqueAz *= 5;
+			unionAB *= 2;
+			bloqueBz *= 2;
+			break;
+		case 6:
+			//BloqueA exp, unionAB estable, BloqueB exp, unionBC incial
+			bloqueAz *= 6;
+			unionAB *= 2;
+			bloqueBz*= 3;
+			break;
+		case 7:
+			//BloqueA exp, unionAB estable, BloqueB exp, unionBC
+			bloqueAz *= 7;
+			unionAB *= 2;
+			bloqueBz *= 4;
+			unionBC *= 2;
+			break;
+		case 8:
+			//BloqueA exp, unionAB estable, BloqueB exp, unionBC, Bloque C ini
+			bloqueAz *= 8;
+			unionAB *= 2;
+			bloqueBz *= 5;
+			unionBC *= 2;
+			break;
+		case 9:
+			bloqueAz *= 9;
+			unionAB *= 2;
+			bloqueBz *= 6;
+			unionBC *= 2;
+			bloqueCz *= 2;
+			//BloqueA exp, unionAB estable, BloqueB exp, unionBC, Bloque C exp
+			break;
+		default:
+			distTronco = 0.0;
+			break;
+	}
+	if (distTronco > 0.0) {
+		glPushMatrix();
+			//Lado derecho
+			glPushMatrix();
+			// Primer bloque, pegado al tronco
+			if (layer <= 1) {
+				//BloqueA
+				glTranslatef(lado * (distTronco + (escalaX1 / 2)), 0.0, 0.0);
+				brick.prisma(0.7, escalaX1, bloqueAz, text);
+			}
+			else {
+				//BloqueA
+				glTranslatef(lado * (distTronco + (escalaX2 / 2)), 0.0, 0.0);
+				brick.prisma(0.7, escalaX2, bloqueAz, text);
+				glPushMatrix();
+				if (layer <= 2) {
+					// UnionAB 1a exp
+					glTranslatef(lado * (unionAB / 2 + escalaX2 / 2), 0.0, 0.0);
+					brick.prisma(0.7, unionAB,unionAB, text2);
+				}
+				else {
+					// UnionAB estable
+					glTranslatef(lado * (unionAB / 2 + escalaX2 / 2), 0.0, 0.0);
+					brick.prisma(0.7, unionAB, unionAB, text2);
+					glPushMatrix();
+					if (layer <= 4) {
+						//BloqueB ini
+						glTranslatef(lado*(unionAB/2 + escalaX1 / 2), 0.0, 0.0);
+						brick.prisma(0.7, escalaX1, bloqueBz, text);
+					}
+					else {
+						//BloqueB 2a exp
+						glTranslatef(lado * (unionAB / 2 + escalaX2 / 2), 0.0, 0.0);
+						brick.prisma(0.7, escalaX2, bloqueBz, text);
+						glPushMatrix();
+						if (layer <= 6) {
+							//UnionBC ini
+							glTranslatef(lado * (unionBC / 2 + escalaX2 / 2), 0.0, 0.0);
+							brick.prisma(0.7, unionBC, unionBC, text2);
+						}
+						else {
+							//UnionBC exp
+							glTranslatef(lado * (unionBC / 2 + escalaX2 / 2), 0.0, 0.0);
+							brick.prisma(0.7, unionBC, unionBC, text2);
+							glPushMatrix();
+							if (layer <= 8) {
+								//Tercer bloque 1a exp
+								glTranslatef(lado*(unionBC/2 + escalaX1/2), 0.0, 0.0);
+								brick.prisma(0.7, escalaX1, bloqueCz, text);
+							}
+							else {
+								//Tercer bloque 1a exp
+								glTranslatef(lado* (unionBC / 2 + escalaX2 / 2), 0.0, 0.0);
+								brick.prisma(0.7, escalaX2, bloqueCz, text);
+							}
+							glPopMatrix();
+						}
+						glPopMatrix();
+					}
+					glPopMatrix();
+				}
+				glPopMatrix();
+			}
+			glPopMatrix();
+		glPopMatrix();
+	}
+}
+void tronco() {
+	glPushMatrix();
+	brick.cilindro(0.6, 20.0 , 5, t_madera.GLindex);
+	glPopMatrix();
+}
+void createArbol(GLuint text, GLuint text2) {
+	glPushMatrix();
+		tronco();
+		glTranslatef(0.0, 20.5, 0.0);
+		brick.prisma(1.0, 1.0, 1.0, text);
+		glPushMatrix();
+			for (int i = 1; i < 10; i++) {
+				glTranslatef(0.0, -1.5, 0.0);
+				layerGeneral(i, 1, text, text2);
+			}
+		glPopMatrix();
+		glPushMatrix();
+			for (int i = 1; i < 10; i++) {
+				glTranslatef(0.0, -1.5, 0.0);
+				layerGeneral(i, -1, text, text2);
+			}
+		glPopMatrix();
+	glPopMatrix();
+}
+void createArboles(GLuint text, GLuint text2) {
+	glPushMatrix();
+		//Jardines derechos
+		//glTranslatef(0.0 + trax, 0.0 + tray, 0.0 + traz);
+		glTranslatef(12.0, 0.0, -36.0);
+		createArbol(text, text2);
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(34.0, 0.0, -25.0);
+		glRotatef(195.0, 0.0, 1.0, 0.0);
+		createArbol(text, text2);
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(14.0, 0.0, -18.0);
+		glRotatef(30.0, 0.0, 1.0, 0.0);
+		createArbol(text, text2);
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(53.0, 0.0, -32.0);
+		glRotatef(85.0, 0.0, 1.0, 0.0);
+		createArbol(text, text2);
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(70.0, 0.0, -20.0);
+		glRotatef(90.0, 0.0, 1.0, 0.0);
+		createArbol(text, text2);
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(25.0, 0.0, -40.0);
+		glRotatef(153.0, 0.0, 1.0, 0.0);
+		createArbol(text, text2);
+	glPopMatrix();
+	//Abajo
+	glPushMatrix();
+		glTranslatef(12.0, 0.0, 36.0);
+		glRotatef(45.0, 0.0, 1.0, 0.0);
+		createArbol(text, text2);
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(23.0, 0.0, 20.0);
+		glRotatef(70.0, 0.0, 1.0, 0.0);
+		createArbol(text, text2);
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(37.0, 0.0, 29.0);
+		glRotatef(153.0, 0.0, 1.0, 0.0);
+		createArbol(text, text2);
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(51.0, 0.0, 35.0);
+		glRotatef(34.0, 0.0, 1.0, 0.0);
+		createArbol(text, text2);
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(68.0, 0.0, 27.0);
+		glRotatef(69.0, 0.0, 1.0, 0.0);
+		createArbol(text, text2);
+	glPopMatrix();
+	//Jardineraz IZquierdas
+	//Abajo
+	glPushMatrix();
+		glTranslatef(-26.0, 0.0, 27.0);
+		glRotatef(69.0, 0.0, 1.0, 0.0);
+		createArbol(text, text2);
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(-39.0, 0.0, 35.0);
+		glRotatef(29.0, 0.0, 1.0, 0.0);
+		createArbol(text, text2);
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(-53.0, 0.0, 18.0);
+		glRotatef(79.0, 0.0, 1.0, 0.0);
+		createArbol(text, text2);
+	glPopMatrix();
+	//Arriba
+	glPushMatrix();
+		glTranslatef(-26.0, 0.0, -20.0);
+		glRotatef(17.0, 0.0, 1.0, 0.0);
+		createArbol(text, text2);
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(-39.0, 0.0, -35.0);
+		glRotatef(135.0, 0.0, 1.0, 0.0);
+		createArbol(text, text2);
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(-53.0, 0.0, -30.0);
+		glRotatef(59.0, 0.0, 1.0, 0.0);
+		createArbol(text, text2);
+	glPopMatrix();
+}
+/*********** TIENDAS ***********/
+void createTecho(GLuint text, GLuint text2, GLuint text3, GLuint text4){}
+void createParedes(GLuint text, GLuint text2, GLuint text3, GLuint text4) {
+	GLuint textG = 0.0;
+	glPushMatrix();
+		//Pared Tras
+		glPushMatrix();
+			//Tienda de 15 de ancho, 19 de largo +-
+			glTranslatef(-9.5, 0.0, 7.5);
+			for (int i = 0; i < 13; i++) {//Hacia arriba
+				glPushMatrix();
+				for (int j = 1; j < 20; j++) {//Hacia un lado
+					if (j % 2 == 0)
+						textG = text;
+					else if (j % 3 == 0) {
+						textG = text2;
+					}
+					else if (j % 7 == 0) {
+						textG = text3;
+					}
+					else
+						textG = text4;
+					brick.prisma(1.0, 1.0, 1.0, textG);
+					glTranslatef(1.0, 0.0, 0.0);
+				}
+				glPopMatrix();
+				glTranslatef(0.0, 1.0, 0.0);
+			}
+		glPopMatrix();
+		//Pared Izq
+		glPushMatrix();
+			glTranslatef(-9.5, 0.0, 7.5);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			glTranslatef(-1.0, 0.0, 0.0);
+			for (int i = 0; i < 13; i++) {//Hacia arriba
+				glPushMatrix();
+				for (int j = 2; j < 13; j++) {//Hacia un lado
+					if (j % 2 == 0)
+						textG = text;
+					else if (j % 3 == 0) {
+						textG = text2;
+					}
+					else if (j % 7 == 0) {
+						textG = text3;
+					}
+					else
+						textG = text4;
+					brick.prisma(1.0, 1.0, 1.0, textG);
+					glTranslatef(-1.0, 0.0, 0.0);
+				}
+				glPopMatrix();
+				glTranslatef(0.0, 1.0, 0.0);
+			}
+		glPopMatrix();
+
+		//Pared Der
+		glPushMatrix();
+			glTranslatef(8.5, 0.0, 7.5);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			glTranslatef(-1.0, 0.0, 0.0);
+			for (int i = 0; i < 13; i++) {//Hacia arriba
+				glPushMatrix();
+				for (int j = 2; j < 13; j++) {//Hacia un lado
+					if (j % 2 == 0)
+						textG = text;
+					else if (j % 3 == 0) {
+						textG = text2;
+					}
+					else if (j % 7 == 0) {
+						textG = text3;
+					}
+					else
+						textG = text4;
+					brick.prisma(1.0, 1.0, 1.0, textG);
+					glTranslatef(-1.0, 0.0, 0.0);
+				}
+				glPopMatrix();
+				glTranslatef(0.0, 1.0, 0.0);
+			}
+		glPopMatrix();
+		//Front
+		glPushMatrix();
+			glTranslatef(-9.5, 0.0, -7.5);
+			//glRotatef(90.0, 0.0, 1.0, 0.0);
+			//glTranslatef(-1.0, 0.0, 0.0);
+			for (int i = 0; i < 2; i++) {//Hacia arriba
+				glPushMatrix();
+				for (int j = 2; j < 13; j++) {//Hacia un lado
+					if (j % 2 == 0)
+						textG = text;
+					else if (j % 3 == 0) {
+						textG = text2;
+					}
+					else if (j % 7 == 0) {
+						textG = text3;
+					}
+					else
+						textG = text4;
+					brick.prisma(1.0, 1.0, 1.0, textG);
+					glTranslatef(-1.0, 0.0, 0.0);
+				}
+				glPopMatrix();
+				glTranslatef(0.0, 1.0, 0.0);
+			}
+			glTranslatef(0.0, 6.0, 0.0);
+			for (int i = 6; i < 13; i++) {//Hacia arriba
+				glPushMatrix();
+				for (int j = 2; j < 13; j++) {//Hacia un lado
+					if (j % 2 == 0)
+						textG = text;
+					else if (j % 3 == 0) {
+						textG = text2;
+					}
+					else if (j % 7 == 0) {
+						textG = text3;
+					}
+					else
+						textG = text4;
+					brick.prisma(1.0, 1.0, 1.0, textG);
+					glTranslatef(-1.0, 0.0, 0.0);
+				}
+				glPopMatrix();
+				glTranslatef(0.0, 1.0, 0.0);
+			}
+		glPopMatrix();
+	glPopMatrix();
+}
+void createTienda(){
+	glPushMatrix();
+		//glTranslatef(0.0 + trax, 0.0 + tray, 0.0 + traz);
+		glTranslatef(-8.0, 0.0, -52.0);
+		createParedes(t_azul.GLindex, t_amarillo.GLindex, t_morado.GLindex, t_rosa.GLindex);
+	glPopMatrix();
+}
+void createTiendas(){}
 /*********** KIOSKO	 ***********/
 /*********** FUENTE	 ***********/
 /*********** FACHADA ***********/
@@ -1179,13 +1794,11 @@ void display(void)   // Creamos la funcion donde se dibuja
 		createPlancha();
 		glTranslatef(0.0, 0.6, 0.0);
 		createFences();
-		glPushMatrix();
-			//glTranslatef(0.0, 2.0, 0.0);
-			//brick.slope1_2(t_madera.GLindex, t_madera2.GLindex);
-			//brick.slopeV(10.0, 1.0, t_madera.GLindex, t_madera2.GLindex);
-			createMesas();
-		glPopMatrix();
+		createMesas();
 		createBancas(t_carbon.GLindex, t_madera.GLindex, t_maderaO.GLindex);
+		createArboles(t_pasto.GLindex, t_pasto2.GLindex);
+		//createParedes(t_amarillo.GLindex, t_azul.GLindex, t_morado.GLindex, t_rosa.GLindex);
+		createTienda();
 	glPopMatrix();
 
 
@@ -1611,38 +2224,68 @@ void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 			foco3 = !foco3;
 		break;
 
-	case 'c':
+	/*case 'c':
 		LightAngle += 2.0;
 		printf("Ang = %f\n", LightAngle);
 		break;
 	case 'v':
 		LightAngle -= 2.0;
 		printf("Ang = %f\n", LightAngle);
-		break;
+		break;*/
 
 	case 'j':
+		//trax += 0.1;
 		trax += 1.0;
-		printf("traX = %f\n", trax);
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'J':
+		//trax -= 0.1;
 		trax -= 1.0;
-		printf("traX = %f\n", trax);
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'k':
+		//tray += 0.1;
 		tray += 1.0;
-		printf("traY = %f\n", tray);
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'K':
+		//tray -= 0.1;
 		tray -= 1.0;
-		printf("traY = %f\n", tray);
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'i':
+		//traz += 0.1;
 		traz += 1.0;
-		printf("traZ = %f\n", traz);
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'I':
-		printf("traZ = %f\n", traz);
+		//traz -= 0.1;
 		traz -= 1.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
+		break;
+	case 'z':
+		scaleX += 0.1;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
+		break;
+	case 'Z':
+		scaleX -= 0.1;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
+		break;
+	case 'x':
+		scaleY += 0.1;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
+		break;
+	case 'X':
+		scaleY -= 0.1;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
+		break;
+	case 'c':
+		scaleZ += 0.1;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
+		break;
+	case 'C':
+		scaleZ -= 0.1;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 27:        // Cuando Esc es presionado...
 		exit(0);   // Salimos del programa

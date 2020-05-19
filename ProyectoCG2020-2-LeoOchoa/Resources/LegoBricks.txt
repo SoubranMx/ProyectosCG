@@ -10,3 +10,6 @@ Bricks:
 Bricks Slopes
 - Roof Tile 2x2
 - Corner Brick 2x2
+
+Referencias:
+https://www.lego.com/es-es/page/static/pick-a-brick

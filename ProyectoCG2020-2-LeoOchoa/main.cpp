@@ -244,7 +244,7 @@ CTexture t_azul;
 CTexture t_azul2;
 CTexture t_turquesa;
 CTexture t_turquesa2;
-
+CTexture t_blanco;
 
 /*
 	********** MODELOS **********
@@ -259,13 +259,14 @@ CFiguras fig3;
 
 //Figuras a "mano"
 CFiguras brick;
-CFiguras pisoGeneral;
-CFiguras silla;
-CFiguras mesa;
-CFiguras cuarto;
-CFiguras puerta;
+//CFiguras pisoGeneral;
+//CFiguras silla;
+//CFiguras mesa;
+//CFiguras cuarto;
+//CFiguras puerta;
 
 //Figuras de 3D Studio
+CModel taza;
 CModel sofa;
 CModel muebleTV;
 CModel tv;
@@ -273,7 +274,7 @@ CModel librero;
 CModel foco;
 CModel lampara;
 CModel lamparaCalle;
-
+/*
 CModel chess;
 
 CModel bPeon;
@@ -289,6 +290,7 @@ CModel nTorre;
 CModel nAlfil;
 CModel nRey;
 CModel nReina;
+*/
 
 /*
 	********** Mover posiciones **********
@@ -638,6 +640,10 @@ void InitGL(GLvoid)     // Inicializamos parametros
 	t_turquesa2.BuildGLTexture();
 	t_turquesa2.ReleaseImage();
 
+	t_blanco.LoadTGA("Resources/Texturas/blanco.tga");
+	t_blanco.BuildGLTexture();
+	t_blanco.ReleaseImage();
+
 	/*
 		********** FIGURAS **********
 
@@ -645,7 +651,8 @@ void InitGL(GLvoid)     // Inicializamos parametros
 		Casi siempre debe ir escrito como .3DS ,en mayusculas.
 		Algunas veces crashea en la ejecución, asi que se abre en 3D MAX y se vuelve a exportar como 3DS, esperando que funcione
 	*/
-
+	taza._3dsLoad("Resources/Modelos/Toilet_3DS.3DS");
+	taza.VertexNormals();
 	
 
 	/*
@@ -1711,6 +1718,129 @@ void createTiendas(){
 		createTienda(1.125,-1.0, t_madera.GLindex, t_azul.GLindex, t_morado.GLindex, t_morado.GLindex);
 	glPopMatrix();
 }
+/*********** BAÑOS	 ***********/
+void createParedesB(GLuint text, bool sexo) {
+	float largoX = 0.0, largoY = 0.0;
+	if (sexo == true) {
+		largoX = 23.0;
+		largoY = 20.0;
+	}
+	else {
+		largoX = 20.0;
+		largoY = 24.0;
+	}
+	glPushMatrix();
+		//Pared Tras
+		glTranslatef(0.0, 0.0, 81.5);
+		glPushMatrix();
+			//Bano de 13 de ancho, 21 de largo +-
+			glTranslatef(1.5, 0.0, 0.0);
+			for (int i = 0; i < 15; i++) {//Hacia arriba
+				glPushMatrix();
+				for (int j = 1; j < 13; j++) {//Hacia un lado
+					brick.prisma(1.0, 1.0, 1.0, text);
+					glTranslatef(1.0, 0.0, 0.0);
+				}
+				glPopMatrix();
+				glTranslatef(0.0, 1.0, 0.0);
+			}
+		glPopMatrix();
+		//Pared Der
+		glPushMatrix();
+			//glTranslatef(-9.5, 0.0, 7.5);
+			glTranslatef(0.5, 0.0, 0.0);
+			glRotatef(-90.0, 0.0, 1.0, 0.0);
+			glTranslatef(-1.0, 0.0, 0.0);
+			for (int i = 0; i < 15; i++) {//Hacia arriba
+				glPushMatrix();
+				for (int j = 0; j < largoX; j++) {//Hacia un lado
+					brick.prisma(1.0, 1.0, 1.0, text);
+					glTranslatef(-1.0, 0.0, 0.0);
+				}
+				glPopMatrix();
+				glTranslatef(0.0, 1.0, 0.0);
+			}
+		glPopMatrix();
+		//Pared Izq
+		glPushMatrix();
+			glTranslatef(13.5, 0.0, 0.0);
+			glRotatef(-90.0, 0.0, 1.0, 0.0);
+			glTranslatef(-1.0, 0.0, 0.0);
+			for (int i = 0; i < 15; i++) {//Hacia arriba
+				glPushMatrix();
+				for (int j = 0; j < largoY; j++) {//Hacia un lado
+					brick.prisma(1.0, 1.0, 1.0, text);
+					glTranslatef(-1.0, 0.0, 0.0);
+				}
+				glPopMatrix();
+				glTranslatef(0.0, 1.0, 0.0);
+			}
+		glPopMatrix();
+			//Front
+		glPushMatrix();
+			if (sexo == true) {
+				glPushMatrix();
+					glTranslatef(0.5, 0.0, -24.0);
+					for (int i = 0; i < 15; i++) {//Hacia arriba
+						glPushMatrix();
+						for (int j = 0; j < 5; j++) {//Hacia un lado
+							brick.prisma(1.0, 1.0, 1.0, text);
+							glTranslatef(1.0, 0.0, 0.0);
+						}
+						glPopMatrix();
+						glTranslatef(0.0, 1.0, 0.0);
+					}
+				glPopMatrix();
+				glTranslatef(4.5, 0.0, -20.0);
+			}
+			else {
+				glPushMatrix();
+					glTranslatef(8.5, 0.0, -24.0);
+					for (int i = 0; i < 15; i++) {//Hacia arriba
+						glPushMatrix();
+						for (int j = 0; j < 5; j++) {//Hacia un lado
+							brick.prisma(1.0, 1.0, 1.0, text);
+							glTranslatef(1.0, 0.0, 0.0);
+						}
+						glPopMatrix();
+						glTranslatef(0.0, 1.0, 0.0);
+					}
+				glPopMatrix();
+				glTranslatef(0.5, 0.0, -20.0);
+			}
+			for (int i = 0; i < 15; i++) {//Hacia arriba
+				glPushMatrix();
+				for (int j = 0; j < 9; j++) {//Hacia un lado
+					brick.prisma(1.0, 1.0, 1.0, text);
+					glTranslatef(1.0, 0.0, 0.0);
+				}
+				glPopMatrix();
+				glTranslatef(0.0, 1.0, 0.0);
+			}
+		glPopMatrix();
+	glPopMatrix();
+}
+void createBano() {
+	glPushMatrix();
+		glRotatef(90.0, 0.0, 1.0, 0.0);
+		createParedesB(t_blanco.GLindex,true);
+		glTranslatef(-14.0 , 0.0, 0.0);
+		createParedesB(t_blanco.GLindex, false);
+	glPopMatrix();
+}
+void createTechoB(GLuint text, GLuint text2) {
+	glPushMatrix();
+		glTranslatef(69.5 + trax, 14.7 + tray, 0.0 + traz);
+		brick.flatV(25.0, 28.0, text, text2);
+	glPopMatrix();
+}
+void createBanos() {
+	glPushMatrix();
+		createBano();
+		createTechoB(t_blanco.GLindex, t_turquesa.GLindex);
+	glPopMatrix();
+}
+
 /*********** KIOSKO	 ***********/
 /*********** FUENTE	 ***********/
 /*********** FACHADA ***********/
@@ -1834,32 +1964,39 @@ void display(void)   // Creamos la funcion donde se dibuja
 	glLoadIdentity();
 	glPushMatrix();	//General
 
-	glRotatef(g_lookupdown, 1.0f, 0, 0);
-	gluLookAt(objCamera.mPos.x, objCamera.mPos.y, objCamera.mPos.z,
-		objCamera.mView.x, objCamera.mView.y, objCamera.mView.z,
-		objCamera.mUp.x, objCamera.mUp.y, objCamera.mUp.z);
+		glRotatef(g_lookupdown, 1.0f, 0, 0);
+		gluLookAt(objCamera.mPos.x, objCamera.mPos.y, objCamera.mPos.z,
+			objCamera.mView.x, objCamera.mView.y, objCamera.mView.z,
+			objCamera.mUp.x, objCamera.mUp.y, objCamera.mUp.z);
 
-	luz();
-	glPushMatrix();
-		glPushMatrix(); //Creamos cielo
-			glTranslatef(0, 60, 0);
-			fig1.skybox(130.0, 130.0, 130.0, cielo.GLindex);
+		luz();
+
+		glPushMatrix();
+			glPushMatrix(); //Creamos cielo
+				glTranslatef(0, 60, 0);
+				fig1.skybox(130.0, 130.0, 130.0, cielo.GLindex);
+			glPopMatrix();
 		glPopMatrix();
-	glPopMatrix();
 
-
-	glPushMatrix(); //Piso primario
-		glTranslatef(0.0, 0.0, 0.0);
-		glScalef(0.5, 0.5, 0.5);
-		createPlancha();
-		glTranslatef(0.0, 0.6, 0.0);
-		createFences();
-		createMesas();
-		createBancas(t_carbon.GLindex, t_madera.GLindex, t_maderaO.GLindex);
-		createArboles(t_pasto.GLindex, t_pasto2.GLindex);
-		//createParedes(t_amarillo.GLindex, t_azul.GLindex, t_morado.GLindex, t_rosa.GLindex);
-		createTiendas();
-	glPopMatrix();
+		// Construcción Primaria
+		glPushMatrix(); //Piso primario
+			glTranslatef(0.0, 0.0, 0.0);
+			glScalef(0.5, 0.5, 0.5);
+			createPlancha();
+			glTranslatef(0.0, 0.6, 0.0);
+			createFences();
+			createMesas();
+			createBancas(t_carbon.GLindex, t_madera.GLindex, t_maderaO.GLindex);
+			createArboles(t_pasto.GLindex, t_pasto2.GLindex);
+			brick.brick1_1_1(0.0, t_carbon.GLindex);
+			glPushMatrix();
+				glTranslatef(0.0 + trax, 0.0 + tray, 0.0 + traz);
+				glScalef(0.01 + scaleX, 0.01 + scaleX, 0.01 + scaleX);
+				//taza.GLrender(NULL, _SHADED, 1.0);
+			glPopMatrix();
+			createTiendas();
+			createBanos();
+		glPopMatrix();
 
 
 	glPopMatrix();	//General
@@ -2294,41 +2431,41 @@ void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 		break;*/
 
 	case 'j':
-		trax += 0.1;
-		//trax += 1.0;
+		//trax += 0.1;
+		trax += 1.0;
 		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'J':
-		trax -= 0.1;
-		//trax -= 1.0;
+		//trax -= 0.1;
+		trax -= 1.0;
 		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'k':
-		tray += 0.1;
-		//tray += 1.0;
+		//tray += 0.1;
+		tray += 1.0;
 		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'K':
-		tray -= 0.1;
-		//tray -= 1.0;
+		//tray -= 0.1;
+		tray -= 1.0;
 		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'i':
-		traz += 0.1;
-		//traz += 1.0;
+		//traz += 0.1;
+		traz += 1.0;
 		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'I':
-		traz -= 0.1;
-		//traz -= 1.0;
+		//traz -= 0.1;
+		traz -= 1.0;
 		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'z':
-		scaleX += 0.1;
+		scaleX += 0.001;
 		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'Z':
-		scaleX -= 0.1;
+		scaleX -= 0.001;
 		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'x':

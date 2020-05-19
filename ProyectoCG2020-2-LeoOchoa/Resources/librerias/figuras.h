@@ -33,7 +33,6 @@ class CFiguras
 	void brick2_2_1(GLuint text, GLuint text2);	//Brick 2x2x1
 	void brick2_3_1(GLuint text, GLuint text2);	//Brick 2x3x1
 	void slope1_2(GLuint text, GLuint text2);
-	void cornerBrick2_2(GLuint text, GLuint text2);
 	void flat4_4(GLuint text, GLuint text2);
 	void plancha(GLuint text, GLuint text2);
 	void flatV(float x, float z, GLuint text, GLuint text2);

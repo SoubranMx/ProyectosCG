@@ -1517,7 +1517,38 @@ void createArboles(GLuint text, GLuint text2) {
 	glPopMatrix();
 }
 /*********** TIENDAS ***********/
-void createTecho(GLuint text, GLuint text2, GLuint text3, GLuint text4){}
+void createTecho(GLuint text, GLuint text2, GLuint text3, GLuint text4){
+	glPushMatrix();
+		//glTranslatef(-0.5 + trax, 12.6 + tray, 13.5 + traz);
+		glTranslatef(-0.5, 12.6, 14.0);
+		brick.flatV(21.0, 14.0, text, text3);
+		glPushMatrix();
+			//Tejado frontal
+			glTranslatef(0.0, -1.6, 6.5);
+			brick.slopeV(17.0, 3.0, 1.0, text, text2, false);
+			glPushMatrix();
+				//Corners
+				glTranslatef(-9.5, 0.0, -0.5);
+				brick.cornerV(2.0, 3.0, 2.0, text, text4, false);
+				glTranslatef(19.0, 0.0, 0.0);
+				glRotatef(90.0, 0.0, 1.0, 0.0);
+				brick.cornerV(2.0, 3.0, 2.0, text, text4, false);
+			glPopMatrix();
+			glPushMatrix();
+				//Tejado izquierdo
+				glTranslatef(-10.0, 0.0, -7.5);
+				glRotatef(-90.0, 0.0, 1.0, 0.0);
+				brick.slopeV(12.0, 3.0, 1.0, text, text3, false);
+			glPopMatrix();
+			glPushMatrix();
+				//Tejado derecho
+				glTranslatef(10.0, 0.0, -7.5);
+				glRotatef(90.0, 0.0, 1.0, 0.0);
+				brick.slopeV(12.0, 3.0, 1.0, text, text3, false);
+			glPopMatrix();
+		glPopMatrix();
+	glPopMatrix();
+}
 void createParedes(GLuint text, GLuint text2, GLuint text3, GLuint text4) {
 	GLuint textG = 0.0;
 	glPushMatrix();
@@ -1598,32 +1629,52 @@ void createParedes(GLuint text, GLuint text2, GLuint text3, GLuint text4) {
 		glPopMatrix();
 		//Front
 		glPushMatrix();
-			glTranslatef(-9.5, 0.0, -7.5);
-			//glRotatef(90.0, 0.0, 1.0, 0.0);
-			//glTranslatef(-1.0, 0.0, 0.0);
-			for (int i = 0; i < 2; i++) {//Hacia arriba
+			glTranslatef(-8.5, 0.0, 19.5);		
+			for (int i = 0; i < 3; i++) {//Hacia arriba
 				glPushMatrix();
-				for (int j = 2; j < 13; j++) {//Hacia un lado
+				for (int j = 2; j < 19; j++) {//Hacia un lado
 					if (j % 2 == 0)
-						textG = text;
-					else if (j % 3 == 0) {
 						textG = text2;
-					}
-					else if (j % 7 == 0) {
+					else if (j % 3 == 0) {
 						textG = text3;
 					}
-					else
+					else if (j % 7 == 0) {
 						textG = text4;
+					}
+					else
+						textG = text;
 					brick.prisma(1.0, 1.0, 1.0, textG);
-					glTranslatef(-1.0, 0.0, 0.0);
+					glTranslatef(1.0, 0.0, 0.0);
 				}
 				glPopMatrix();
 				glTranslatef(0.0, 1.0, 0.0);
 			}
+			glPushMatrix();
+				glTranslatef(0.0, -1.0, -1.0);
+				for (int i = 0; i < 2; i++) {
+					glPushMatrix();
+					for (int j = 2; j < 19; j++) {//Hacia un lado
+						if (j % 2 == 0)
+							textG = text2;
+						else if (j % 3 == 0) {
+							textG = text3;
+						}
+						else if (j % 7 == 0) {
+							textG = text4;
+						}
+						else
+							textG = text;
+						brick.prisma(1.0, 1.0, 1.0, textG);
+						glTranslatef(1.0, 0.0, 0.0);
+					}
+					glPopMatrix();
+					glTranslatef(0.0, 0.0, -1.0);
+				}
+			glPopMatrix();
 			glTranslatef(0.0, 6.0, 0.0);
-			for (int i = 6; i < 13; i++) {//Hacia arriba
+			for (int i = 7; i < 11; i++) {//Hacia arriba
 				glPushMatrix();
-				for (int j = 2; j < 13; j++) {//Hacia un lado
+				for (int j = 2; j < 19; j++) {//Hacia un lado
 					if (j % 2 == 0)
 						textG = text;
 					else if (j % 3 == 0) {
@@ -1635,7 +1686,7 @@ void createParedes(GLuint text, GLuint text2, GLuint text3, GLuint text4) {
 					else
 						textG = text4;
 					brick.prisma(1.0, 1.0, 1.0, textG);
-					glTranslatef(-1.0, 0.0, 0.0);
+					glTranslatef(1.0, 0.0, 0.0);
 				}
 				glPopMatrix();
 				glTranslatef(0.0, 1.0, 0.0);
@@ -1643,14 +1694,23 @@ void createParedes(GLuint text, GLuint text2, GLuint text3, GLuint text4) {
 		glPopMatrix();
 	glPopMatrix();
 }
-void createTienda(){
+void createTienda(float dir1, float dir2, GLuint text, GLuint text2, GLuint text3, GLuint text4){
 	glPushMatrix();
-		//glTranslatef(0.0 + trax, 0.0 + tray, 0.0 + traz);
-		glTranslatef(-8.0, 0.0, -52.0);
-		createParedes(t_azul.GLindex, t_amarillo.GLindex, t_morado.GLindex, t_rosa.GLindex);
+		glTranslatef(dir1*8.0, 0.0, dir2*52.0);
+		createParedes(text, text2, text3, text4);
+		createTecho(text, text2, text3, text4);
+		//t_madera.GLindex, t_amarillo.GLindex, t_morado.GLindex, t_morado.GLindex
 	glPopMatrix();
 }
-void createTiendas(){}
+void createTiendas(){
+	glPushMatrix();
+		createTienda(-1.0,-1.0, t_maderaO.GLindex, t_amarillo.GLindex, t_rosa2.GLindex, t_rosa2.GLindex);
+	glPopMatrix();
+	glPushMatrix();
+		glRotatef(180.0, 0.0, 1.0, 0.0);
+		createTienda(1.125,-1.0, t_madera.GLindex, t_azul.GLindex, t_morado.GLindex, t_morado.GLindex);
+	glPopMatrix();
+}
 /*********** KIOSKO	 ***********/
 /*********** FUENTE	 ***********/
 /*********** FACHADA ***********/
@@ -1798,7 +1858,7 @@ void display(void)   // Creamos la funcion donde se dibuja
 		createBancas(t_carbon.GLindex, t_madera.GLindex, t_maderaO.GLindex);
 		createArboles(t_pasto.GLindex, t_pasto2.GLindex);
 		//createParedes(t_amarillo.GLindex, t_azul.GLindex, t_morado.GLindex, t_rosa.GLindex);
-		createTienda();
+		createTiendas();
 	glPopMatrix();
 
 
@@ -2234,33 +2294,33 @@ void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 		break;*/
 
 	case 'j':
-		//trax += 0.1;
-		trax += 1.0;
+		trax += 0.1;
+		//trax += 1.0;
 		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'J':
-		//trax -= 0.1;
-		trax -= 1.0;
+		trax -= 0.1;
+		//trax -= 1.0;
 		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'k':
-		//tray += 0.1;
-		tray += 1.0;
+		tray += 0.1;
+		//tray += 1.0;
 		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'K':
-		//tray -= 0.1;
-		tray -= 1.0;
+		tray -= 0.1;
+		//tray -= 1.0;
 		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'i':
-		//traz += 0.1;
-		traz += 1.0;
+		traz += 0.1;
+		//traz += 1.0;
 		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'I':
-		//traz -= 0.1;
-		traz -= 1.0;
+		traz -= 0.1;
+		//traz -= 1.0;
 		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'z':
@@ -2349,3 +2409,4 @@ int main(int argc, char** argv)   // Main Function
 
 	return 0;
 }
+

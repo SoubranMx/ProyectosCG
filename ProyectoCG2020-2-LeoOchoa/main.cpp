@@ -84,7 +84,7 @@ GLfloat Position2[] = { 0.0f, 0.0f, -5.0f, 1.0f };			// Light Position
 
 */
 //Luz blanca
-GLfloat aten1[] = { 0.1 , 0.0, 0.0 };	//Atenuacion de Luz Puntual
+GLfloat aten1[] = { 0.35 , 0.0, 0.0 };	//Atenuacion de Luz Puntual
 GLfloat aten2[] = { 0.5 , 0.0, 0.0 };	//Atenuacion de Luz Spotlight
 GLfloat atenTecho[] = { 0.1 , 0.0, 0.0 };	//Atenuacion de Luz Spotlight
 
@@ -583,23 +583,51 @@ void InitGL(GLvoid)     // Inicializamos parametros
 	**********	LUCES	**********
 	//gLightfv(light,pname,params)
 */
+	//Farolas
 	//Puntual		Foco de lampara de exterior
 	glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);					// Setup The Ambient Light
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);					// Setup The Diffuse Light
 	glLightfv(GL_LIGHT1, GL_SPECULAR, LightSpecular);				// Setup The Diffuse Light
 	glLightfv(GL_LIGHT1, GL_LINEAR_ATTENUATION, aten1);
 
-	//Spotlight		Foco de lámpara
+	//Puntual		Foco de lampara de exterior
 	glLightfv(GL_LIGHT2, GL_AMBIENT, LightAmbient);					// Setup The Ambient Light
 	glLightfv(GL_LIGHT2, GL_DIFFUSE, LightDiffuse);					// Setup The Diffuse Light
 	glLightfv(GL_LIGHT2, GL_SPECULAR, LightSpecular);				// Setup The Diffuse Light
-	glLightfv(GL_LIGHT2, GL_LINEAR_ATTENUATION, aten2);
+	glLightfv(GL_LIGHT2, GL_LINEAR_ATTENUATION, aten1);
 
-	//Puntual		Foco del Techo
+	//Puntual		Foco de lampara de exterior
 	glLightfv(GL_LIGHT3, GL_AMBIENT, LightAmbient);					// Setup The Ambient Light
 	glLightfv(GL_LIGHT3, GL_DIFFUSE, LightDiffuse);					// Setup The Diffuse Light
 	glLightfv(GL_LIGHT3, GL_SPECULAR, LightSpecular);				// Setup The Diffuse Light
-	glLightfv(GL_LIGHT3, GL_LINEAR_ATTENUATION, atenTecho);
+	glLightfv(GL_LIGHT3, GL_LINEAR_ATTENUATION, aten1);
+
+	//Puntual		Foco de lampara de exterior
+	glLightfv(GL_LIGHT4, GL_AMBIENT, LightAmbient);					// Setup The Ambient Light
+	glLightfv(GL_LIGHT4, GL_DIFFUSE, LightDiffuse);					// Setup The Diffuse Light
+	glLightfv(GL_LIGHT4, GL_SPECULAR, LightSpecular);				// Setup The Diffuse Light
+	glLightfv(GL_LIGHT4, GL_LINEAR_ATTENUATION, aten1);
+
+	//Puntual		Foco de lampara de exterior
+	glLightfv(GL_LIGHT5, GL_AMBIENT, LightAmbient);					// Setup The Ambient Light
+	glLightfv(GL_LIGHT5, GL_DIFFUSE, LightDiffuse);					// Setup The Diffuse Light
+	glLightfv(GL_LIGHT5, GL_SPECULAR, LightSpecular);				// Setup The Diffuse Light
+	glLightfv(GL_LIGHT5, GL_LINEAR_ATTENUATION, aten1);
+	
+
+	// Spotligh Kiosko
+
+	//Spotlight		Foco de lámpara
+	glLightfv(GL_LIGHT6, GL_AMBIENT, LightAmbient);					// Setup The Ambient Light
+	glLightfv(GL_LIGHT6, GL_DIFFUSE, LightDiffuse);					// Setup The Diffuse Light
+	glLightfv(GL_LIGHT6, GL_SPECULAR, LightSpecular);				// Setup The Diffuse Light
+	glLightfv(GL_LIGHT6, GL_LINEAR_ATTENUATION, aten2);
+
+	//Spotlight		Foco de lámpara
+	glLightfv(GL_LIGHT7, GL_AMBIENT, LightAmbient);					// Setup The Ambient Light
+	glLightfv(GL_LIGHT7, GL_DIFFUSE, LightDiffuse);					// Setup The Diffuse Light
+	glLightfv(GL_LIGHT7, GL_SPECULAR, LightSpecular);				// Setup The Diffuse Light
+	glLightfv(GL_LIGHT7, GL_LINEAR_ATTENUATION, aten2);
 
 	/*
 		********** TEXTURAS **********
@@ -818,7 +846,110 @@ void pintaTexto(float x, float y, float z, void* font, char* string)
 		glutBitmapCharacter(font, *c); //imprime
 	}
 }
-	
+/*********** LUCES	 ***********/
+void foc1(int source) {
+
+	//if (foco1)
+//		glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 180.0);			// Position The Light
+	glPushMatrix();
+		glTranslatef(0.0, 0.0, 0.0);
+		glutSolidSphere(0.1, 10, 10);	//Representa el foco, solo para prueba
+
+		if (foco1) {
+			glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 180.0);			// Position The Light
+			switch (source) {
+				case 1:
+					glEnable(GL_LIGHT1);
+					glLightfv(GL_LIGHT1, GL_POSITION, LightPosition3);
+					break;
+				case 2:
+					glEnable(GL_LIGHT2);
+					glLightfv(GL_LIGHT2, GL_POSITION, LightPosition3);
+					break;
+				case 3:
+					glEnable(GL_LIGHT3);
+					glLightfv(GL_LIGHT3, GL_POSITION, LightPosition3);
+					break;
+				case 4:
+					glEnable(GL_LIGHT4);
+					glLightfv(GL_LIGHT4, GL_POSITION, LightPosition3);
+					break;
+				case 5:
+					glEnable(GL_LIGHT5);
+					glLightfv(GL_LIGHT5, GL_POSITION, LightPosition3);
+					break;
+			}	
+		}
+		else {
+			glDisable(GL_LIGHT1);
+			glDisable(GL_LIGHT2);
+			glDisable(GL_LIGHT3);
+			glDisable(GL_LIGHT4);
+			glDisable(GL_LIGHT5);
+		}
+	glPopMatrix();
+}
+void foc2() {
+	//	LUZ SPOTLIGHT
+	if (foco2)
+		glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, LightAngle);			// Position The Light
+	glPushMatrix();
+	//glTranslatef(0.0 + trax, 0.0 + tray, 0.0 + traz);
+	glTranslatef(-5.0, 9.1, -0.1);
+	//glutSolidSphere(0.1, 10, 10);
+	//glRotatef(angleX2, 1.0f, 0.0f, 0.0f);
+	//glRotatef(angleY2, 0.0f, 1.0f, 0.0f);
+	glRotatef(-66.0, 1.0f, 0.0f, 0.0f);
+	glRotatef(-16.0, 0.0f, 1.0f, 0.0f);
+
+
+	if (foco2) {
+		glEnable(GL_LIGHT2);
+		glLightfv(GL_LIGHT2, GL_POSITION, LightPosition2);
+		glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, LightDirection2);
+
+	}
+	else {
+		glDisable(GL_LIGHT2);
+	}
+	glPopMatrix();
+}
+void foc3() {
+	if (foco3)
+		glLightf(GL_LIGHT3, GL_SPOT_CUTOFF, 180.0);			// Position The Light
+	//	IMPORTANTE		180.0 es el valor en el que se convierte en una luz puntual
+	glPushMatrix();
+	glTranslatef(-1.0, 17.4, 0.0);		//En el techo mismo
+	//glTranslatef(-1.0 + trax, 17.4 + tray, 0.0 + traz);
+	//glutSolidSphere(0.1, 10, 10);	//Representa el foco, solo para prueba
+
+	if (foco3) {
+		glEnable(GL_LIGHT3);
+		glLightfv(GL_LIGHT3, GL_POSITION, LightPosition3);
+	}
+	else {
+		glDisable(GL_LIGHT3);
+	}
+	glPopMatrix();
+}
+void luz() {
+	glPushMatrix();
+		glPushMatrix();
+			if (!light) {
+				glDisable(GL_LIGHTING);
+				glDisable(GL_LIGHT1);
+				glDisable(GL_LIGHT2);
+				glDisable(GL_LIGHT3);
+			}
+			else {
+				glEnable(GL_LIGHTING);
+			}
+			glPopMatrix();
+		//foc1();
+		//foc2();
+		//foc3();
+	glPopMatrix();
+}
 /*********** PLANCHA ***********/
 void createCemento() {
 	glPushMatrix();
@@ -2093,7 +2224,7 @@ void createBanos() {
 /*********** AVATAR1 ***********/
 /*********** AVATAR2 ***********/
 /*********** FAROLAS ***********/
-void createFarola(GLuint cuerpo, GLuint lampara) {
+void createFarola(GLuint cuerpo, GLuint lampara, int source) {
 	glPushMatrix();
 		//glTranslatef(0.0 + trax, 0.0 + tray, 0.0 + traz);
 		glPushMatrix();
@@ -2114,179 +2245,78 @@ void createFarola(GLuint cuerpo, GLuint lampara) {
 				set_material(gold);
 				brick.prisma(0.5, 2.0, 1.4, lampara);
 				glTranslatef(0.0, -0.25, 0.0);
-				glRotatef(180.0, 0.0, 0.0, 1.0);
-				set_material(perl);
-				brick.brick1_1_1(lampara, t_blanco.GLindex);
+				glPushMatrix();
+					glRotatef(180.0, 0.0, 0.0, 1.0);
+					set_material(perl);
+					brick.brick1_1_1(lampara, t_blanco.GLindex);
+				glPopMatrix();
+				glTranslatef(0.0, -0.25 - 0.15 - 0.9, 0.0);
+				foc1(source);
 			glPopMatrix();
 		glPopMatrix();
 	glPopMatrix();
 }
 void createFarolas() {
 	glPushMatrix();
+	
 		//glTranslatef(0.0 + trax, 0.0 + tray, 0.0 + traz);
 		//Farola 1
 		glPushMatrix();
 			glTranslatef(-76.0, 0.0, -31.0);
 			//glRotatef(angleY1, 0.0, 1.0, 0.0);
-			createFarola(t_carbon.GLindex, t_amarillo2.GLindex);
+			createFarola(t_carbon.GLindex, t_amarillo2.GLindex,1);
 		glPopMatrix();
 		//Farola 2
 		glPushMatrix();
 			glTranslatef(-76.0, 0.0, 31.0);
 			//glRotatef(angleY1, 0.0, 1.0, 0.0);
-			createFarola(t_carbon.GLindex, t_amarillo2.GLindex);
+			createFarola(t_carbon.GLindex, t_amarillo2.GLindex,0);
 		glPopMatrix();
 		//Farola 3
 		//A
 		glPushMatrix();
 			glTranslatef(-38.5, 0.0, -12.0);
 			glRotatef(-90.0, 0.0, 1.0, 0.0);
-			createFarola(t_carbon.GLindex, t_amarillo2.GLindex);
+			createFarola(t_carbon.GLindex, t_amarillo2.GLindex,3);
 		glPopMatrix();
 		//B
 		glPushMatrix();
 			glTranslatef(-38.5, 0.0, 12.0);
 			glRotatef(90.0, 0.0, 1.0, 0.0);
-			createFarola(t_carbon.GLindex, t_amarillo2.GLindex);
+			createFarola(t_carbon.GLindex, t_amarillo2.GLindex,0);
 		glPopMatrix();
 		//Farola 4
 		glPushMatrix();
 			glTranslatef(-16.0, 0.0, -22.0);
 			//glRotatef(0.0, 0.0, 1.0, 0.0);
-			createFarola(t_carbon.GLindex, t_amarillo2.GLindex);
+			createFarola(t_carbon.GLindex, t_amarillo2.GLindex,4);
 		glPopMatrix();
+		
 		//Farola 5
 		glPushMatrix();
 			glTranslatef(-0.5, 0.0, 25.0);
 			glRotatef(180.0, 0.0, 1.0, 0.0);
-			createFarola(t_carbon.GLindex, t_amarillo2.GLindex);
+			createFarola(t_carbon.GLindex, t_amarillo2.GLindex,5);
 		glPopMatrix();
 		//Farola 6
+		
 		//A
 		glPushMatrix();
 			glTranslatef(36.0, 0.0, 12.0);
 			glRotatef(90.0, 0.0, 1.0, 0.0);
-			createFarola(t_carbon.GLindex, t_amarillo2.GLindex);
+			createFarola(t_carbon.GLindex, t_amarillo2.GLindex,2);
 		glPopMatrix();
 		//B
 		glPushMatrix();
 			glTranslatef(36.0, 0.0, -12.0);
 			glRotatef(-90.0, 0.0, 1.0, 0.0);
-			createFarola(t_carbon.GLindex, t_amarillo2.GLindex);
+			createFarola(t_carbon.GLindex, t_amarillo2.GLindex,0);
 		glPopMatrix();
 	glPopMatrix();
 }
-/*********** LUCES	 ***********/
-void createFoco1() {
-	glPushMatrix();
-	float s = 0.001;
-	//glTranslatef(-1.2 + trax, 15.9 + tray, 0.0 + traz);
-	glTranslatef(-1.2, 15.9, 0.0);
-	glScalef(s, s, s);
-	foco.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-}
-void createFoco2() {
-	glPushMatrix();
-	//float s = 0.01;
-	glTranslatef(-5.7, 6.4, 0.6);
-	//glTranslatef(0.0 + trax, 0.0 + tray, -1.0 + traz);
-	//glScalef(sc, sc, sc);
-	//glRotatef(sc, 0.0, 1.0, 0.0);
-	glRotatef(-44.0, 0.0, 1.0, 0.0);
-	glScalef(0.02, 0.02, 0.02);
-	lampara.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-}
-void createFoco3() {
-	glPushMatrix();
-	float s = 0.04;
-	glTranslatef(-0.3, 0.0, 17.2);
-	//glTranslatef(0.0 + trax, 0.0 + tray, -1.0 + traz);
-	glScalef(s, s, s);
-	lamparaCalle.GLrender(NULL, _SHADED, 1.0);
-	glPopMatrix();
-}
-void foc1() {
-	if (foco1)
-		glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 180.0);			// Position The Light
-	//	IMPORTANTE		180.0 es el valor en el que se convierte en una luz puntual
-	glPushMatrix();
-	glTranslatef(-0.4, 13.6, 17.2);		//En el techo mismo
-	//glTranslatef(-0.4 + trax, 13.6 + tray, 17.2 + traz);
-	//glutSolidSphere(0.1, 10, 10);	//Representa el foco, solo para prueba
-
-	if (foco1) {
-		glEnable(GL_LIGHT1);
-		glLightfv(GL_LIGHT1, GL_POSITION, LightPosition3);
-	}
-	else {
-		glDisable(GL_LIGHT1);
-	}
-	glPopMatrix();
-}
-void foc2() {
-	//	LUZ SPOTLIGHT
-	if (foco2)
-		glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, LightAngle);			// Position The Light
-	glPushMatrix();
-	//glTranslatef(0.0 + trax, 0.0 + tray, 0.0 + traz);
-	glTranslatef(-5.0, 9.1, -0.1);
-	//glutSolidSphere(0.1, 10, 10);
-	//glRotatef(angleX2, 1.0f, 0.0f, 0.0f);
-	//glRotatef(angleY2, 0.0f, 1.0f, 0.0f);
-	glRotatef(-66.0, 1.0f, 0.0f, 0.0f);
-	glRotatef(-16.0, 0.0f, 1.0f, 0.0f);
 
 
-	if (foco2) {
-		glEnable(GL_LIGHT2);
-		glLightfv(GL_LIGHT2, GL_POSITION, LightPosition2);
-		glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, LightDirection2);
-
-	}
-	else {
-		glDisable(GL_LIGHT2);
-	}
-	glPopMatrix();
-}
-void foc3() {
-	if (foco3)
-		glLightf(GL_LIGHT3, GL_SPOT_CUTOFF, 180.0);			// Position The Light
-	//	IMPORTANTE		180.0 es el valor en el que se convierte en una luz puntual
-	glPushMatrix();
-	glTranslatef(-1.0, 17.4, 0.0);		//En el techo mismo
-	//glTranslatef(-1.0 + trax, 17.4 + tray, 0.0 + traz);
-	//glutSolidSphere(0.1, 10, 10);	//Representa el foco, solo para prueba
-
-	if (foco3) {
-		glEnable(GL_LIGHT3);
-		glLightfv(GL_LIGHT3, GL_POSITION, LightPosition3);
-	}
-	else {
-		glDisable(GL_LIGHT3);
-	}
-	glPopMatrix();
-}
-void luz() {
-	glPushMatrix();
-		glPushMatrix();
-			if (!light) {
-				glDisable(GL_LIGHTING);
-				glDisable(GL_LIGHT1);
-				glDisable(GL_LIGHT2);
-				glDisable(GL_LIGHT3);
-			}
-			else {
-				glEnable(GL_LIGHTING);
-			}
-		glPopMatrix();
-		foc1();
-		foc2();
-		foc3();
-	glPopMatrix();
-}
-
+/*********** PRINCIPAL ***********/
 void display(void)   // Creamos la funcion donde se dibuja
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

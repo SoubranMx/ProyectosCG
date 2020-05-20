@@ -109,6 +109,8 @@ bool light = false;		// Luz ON/OFF
 bool foco1 = false;
 bool foco2 = false;
 bool foco3 = false;
+bool sol0 = false;
+bool dia = false;
 
 float angleX1 = 0.0;
 float angleY1 = 0.0;
@@ -430,12 +432,9 @@ bool banderaDado = false;
 	*rotSillon fue utilizada para rotar algun objeto mediante una tecla, en el proyecto final no tiene utilidad
 */
 float rotPuerta = 0.0f;
-float rotVentana = 0.0f;
-float rotSilla = 0.0f;
-float transSilla = 0.0f;
+float rotSol = 0.0f;
 float rotDado = 0.0f;
 
-float rotSillon = 0.0;
 
 /*
 	********** CAMARA **********
@@ -459,13 +458,7 @@ float lookUpDownJ;
 	**********	KEY FRAMES	**********
 
 	Variables utilizadas para el uso de KeyFrames.
-	Como la animación por KeyFrames solo preveo 6 o 7 movimientos, solo utilizaré 7 piezas de ajedrez.
-	Algunas solo deben moverse hacia enfrente, como los peones. Otros, tanto en x como en z, y solo uno en las 3 posiciones para salir del tablero.
-
-	*pBz	pieza B eje z
-	*pCx	pieza C eje x
-	*pFy	pieza F eje y
-	*And so on...
+	Como la animación por KeyFrames solo preveo 6 o 7 movimientos, solo utilizaré 6 variables.
 
 	*MAX_FRAMES indica el numero de frames que se pueden guardar como máximo.
 	*i_max_steps	Cantidad de cuadros intermedios
@@ -482,8 +475,6 @@ float lookUpDownJ;
 	*resetElements	para reiniciar la animación, pone en 0 current frame
 	*interpolation	calcula los valores de interpolación para la animación fluida del KeyFrame. Más fluido mientras más pasos se pongan en max_steps
 */
-
-//float pBz = 0.0, pCx = 0.0, pCz = 0.0, pDx = 0.0, pDz = 0.0, pFx = 0.0, pFy = 0.0, pFz = 0.0, pGz = 0.0;
 float rotLampX = 0.0, rotLampY = 0.0, rotLampZ = 0.0;
 float traxFrame = 0.0, trayFrame = 0.0, trazFrame = 0.0;
 #define MAX_FRAMES 15		//15 keyframes
@@ -546,15 +537,6 @@ void interpolation(void)
 	KeyFrame[playIndex].rotLampXInc = (KeyFrame[playIndex + 1].rotLampX - KeyFrame[playIndex].rotLampX) / i_max_steps;
 	KeyFrame[playIndex].rotLampYInc = (KeyFrame[playIndex + 1].rotLampY - KeyFrame[playIndex].rotLampY) / i_max_steps;
 	KeyFrame[playIndex].rotLampZInc = (KeyFrame[playIndex + 1].rotLampZ - KeyFrame[playIndex].rotLampZ) / i_max_steps;
-
-	/*KeyFrame[playIndex].pCxInc = (KeyFrame[playIndex + 1].pCx - KeyFrame[playIndex].pCx) / i_max_steps;
-	KeyFrame[playIndex].pCzInc = (KeyFrame[playIndex + 1].pCz - KeyFrame[playIndex].pCz) / i_max_steps;
-	KeyFrame[playIndex].pDxInc = (KeyFrame[playIndex + 1].pDx - KeyFrame[playIndex].pDx) / i_max_steps;
-	KeyFrame[playIndex].pDzInc = (KeyFrame[playIndex + 1].pDz - KeyFrame[playIndex].pDz) / i_max_steps;
-	KeyFrame[playIndex].pFxInc = (KeyFrame[playIndex + 1].pFx - KeyFrame[playIndex].pFx) / i_max_steps;
-	KeyFrame[playIndex].pFyInc = (KeyFrame[playIndex + 1].pFy - KeyFrame[playIndex].pFy) / i_max_steps;
-	KeyFrame[playIndex].pFzInc = (KeyFrame[playIndex + 1].pFz - KeyFrame[playIndex].pFz) / i_max_steps;
-	KeyFrame[playIndex].pGzInc = (KeyFrame[playIndex + 1].pGz - KeyFrame[playIndex].pGz) / i_max_steps;*/
 }
 
 //	*************	KEY FRAMES	*********************
@@ -564,7 +546,8 @@ void InitGL(GLvoid)     // Inicializamos parametros
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);				// Negro de fondo	
 
 	glEnable(GL_TEXTURE_2D);
-	glShadeModel(GL_SMOOTH);
+	//glShadeModel(GL_SMOOTH);
+	glShadeModel(GL_FLAT);
 	glClearDepth(1.0f);									// Configuramos Depth Buffer
 	glEnable(GL_DEPTH_TEST);							// Habilitamos Depth Testing
 	glDepthFunc(GL_LEQUAL);								// Tipo de Depth Testing a realizar
@@ -578,7 +561,10 @@ void InitGL(GLvoid)     // Inicializamos parametros
 	**********	LUCES	**********
 	//gLightfv(light,pname,params)
 */
-	//Farolas
+	//SOL
+	glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmbient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, LightDiffuse);
+	glLightfv(GL_LIGHT0, GL_POSITION, LightSpecular);
 	//Puntual		Foco de lampara de exterior
 	glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);					// Setup The Ambient Light
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);					// Setup The Diffuse Light
@@ -1007,19 +993,44 @@ void foc3() {
 	}
 	glPopMatrix();
 }
+void sol() {
+	/*if (sol0)
+		glLightf(GL_LIGHT0, GL_POSITION, LightAngle);			// Position The Light*/
+	glPushMatrix();
+	glTranslatef(0.0 + trax, 0.0 + tray, 0.0 + traz);
+	//glTranslatef(-5.0, 9.1, -0.1);
+	glRotatef(rotSol, 1.0, 0.0, 1.0);
+
+
+	if (sol0) {
+		glEnable(GL_LIGHT0);
+		glLightfv(GL_LIGHT0, GL_POSITION, LightPosition2);
+
+	}
+	else {
+		glDisable(GL_LIGHT0);
+	}
+	glPopMatrix();
+}
 void luz() {
 	glPushMatrix();
 		glPushMatrix();
 			if (!light) {
 				glDisable(GL_LIGHTING);
+				glDisable(GL_LIGHT0);
 				glDisable(GL_LIGHT1);
 				glDisable(GL_LIGHT2);
 				glDisable(GL_LIGHT3);
+				glDisable(GL_LIGHT4);
+				glDisable(GL_LIGHT5);
+				glDisable(GL_LIGHT6);
+				glDisable(GL_LIGHT7);
 			}
 			else {
 				glEnable(GL_LIGHTING);
 			}
 			glPopMatrix();
+			sol();
 		//foc1();
 		//foc2();
 		//foc3();
@@ -2731,68 +2742,38 @@ void animacion()
 	}
 	if (dwElapsedTime >= 30)
 	{
-		if (banderaPuerta == true) {
-			if (banderaUpDown == true) {	//Va de 0 a 90
-				rotPuerta += 2.0;
-				if (rotPuerta == 90.0)
-					banderaPuerta = false;
-			}
-			else {
-				rotPuerta -= 2.0;
-				if (rotPuerta == 0.0)
-					banderaPuerta = false;
-			}
-		}
-		if (banderaVentana == true) {
-			if (banderaUpDown == true) {	//Va de 0 a 90
-				rotVentana += 2.0;
-				if (rotVentana == 66.0)
-					banderaVentana = false;
-			}
-			else {
-				rotVentana -= 2.0;
-				if (rotVentana == 0.0)
-					banderaVentana = false;
-			}
-		}
-		/*
-			Basicamente, si banderaSilla es true, se presionó la tecla 5. Como Z = 0.0:
-			Primero se mueve en -z hasta -2.0, luego rota hasta -90.0 y pone banderaSilla en false
-
-			Si banderaSilla vuelve a ser true, ahora como Z = -2.0:
-			Primero rota hasta 0.0, luego se mueve en Z hasta 0.0
-		*/
-		if (banderaSilla == true) {
-			if (banderaTrans == true) {
-				transSilla -= 0.1;
-				if (transSilla <= -2.0) {
-					transSilla = -2.0f;
-					banderaUpDown = true;
+		if (light == true) {
+			if (dia == true) {
+				rotSol += 1.0;
+				printf("%f\n", rotSol);
+				if (rotSol >= 500.0) {
+					sol0 = false;
+					foco1 = true;
+					foco2 = true;
+					foco3 = true;
+					rotSol = 0.0;
+					dia = false;
 				}
-				if (banderaUpDown == true) {	//Va de 0 a 90
-					rotSilla -= 2.0;
-					if (rotSilla <= -90.0) {
-						rotSilla = -90.0;
-						banderaSilla = false;
-					}
-
+				else {
+					sol0 = true;
 				}
 			}
 			else {
-
-				rotSilla += 2.0;
-				if (rotSilla >= 0.0) {
-					rotSilla = 2.0;
-					banderaUpDown = false;
+				rotSol += 1.0;
+				printf("%f\n", rotSol);
+				if (rotSol <= 500.0) {
+					sol0 = false;
 				}
-				if (banderaUpDown == false) {
-					transSilla += 0.1;
-					if (transSilla >= 0.0) {
-						transSilla = 0.0f;
-						banderaSilla = false;
-					}
+				else {
+					rotSol = 0.0;
+					sol0 = true;
+					dia = true;
+					foco1 = false;
+					foco2 = false;
+					foco3 = false;
 				}
 			}
+			
 		}
 
 		ranX = (float)(rand() % 100) / 100.0;
@@ -3026,6 +3007,7 @@ void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 		banderaModelos = !banderaModelos;
 		break;
 	case '4':	//
+		banderaVentana = !banderaVentana;
 		/*if (banderaVentana == false) {
 			banderaVentana = true;
 			if (rotVentana == 0)
@@ -3033,24 +3015,11 @@ void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 			else
 				banderaUpDown = false;
 		}*/
-		banderaVentana = !banderaVentana;
+		//banderaVentana = !banderaVentana;
 		break;
 	case '5':
-		if (banderaSilla == false) {
-			banderaSilla = true;
-			if (transSilla == 0.0)	//Va de 0 a -2.0
-				banderaTrans = true;	//Va de 0 a 90
-			else
-				banderaTrans = false;
-		}
+		
 		break;
-		/*case ' ':	//Salvar Frame
-			if (FrameIndex < MAX_FRAMES)
-			{
-				saveFrame();
-			}
-
-			break;*/
 	case '6':
 		if (play == false && (FrameIndex > 1))
 		{
@@ -3068,37 +3037,17 @@ void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 			play = false;
 		}
 		break;
-
-		/*case '.':
-			for (int i = 0; i < FrameIndex; i++) {
-				printf("Frame [%d]\n", i);
-				printf("pBz = %f  pCx = %f  pCz = %f  pDx = %f  pDz = %f\n", KeyFrame[i].pBz, KeyFrame[i].pCx, KeyFrame[i].pCz, KeyFrame[i].pDx, KeyFrame[i].pDz);
-				printf("pFx = %f  pFy = %f  pFz = %f  pGz = %f\n", KeyFrame[i].pFz, KeyFrame[i].pFy, KeyFrame[i].pFz, KeyFrame[i].pGz);
-
-				printf("\nIncrementos:\n\n");
-				printf("pBzInc = %f  pCxInc = %f  pCzInc = %f  pDxInc = %f  pDzInc = %f\n", KeyFrame[i].pBzInc, KeyFrame[i].pCxInc, KeyFrame[i].pCzInc, KeyFrame[i].pDxInc, KeyFrame[i].pDzInc);
-				printf("pFxInc = %f  pFyInc = %f  pFzInc = %f  pGzInc = %f\n", KeyFrame[i].pFzInc, KeyFrame[i].pFyInc, KeyFrame[i].pFzInc, KeyFrame[i].pGzInc);
-				printf("******************************************\n\n");
-			}
-			break;*/
-
 	case 'l':   //Activamos/desactivamos luz
 	case 'L':
 		light = !light;
+		//dia = !dia;
 		if (light == true) {
-			foco1 = true;
-			foco2 = true;
-			foco3 = true;
-		}
-		else {
-			foco1 = false;
-			foco2 = false;
-			foco3 = false;
+			sol0 = true;
+			dia = true;
+			rotSol = 0.0;
 		}
 		break;
 	case '7':   //Activamos/desactivamos luz
-	//case 'P':
-		//positional = !positional;
 		if (light == true)
 			foco1 = !foco1;
 		break;

@@ -39,4 +39,6 @@ class CFiguras
 	void flatV(float x, float z, GLuint text, GLuint text2);
 	void slopeV(float x, float y, float z, GLuint text, GLuint text2, bool cil);
 	void cornerV(float x, float y, float z, GLuint text, GLuint text2, bool cil);
+	void cara(float x, float y, float z, GLuint rostro, GLuint piel);
+	void calzon();
 };

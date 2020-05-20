@@ -312,6 +312,7 @@ CTexture t_turquesa2;
 CTexture t_blanco;
 CTexture t_banoMujer;
 CTexture t_banoHombre;
+CTexture t_cara;
 
 /*
 	********** MODELOS **********
@@ -326,40 +327,10 @@ CFiguras fig3;
 
 //Figuras a "mano"
 CFiguras brick;
-//CFiguras pisoGeneral;
-//CFiguras silla;
-//CFiguras mesa;
-//CFiguras cuarto;
-//CFiguras puerta;
 
 //Figuras de 3D Studio
 CModel wc;
 CModel lavaManos;
-CModel taza;
-CModel sofa;
-CModel muebleTV;
-CModel tv;
-CModel librero;
-CModel foco;
-CModel lampara;
-CModel lamparaCalle;
-/*
-CModel chess;
-
-CModel bPeon;
-CModel bCaballo;
-CModel bTorre;
-CModel bAlfil;
-CModel bRey;
-CModel bReina;
-
-CModel nPeon;
-CModel nCaballo;
-CModel nTorre;
-CModel nAlfil;
-CModel nRey;
-CModel nReina;
-*/
 
 /*
 	********** Mover posiciones **********
@@ -404,11 +375,6 @@ float sc = 1.0;
 	*banderaCO	Camara Original
 
 	Se utilizan para saber si alguna tecla de animación fue presionada
-	*banderaPuerta	se activa la animación de abrir/cerrar puerta
-	*banderaVentana	abrir/cerrar ventana
-	*banderaSilla	inicia animación de movimiento de silla con rotación y de vuelta al punto origen
-	*banderaUpDown	para saber si: abre o cierra (puerta, ventana), desplaza o gira (silla)
-	*banderaTrans	para saber si la silla está en movimiento translate o rotación.
 */
 bool banderaModelos = false;
 bool banderaCJ = false;	//Visualización de Camara enfocada en el Juego
@@ -453,6 +419,8 @@ float pos_xC, pos_yC, pos_zC, view_xC, view_yC, view_zC, up_xC, up_yC, up_zC;
 float lookUpDownC;
 float pos_xJ, pos_yJ, pos_zJ, view_xJ, view_yJ, view_zJ, up_xJ, up_yJ, up_zJ;
 float lookUpDownJ;
+
+float movX = 0.0, movY = 0.0, movZ = 0.0;
 
 /*
 	**********	KEY FRAMES	**********
@@ -728,6 +696,9 @@ void InitGL(GLvoid)     // Inicializamos parametros
 	t_banoMujer.BuildGLTexture();
 	t_banoMujer.ReleaseImage();
 
+	t_cara.LoadTGA("Resources/Texturas/face.tga");
+	t_cara.BuildGLTexture();
+	t_cara.ReleaseImage();
 
 	/*
 		********** FIGURAS **********
@@ -736,9 +707,6 @@ void InitGL(GLvoid)     // Inicializamos parametros
 		Casi siempre debe ir escrito como .3DS ,en mayusculas.
 		Algunas veces crashea en la ejecución, asi que se abre en 3D MAX y se vuelve a exportar como 3DS, esperando que funcione
 	*/
-	taza._3dsLoad("Resources/Modelos/Toilet_3DS.3DS");
-	taza.VertexNormals();
-	
 	wc._3dsLoad("Resources/Modelos/hsdc00.3DS");
 	wc.VertexNormals();
 
@@ -759,25 +727,25 @@ void InitGL(GLvoid)     // Inicializamos parametros
 			glookupdown 0.0
 	*/
 
-	objCamera.Position_Camera(4.36f, 15.8f, 30.82f, 4.15f, 15.8f, 27.82f, 0, 1, 0);
+	objCamera.Position_Camera(0.1375f, 29.8f, 51.465f, -0.0725f, 29.8f, 48.465f, 0, 1, 0);
 
 	//Posiciones de cámaras para Juego y Cuarto iniciales
-	pos_xC = 6.945;
-	pos_yC = 17.2;
-	pos_zC = 7.034;
-	view_xC = 5.35;
-	view_yC = 17.2;
-	view_zC = 4.485;
+	pos_xC = -38.138;
+	pos_yC = 5.3;
+	pos_zC = 0.354;
+	view_xC = -35.1335;
+	view_yC = 5.3;
+	view_zC = 0.4746;
 	up_xC = 0.0;
 	up_yC = 1.0;
 	up_zC = 0.0;
-	lookUpDownC = 46.0;
+	lookUpDownC = 24.0;
 
 	pos_xJ = -4.1;
-	pos_yJ = 9.5;
+	pos_yJ = 38.2;
 	pos_zJ = 0.04;
 	view_xJ = -4.1;
-	view_yJ = 9.5;
+	view_yJ = 38.2;
 	view_zJ = -2.96;
 	up_xJ = 0.0;
 	up_yJ = 1.0;
@@ -2163,7 +2131,6 @@ void createFarolaKeyFrame(GLuint cuerpo, GLuint lampara, int source, float altoP
 		glPushMatrix();
 		/********	KEYFRAME	********/
 			glTranslatef(0.0 + traxFrame, 0.0 + trayFrame, -0.5 + trazFrame);
-			//glTranslatef(0.0 + trax, 0.0 + tray, -3.0 + traz);
 		/********	KEYFRAME	********/
 			set_material(obsidiana);
 			//Base
@@ -2657,6 +2624,101 @@ void createKiosko() {
 /*********** FUENTE	 ***********/
 /*********** FACHADA ***********/
 /*********** AVATAR1 ***********/
+void pie(){}
+void piernaDer(){}
+void piernaIzq(){}
+void calzon() {}
+void mano() {}
+void brazoIzq() {}
+void brazoIzq2() {}
+void brazoDer() {}
+void brazoDer2() {}
+void brazo(float altBrazo, float anchoBrazo, float profBrazo, float altMano, float anchoMano, float profMano){
+	float aB = 0.5, anB = 0.5, pB = 1.0;
+	glPushMatrix();
+		brick.prisma(altBrazo, anchoBrazo, profBrazo, t_amarillo.GLindex);
+		//glTranslatef(pB / 2, 0.0, 0.0);
+		glTranslatef(0.0, -(altBrazo/2 + aB/2), profBrazo/2);
+		brick.prisma(aB, anB, pB, t_amarillo.GLindex);
+		glTranslatef(0.0,0.0,pB/2 + altMano/2);
+		glPushMatrix();
+			glRotatef(90.0, 1.0, 0.0, 0.0);
+			brick.brick1V(t_amarillo.GLindex, t_carbon.GLindex, anchoMano, altMano, profMano);
+		glPopMatrix();
+	glPopMatrix();
+}
+void cuerpo(float alt, float ancho, float prof){
+	glPushMatrix();
+		brick.prisma(alt, ancho, prof, t_rojo.GLindex);
+	glPopMatrix();
+}
+void face() {
+	glPushMatrix();
+		//punto de rotacion de cara
+		brick.cilindro(0.15, 0.3, 4, t_amarillo.GLindex);
+		glTranslatef(0.0, 0.25 + 0.3, 0.0);
+		brick.cara(1.0, 1.0, 1.0, t_cara.GLindex, t_amarillo.GLindex);
+	glPopMatrix();
+}
+void avatar() {
+	float altCuerpo = 2.0, anchoCuerpo = 1.3, profCuerpo = 0.7;
+	float altBrazo = 1.0, anchoBrazo = 0.5, profBrazo = 0.5;
+	float altMano = 0.3, anchoMano = 0.5, profMano = 0.5;
+	float altCalzon = 0.1, anchoCalzon = 1.3, profCalzon = 0.7;
+	float altCalzon2 = 0.7, anchoCalzon2 = 0.2, profCalzon2 = 0.7;
+	float altPierna = 2.0, anchoPierna = 0.55, profPierna = 0.7;
+	glPushMatrix();
+		glTranslatef(-34.0, 1.0, 0.0);
+		glPushMatrix();
+			glTranslatef(movX, movY + 3.5, movZ);
+			glRotatef(90, 0.0, 1.0, 0.0);
+			face();
+			//pivote en el inicio del cuello
+			glPushMatrix();
+				glTranslatef(0.0, -altCuerpo/2 , 0.0);
+				cuerpo(altCuerpo, anchoCuerpo, profCuerpo);
+			glPopMatrix();
+			// inicio del cuello
+			//BrazoIzq
+			glPushMatrix();
+				glTranslatef((anchoCuerpo / 2 + anchoBrazo / 2), -altBrazo/2, 0.0);
+				brazo(altBrazo, anchoBrazo, profBrazo, altMano, anchoMano, profMano);
+			glPopMatrix();
+			//BrazoDer
+			glPushMatrix();
+				glTranslatef(-(anchoCuerpo / 2 + anchoBrazo / 2), -altBrazo / 2, 0.0);
+				brazo(altBrazo, anchoBrazo, profBrazo, altMano, anchoMano, profMano);
+			glPopMatrix();
+			glTranslatef(0.0, -(altCuerpo), 0.0);
+			//Final del cuerpo
+				//Calzon
+			glPushMatrix();
+				glPushMatrix();
+					glTranslatef(0.0, -altCalzon/2, 0.0);
+					brick.prisma(altCalzon, anchoCalzon, profCalzon, t_carbon.GLindex);
+				glPopMatrix();
+				glPushMatrix();
+					glTranslatef(0.0, -(altCalzon / 2 + altCalzon2 / 2), 0.0);
+					brick.prisma(altCalzon2, anchoCalzon2, profCalzon2, t_carbon.GLindex);
+					glTranslatef(0.0, altCalzon / 2 + altCalzon2 / 2, 0.0);
+					//final de cuerpo
+					glPushMatrix();
+						glTranslatef(-(anchoPierna / 2 + anchoCalzon2/2), -(altPierna / 2+altCalzon), 0.0);
+						brick.prisma(altPierna, anchoPierna, profPierna, t_azul.GLindex);
+						glTranslatef(0.0, -(altPierna / 2 + 0.25), 0.1);
+						brick.prisma(0.5, anchoPierna, 0.9, t_carbon.GLindex);
+					glPopMatrix();
+					glPushMatrix();
+						glTranslatef((anchoPierna / 2 + anchoCalzon2 / 2), -(altPierna / 2  + altCalzon), 0.0);
+						brick.prisma(altPierna, anchoPierna, profPierna, t_azul.GLindex);
+						glTranslatef(0.0, -(altPierna / 2 + 0.25), 0.1);
+						brick.prisma(0.5, anchoPierna, 0.9, t_carbon.GLindex);
+					glPopMatrix();
+				glPopMatrix();
+			glPopMatrix();
+		glPopMatrix();
+	glPopMatrix();
+}
 
 
 
@@ -2672,7 +2734,7 @@ void display(void)   // Creamos la funcion donde se dibuja
 		gluLookAt(objCamera.mPos.x, objCamera.mPos.y, objCamera.mPos.z,
 			objCamera.mView.x, objCamera.mView.y, objCamera.mView.z,
 			objCamera.mUp.x, objCamera.mUp.y, objCamera.mUp.z);
-
+		avatar();
 		luz();
 
 		glPushMatrix();
@@ -2848,24 +2910,30 @@ void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 	case 'w':   //Movimientos de camara
 	case 'W':
 		objCamera.Move_Camera(CAMERASPEED + 0.2);
+		//objCamera.Position_Camera(objCamera.mPos.x, objCamera.mPos.y,0.0, objCamera.mView.x, objCamera.mView.y, 0.0, 0, 1, 0);
+		//movX += (CAMERASPEED + 0.2)*3;
 		break;
 
 	case 's':
 	case 'S':
 		objCamera.Move_Camera(-(CAMERASPEED + 0.2));
+		//objCamera.Position_Camera(objCamera.mPos.x, objCamera.mPos.y, 0.0, objCamera.mView.x, objCamera.mView.y, 0.0, 0, 1, 0);
+		//movX += -(CAMERASPEED + 0.2) * 3;
 		break;
 
 	case 'a':
 	case 'A':
 		objCamera.Strafe_Camera(-(CAMERASPEED + 0.4));
+		//movZ += -(CAMERASPEED + 0.4) * 3;
 		break;
 
 	case 'd':
 	case 'D':
 		objCamera.Strafe_Camera(CAMERASPEED + 0.4);
+		//movZ += (CAMERASPEED + 0.4) * 3;
 		break;
 
-	/*case ' ':		//Poner algo en movimiento
+	case 'p':		//Poner algo en movimiento
 		//Commit?
 		printf("mPos.x = %f\tmPos.y = %f\tmPos.z = %f\n",objCamera.mPos.x, objCamera.mPos.y, objCamera.mPos.z);
 		printf("mView.x = %f\tmView.y = %f\tmView.z = %f\n", objCamera.mView.x, objCamera.mView.y, objCamera.mView.z);
@@ -2874,7 +2942,7 @@ void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 		printf("CAMERASPEED: %f\n", CAMERASPEED);
 		printf("******************************************\n");
 
-		break;*/
+		break;
 	case '0':	//Original
 		banderaCO = true;	//Estamos en camara original
 		//Posiciona la camara a la posición original. Si viene de cualquier otra cámara, no debe borrar los anteriores estados.
@@ -2909,8 +2977,7 @@ void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 			lookUpDownJ = g_lookupdown;
 		}
 		g_lookupdown = 16.0;
-		//objCamera.Position_Camera(0.13f, 3.2f, 8.95f, 0.13f, 3.2f, 5.95f, 0, 1, 0);
-		objCamera.Position_Camera(4.36f, 15.8f, 30.82f, 4.15f, 15.8f, 27.82f, 0, 1, 0);
+		objCamera.Position_Camera(0.1375f, 29.8f, 51.465f, -0.0725f, 29.8f, 48.465f, 0, 1, 0);
 		break;
 	case '1':	//Cuarto
 		banderaCC = true;	//Estamos en camara cuarto.
@@ -3069,84 +3136,58 @@ void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 		printf("Ang = %f\n", LightAngle);
 		break;
 
-	case 'j':
-		if (banderaVentana == true)
-			//trax += 0.1;
-			traxFrame += 0.1;
-		else
-			//trax += 1.0;
-			traxFrame += 1.0;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
+	case 'u':
+	case 'U':
+		movX += 1.0;
 		break;
+	case 'j':
 	case 'J':
-		if (banderaVentana == true)
-			//trax -= 0.1;
-			traxFrame -= 1.0;
-		else
-			//trax -= 1.0;
-			traxFrame -= 1.0;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
+		movX -= 1.0;
+		break;
+	case 'h':
+	case 'H':
+		movZ -= 1.0;
 		break;
 	case 'k':
-		if (banderaVentana == true)
-			//tray += 0.1;
-			trayFrame += 0.1;
-		else
-			tray += 1.0;
-			trayFrame += 1.0;
-			printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
-		break;
 	case 'K':
-		if (banderaVentana == true)
-			//tray -= 0.1;
-			trayFrame -= 0.1;
-		else
-			//tray -= 1.0;
-			trayFrame -= 1.0;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
+		movZ += 1.0;
+		break;
+	case 'y':
+	case 'Y':
+		movY += 1.0;
 		break;
 	case 'i':
-		if (banderaVentana == true)
-			//traz += 0.1;
-			trazFrame += 0.1;
-		else
-			//traz += 1.0;
-			trazFrame += 1.0;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
-		break;
 	case 'I':
-		if (banderaVentana == true)
-			//traz -= 0.1;
-			trazFrame -= 0.1;
-		else
-			//traz -= 1.0;
-			trazFrame -= 1.0;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
+		movY -= 1.0;
 		break;
+
+/*
 	case 'z':
-		rotLampX += 10.0;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
+		//rotLampX += 10.0;
+		scaleX += 10.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotX = %f\nrotY = %f\nrotZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'Z':
-		rotLampX -= 10.0;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
+		scaleX -= 10.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotX = %f\nrotY = %f\nrotZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'x':
-		rotLampY += 10.0;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
+		scaleY += 10.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotX = %f\nrotY = %f\nrotZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'X':
-		rotLampY -= 10.0;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
+		scaleY -= 10.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotX = %f\nrotY = %f\nrotZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'c':
-		rotLampZ += 10.0;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
+		scaleZ += 10.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotX = %f\nrotY = %f\nrotZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
 	case 'C':
-		rotLampZ -= 10.0;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
+		scaleX -= 10.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotX = %f\nrotY = %f\nrotZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
+
 	case 'b':
 		scaleZ += 10.0;
 		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
@@ -3171,8 +3212,9 @@ void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 		scaleY -= 10.0;
 		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
+*/
 	/**********	KEYFRAMES	*********/
-	case ' ':	//Salvar Frame
+	/*case ' ':	//Salvar Frame
 		if (FrameIndex < MAX_FRAMES)
 		{
 			saveFrame();
@@ -3188,7 +3230,7 @@ void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 			printf("traxFrameInc = %f  trayFrameInc = %f  trazFrameInc = %f  rotLampXInc = %f  rotLampYInc = %f  rotLampZInc = %f\n", KeyFrame[i].traxFrameInc, KeyFrame[i].trayFrameInc, KeyFrame[i].trazFrameInc, KeyFrame[i].rotLampXInc, KeyFrame[i].rotLampYInc, KeyFrame[i].rotLampZInc);
 			printf("******************************************\n\n");
 		}
-		break;
+		break;*/
 	/**********	KEYFRAMES	*********/
 	case 27:        // Cuando Esc es presionado...
 		exit(0);   // Salimos del programa
@@ -3205,22 +3247,25 @@ void arrow_keys(int a_keys, int x, int y)  // Funcion para manejo de teclas espe
 	switch (a_keys) {
 	case GLUT_KEY_PAGE_UP:
 		objCamera.UpDown_Camera(CAMERASPEED);
+		//movY += (CAMERASPEED +0.2)* 3;
 		break;
 
 	case GLUT_KEY_PAGE_DOWN:
 		objCamera.UpDown_Camera(-CAMERASPEED);
+		//movY += -(CAMERASPEED +0.2)* 3;
 		break;
 
 	case GLUT_KEY_UP:     // Presionamos tecla ARRIBA...
-		g_lookupdown -= 1.0f;
+		//g_lookupdown -= 1.0f;
 		break;
 
 	case GLUT_KEY_DOWN:               // Presionamos tecla ABAJO...
-		g_lookupdown += 1.0f;
+		//g_lookupdown += 1.0f;
 		break;
 
 	case GLUT_KEY_LEFT:
 		objCamera.Rotate_View(-CAMERASPEED);
+		
 		break;
 
 	case GLUT_KEY_RIGHT:

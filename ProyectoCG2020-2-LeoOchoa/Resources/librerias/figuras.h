@@ -27,6 +27,7 @@ class CFiguras
 	/***************	A MANO	***************/
 
 	void brick1_1_1(GLuint text, GLuint text2);	//Brick 1x1x1
+	void brick1V(GLuint text, GLuint text2, float x, float y, float z);	//Brick 1x1x1
 	void brick1_2_1(GLuint text, GLuint text2);	//Brick 1x2x1
 	void brick1_4_1(GLuint text, GLuint text2);	//Brick 1x4x1
 	void brick1_8_1(GLuint text, GLuint text2);	//Brick 1x8x1

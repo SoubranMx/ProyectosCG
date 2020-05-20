@@ -85,7 +85,7 @@ GLfloat Position2[] = { 0.0f, 0.0f, -5.0f, 1.0f };			// Light Position
 */
 //Luz blanca
 GLfloat aten1[] = { 0.35 , 0.0, 0.0 };	//Atenuacion de Luz Puntual
-GLfloat aten2[] = { 0.5 , 0.0, 0.0 };	//Atenuacion de Luz Spotlight
+GLfloat aten2[] = { 0.1 , 0.0, 0.0 };	//Atenuacion de Luz Spotlight
 GLfloat atenTecho[] = { 0.1 , 0.0, 0.0 };	//Atenuacion de Luz Spotlight
 
 GLfloat exponent[] = { 128.0, 0.0, 0.0 };
@@ -103,7 +103,7 @@ GLfloat LightDirection1[] = { 0.0f, 0.0f, -1.0f };			// Light Position
 GLfloat LightDirection2[] = { 0.0f, 0.0f, -1.0f };			// Light Position
 GLfloat LightDirection3[] = { 0.0f, 0.0f, -1.0f };			// Light Position
 
-float LightAngle = 36.0f;
+float LightAngle = 18.0f;
 
 bool light = false;		// Luz ON/OFF
 bool foco1 = false;
@@ -483,33 +483,29 @@ float lookUpDownJ;
 	*interpolation	calcula los valores de interpolación para la animación fluida del KeyFrame. Más fluido mientras más pasos se pongan en max_steps
 */
 
-float pBz = 0.0, pCx = 0.0, pCz = 0.0, pDx = 0.0, pDz = 0.0, pFx = 0.0, pFy = 0.0, pFz = 0.0, pGz = 0.0;
+//float pBz = 0.0, pCx = 0.0, pCz = 0.0, pDx = 0.0, pDz = 0.0, pFx = 0.0, pFy = 0.0, pFz = 0.0, pGz = 0.0;
+float rotLampX = 0.0, rotLampY = 0.0, rotLampZ = 0.0;
+float traxFrame = 0.0, trayFrame = 0.0, trazFrame = 0.0;
 #define MAX_FRAMES 15		//15 keyframes
 int i_max_steps = 90;		//Cantidad de cuadros intermedios	valores peque�os: animacion r�pida, valores grandes: animaci�n m�s pausada
 int i_curr_steps = 0;
 
 typedef struct _frame {
 	//Variables para guardar KeyFrames
-	float pBz;
-	float pCx;
-	float pCz;
-	float pDx;
-	float pDz;
-	float pFx;
-	float pFy;
-	float pFz;
-	float pGz;
+	float traxFrame;
+	float trayFrame;
+	float trazFrame;
+	float rotLampX;
+	float rotLampY;
+	float rotLampZ;
 
 	//Incrementos
-	float pBzInc;
-	float pCxInc;
-	float pCzInc;
-	float pDxInc;
-	float pDzInc;
-	float pFxInc;
-	float pFyInc;
-	float pFzInc;
-	float pGzInc;
+	float traxFrameInc;
+	float trayFrameInc;
+	float trazFrameInc;
+	float rotLampXInc;
+	float rotLampYInc;
+	float rotLampZInc;
 } FRAME;
 FRAME KeyFrame[MAX_FRAMES];
 int FrameIndex = 0;			//introducir datos
@@ -524,42 +520,41 @@ char s[30];
 
 void saveFrame(void) {
 	printf("frameindex %d\n", FrameIndex);
-	KeyFrame[FrameIndex].pBz = pBz;
-	KeyFrame[FrameIndex].pCx = pCx;
-	KeyFrame[FrameIndex].pCz = pCz;
-	KeyFrame[FrameIndex].pDx = pDx;
-	KeyFrame[FrameIndex].pDz = pDz;
-	KeyFrame[FrameIndex].pFx = pFx;
-	KeyFrame[FrameIndex].pFy = pFy;
-	KeyFrame[FrameIndex].pFz = pFz;
-	KeyFrame[FrameIndex].pGz = pGz;
-
+	KeyFrame[FrameIndex].traxFrame = traxFrame;
+	KeyFrame[FrameIndex].trayFrame = trayFrame;
+	KeyFrame[FrameIndex].trazFrame = trazFrame;
+	KeyFrame[FrameIndex].rotLampX = rotLampX;
+	KeyFrame[FrameIndex].rotLampY = rotLampY;
+	KeyFrame[FrameIndex].rotLampZ = rotLampZ;
 	FrameIndex++;
 }
 void resetElements(void)
 {
-	pBz = KeyFrame[0].pBz;
-	pCx = KeyFrame[0].pCx;
-	pCz = KeyFrame[0].pCz;
-	pDx = KeyFrame[0].pDx;
-	pDz = KeyFrame[0].pDz;
-	pFx = KeyFrame[0].pFx;
-	pFy = KeyFrame[0].pFy;
-	pFz = KeyFrame[0].pFz;
-	pGz = KeyFrame[0].pGz;
+	traxFrame = KeyFrame[0].traxFrame;
+	trayFrame = KeyFrame[0].trayFrame;
+	trazFrame = KeyFrame[0].trazFrame;
+	rotLampX = KeyFrame[0].rotLampX;
+	rotLampY = KeyFrame[0].rotLampY;
+	rotLampZ = KeyFrame[0].rotLampZ;
 }
 void interpolation(void)
 {
 	//Los incrementos
-	KeyFrame[playIndex].pBzInc = (KeyFrame[playIndex + 1].pBz - KeyFrame[playIndex].pBz) / i_max_steps;
-	KeyFrame[playIndex].pCxInc = (KeyFrame[playIndex + 1].pCx - KeyFrame[playIndex].pCx) / i_max_steps;
+	KeyFrame[playIndex].traxFrameInc = (KeyFrame[playIndex + 1].traxFrame - KeyFrame[playIndex].traxFrame) / i_max_steps;
+	KeyFrame[playIndex].trayFrameInc = (KeyFrame[playIndex + 1].trayFrame - KeyFrame[playIndex].trayFrame) / i_max_steps;
+	KeyFrame[playIndex].trazFrameInc = (KeyFrame[playIndex + 1].trazFrame - KeyFrame[playIndex].trazFrame) / i_max_steps;
+	KeyFrame[playIndex].rotLampXInc = (KeyFrame[playIndex + 1].rotLampX - KeyFrame[playIndex].rotLampX) / i_max_steps;
+	KeyFrame[playIndex].rotLampYInc = (KeyFrame[playIndex + 1].rotLampY - KeyFrame[playIndex].rotLampY) / i_max_steps;
+	KeyFrame[playIndex].rotLampZInc = (KeyFrame[playIndex + 1].rotLampZ - KeyFrame[playIndex].rotLampZ) / i_max_steps;
+
+	/*KeyFrame[playIndex].pCxInc = (KeyFrame[playIndex + 1].pCx - KeyFrame[playIndex].pCx) / i_max_steps;
 	KeyFrame[playIndex].pCzInc = (KeyFrame[playIndex + 1].pCz - KeyFrame[playIndex].pCz) / i_max_steps;
 	KeyFrame[playIndex].pDxInc = (KeyFrame[playIndex + 1].pDx - KeyFrame[playIndex].pDx) / i_max_steps;
 	KeyFrame[playIndex].pDzInc = (KeyFrame[playIndex + 1].pDz - KeyFrame[playIndex].pDz) / i_max_steps;
 	KeyFrame[playIndex].pFxInc = (KeyFrame[playIndex + 1].pFx - KeyFrame[playIndex].pFx) / i_max_steps;
 	KeyFrame[playIndex].pFyInc = (KeyFrame[playIndex + 1].pFy - KeyFrame[playIndex].pFy) / i_max_steps;
 	KeyFrame[playIndex].pFzInc = (KeyFrame[playIndex + 1].pFz - KeyFrame[playIndex].pFz) / i_max_steps;
-	KeyFrame[playIndex].pGzInc = (KeyFrame[playIndex + 1].pGz - KeyFrame[playIndex].pGz) / i_max_steps;
+	KeyFrame[playIndex].pGzInc = (KeyFrame[playIndex + 1].pGz - KeyFrame[playIndex].pGz) / i_max_steps;*/
 }
 
 //	*************	KEY FRAMES	*********************
@@ -813,26 +808,110 @@ void InitGL(GLvoid)     // Inicializamos parametros
 	*/
 	for (int i = 0; i < MAX_FRAMES; i++)
 	{
-		KeyFrame[i].pBz = 0;
-		KeyFrame[i].pCx = 0;
-		KeyFrame[i].pCz = 0;
-		KeyFrame[i].pDx = 0;
-		KeyFrame[i].pDz = 0;
-		KeyFrame[i].pFx = 0;
-		KeyFrame[i].pFy = 0;
-		KeyFrame[i].pFz = 0;
-		KeyFrame[i].pGz = 0;
+		KeyFrame[i].traxFrame = 0;
+		KeyFrame[i].trayFrame = 0;
+		KeyFrame[i].trazFrame = 0;
+		KeyFrame[i].rotLampX = 0;
+		KeyFrame[i].rotLampY = 0;
+		KeyFrame[i].rotLampZ = 0;
 
-		KeyFrame[i].pBzInc = 0;
-		KeyFrame[i].pCxInc = 0;
-		KeyFrame[i].pCzInc = 0;
-		KeyFrame[i].pDxInc = 0;
-		KeyFrame[i].pDzInc = 0;
-		KeyFrame[i].pFxInc = 0;
-		KeyFrame[i].pFyInc = 0;
-		KeyFrame[i].pFzInc = 0;
-		KeyFrame[i].pGzInc = 0;
+		KeyFrame[i].traxFrameInc = 0;
+		KeyFrame[i].trayFrameInc = 0;
+		KeyFrame[i].trazFrameInc = 0;
+		KeyFrame[i].rotLampXInc = 0;
+		KeyFrame[i].rotLampYInc = 0;
+		KeyFrame[i].rotLampZInc = 0;
 	}
+	// FRAME 1
+	KeyFrame[1].traxFrame = 0.0;
+	KeyFrame[1].trayFrame = 0.0;
+	KeyFrame[1].trazFrame = -3.0;
+	KeyFrame[1].rotLampX = 40.0;
+	KeyFrame[1].rotLampY = 0.0;
+	KeyFrame[1].rotLampZ = -15.0;//-10.0
+
+	KeyFrame[1].traxFrameInc = 0.0;
+	KeyFrame[1].trayFrameInc = 0.0;
+	KeyFrame[1].trazFrameInc = 0.0;
+	KeyFrame[1].rotLampXInc = 0.0;
+	KeyFrame[1].rotLampYInc = 0.0;
+	KeyFrame[1].rotLampZInc = 0.0;
+
+	// FRAME 2
+	KeyFrame[2].traxFrame = 0.0;
+	KeyFrame[2].trayFrame = 0.0;
+	KeyFrame[2].trazFrame = -3.0;
+	KeyFrame[2].rotLampX = 30.0;
+	KeyFrame[2].rotLampY = 40.0;
+	KeyFrame[2].rotLampZ = 60.0;//-10.0
+
+	KeyFrame[2].traxFrameInc = 0.0;
+	KeyFrame[2].trayFrameInc = 0.0;
+	KeyFrame[2].trazFrameInc = 0.0;
+	KeyFrame[2].rotLampXInc = 0.0;
+	KeyFrame[2].rotLampYInc = 0.0;
+	KeyFrame[2].rotLampZInc = 0.0;
+
+	// FRAME 3
+	KeyFrame[3].traxFrame = 0.0;
+	KeyFrame[3].trayFrame = 0.0;
+	KeyFrame[3].trazFrame = 1.0;
+	KeyFrame[3].rotLampX = 0.0;
+	KeyFrame[3].rotLampY = 0.0;
+	KeyFrame[3].rotLampZ = 60.0;
+
+	KeyFrame[3].traxFrameInc = 0.0;
+	KeyFrame[3].trayFrameInc = 0.0;
+	KeyFrame[3].trazFrameInc = 0.0;
+	KeyFrame[3].rotLampXInc = 0.0;
+	KeyFrame[3].rotLampYInc = 0.0;
+	KeyFrame[3].rotLampZInc = 0.0;
+
+	// FRAME 4
+	KeyFrame[4].traxFrame = 0.0;
+	KeyFrame[4].trayFrame = 0.0;
+	KeyFrame[4].trazFrame = 4.0;
+	KeyFrame[4].rotLampX = -30.0;
+	KeyFrame[4].rotLampY = 0.0;
+	KeyFrame[4].rotLampZ = 10.0;
+
+	KeyFrame[4].traxFrameInc = 0.0;
+	KeyFrame[4].trayFrameInc = 0.0;
+	KeyFrame[4].trazFrameInc = 0.0;
+	KeyFrame[4].rotLampXInc = 0.0;
+	KeyFrame[4].rotLampYInc = 0.0;
+	KeyFrame[4].rotLampZInc = 0.0;
+
+	// FRAME 5
+	KeyFrame[5].traxFrame = 0.0;
+	KeyFrame[5].trayFrame = 0.0;
+	KeyFrame[5].trazFrame = 4.0;
+	KeyFrame[5].rotLampX = 10.0;
+	KeyFrame[5].rotLampY = -60.0;
+	KeyFrame[5].rotLampZ = 110.0;
+
+	KeyFrame[5].traxFrameInc = 0.0;
+	KeyFrame[5].trayFrameInc = 0.0;
+	KeyFrame[5].trazFrameInc = 0.0;
+	KeyFrame[5].rotLampXInc = 0.0;
+	KeyFrame[5].rotLampYInc = 0.0;
+	KeyFrame[5].rotLampZInc = 0.0;
+
+	// FRAME 6
+	KeyFrame[6].traxFrame = 0.0;
+	KeyFrame[6].trayFrame = 0.0;
+	KeyFrame[6].trazFrame = 0.0;
+	KeyFrame[6].rotLampX = -0.000008;
+	KeyFrame[6].rotLampY = -0.000042;
+	KeyFrame[6].rotLampZ = 0.0;
+
+	KeyFrame[6].traxFrameInc = 0.0;
+	KeyFrame[6].trayFrameInc = 0.0;
+	KeyFrame[6].trazFrameInc = 0.0;
+	KeyFrame[6].rotLampXInc = 0.0;
+	KeyFrame[6].rotLampYInc = 0.0;
+	KeyFrame[6].rotLampZInc = 0.0;
+	FrameIndex = 7;
 }
 
 void pintaTexto(float x, float y, float z, void* font, char* string)
@@ -853,7 +932,7 @@ void foc1(int source) {
 //		glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 180.0);			// Position The Light
 	glPushMatrix();
 		glTranslatef(0.0, 0.0, 0.0);
-		glutSolidSphere(0.1, 10, 10);	//Representa el foco, solo para prueba
+		//glutSolidSphere(0.1, 10, 10);	//Representa la fuente de luz, solo para prueba
 
 		if (foco1) {
 			glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 180.0);			// Position The Light
@@ -892,43 +971,39 @@ void foc1(int source) {
 void foc2() {
 	//	LUZ SPOTLIGHT
 	if (foco2)
-		glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, LightAngle);			// Position The Light
+		glLightf(GL_LIGHT6, GL_SPOT_CUTOFF, LightAngle);			// Position The Light
 	glPushMatrix();
-	//glTranslatef(0.0 + trax, 0.0 + tray, 0.0 + traz);
-	glTranslatef(-5.0, 9.1, -0.1);
-	//glutSolidSphere(0.1, 10, 10);
-	//glRotatef(angleX2, 1.0f, 0.0f, 0.0f);
-	//glRotatef(angleY2, 0.0f, 1.0f, 0.0f);
-	glRotatef(-66.0, 1.0f, 0.0f, 0.0f);
-	glRotatef(-16.0, 0.0f, 1.0f, 0.0f);
+	glRotatef(-90.0, 1.0f, 0.0f, 0.0f);
 
 
 	if (foco2) {
-		glEnable(GL_LIGHT2);
-		glLightfv(GL_LIGHT2, GL_POSITION, LightPosition2);
-		glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, LightDirection2);
+		glEnable(GL_LIGHT6);
+		glLightfv(GL_LIGHT6, GL_POSITION, LightPosition2);
+		glLightfv(GL_LIGHT6, GL_SPOT_DIRECTION, LightDirection2);
 
 	}
 	else {
-		glDisable(GL_LIGHT2);
+		glDisable(GL_LIGHT6);
 	}
 	glPopMatrix();
 }
 void foc3() {
 	if (foco3)
-		glLightf(GL_LIGHT3, GL_SPOT_CUTOFF, 180.0);			// Position The Light
-	//	IMPORTANTE		180.0 es el valor en el que se convierte en una luz puntual
+		glLightf(GL_LIGHT7, GL_SPOT_CUTOFF, LightAngle);			// Position The Light
 	glPushMatrix();
-	glTranslatef(-1.0, 17.4, 0.0);		//En el techo mismo
-	//glTranslatef(-1.0 + trax, 17.4 + tray, 0.0 + traz);
-	//glutSolidSphere(0.1, 10, 10);	//Representa el foco, solo para prueba
+	//glTranslatef(0.0 + trax, 0.0 + tray, 0.0 + traz);
+	//glTranslatef(-5.0, 9.1, -0.1);
+	glRotatef(-90.0, 1.0, 0.0, 0.0);
+
 
 	if (foco3) {
-		glEnable(GL_LIGHT3);
-		glLightfv(GL_LIGHT3, GL_POSITION, LightPosition3);
+		glEnable(GL_LIGHT7);
+		glLightfv(GL_LIGHT7, GL_POSITION, LightPosition2);
+		glLightfv(GL_LIGHT7, GL_SPOT_DIRECTION, LightDirection2);
+
 	}
 	else {
-		glDisable(GL_LIGHT3);
+		glDisable(GL_LIGHT7);
 	}
 	glPopMatrix();
 }
@@ -1314,197 +1389,6 @@ void createMesas() {
 	glPopMatrix();
 }
 /*********** ARBOLES ***********/
-/*void layerUno(GLuint text) {
-	glPushMatrix();
-		glPushMatrix();
-			glTranslatef(1.35, 0.0, 0.0);
-			brick.prisma(0.7, 0.7, 1.4, text);
-		glPopMatrix();
-		glPushMatrix();
-			glTranslatef(-1.35, 0.0, 0.0);
-			brick.prisma(0.7, 0.7, 1.4, text);
-		glPopMatrix();
-	glPopMatrix();
-}
-void layerDos(GLuint text) {
-	glPushMatrix();
-		//Lado derecho
-		glPushMatrix();
-			//1er bloque
-			glTranslatef(1.45, 0.0, 0.0);
-			brick.prisma(0.7, 0.9, 2.7, text);
-		glPopMatrix();
-		glPushMatrix();
-			// Union 1a expansion
-			glTranslatef(2.05, 0.0, 0.0);
-			brick.prisma(0.7, 0.3, 0.3, text);
-		glPopMatrix();
-	glPopMatrix();
-}
-void layerTres(GLuint text) {
-	glPushMatrix();
-		//Lado derecho
-		glPushMatrix();
-			glTranslatef(1.45, 0.0, 0.0);
-			brick.prisma(0.7, 0.9, 4.0, text);
-		glPopMatrix();
-		glPushMatrix();
-			//Union 2a expansion
-			glTranslatef(2.15, 0.0, 0.0);
-			brick.prisma(0.7, 0.5, 0.5, text);
-		glPopMatrix();
-	glPopMatrix();
-}
-void layerCuatro(GLuint text) {
-	glPushMatrix();
-		//Lado derecho
-		glPushMatrix();
-			// Primer bloque, pegado al tronco
-			glTranslatef(1.45, 0.0, 0.0);
-			brick.prisma(0.7, 0.9, 5.3, text);
-		glPopMatrix();
-		glPushMatrix();
-			// Union entre bloques
-			glTranslatef(2.15, 0.0, 0.0);
-			brick.prisma(0.7, 0.5, 0.5, text);
-			glPushMatrix();
-				//Segundo bloque, 1er crecimiento
-				glTranslatef(0.25 + 0.15, 0.0, 0.0);
-				brick.prisma(0.7, 0.3, 1.3, text);
-			glPopMatrix();
-		glPopMatrix();
-	glPopMatrix();
-}
-void layerCinco(GLuint text) {
-	glPushMatrix();
-		//Lado derecho
-		glPushMatrix();
-			// Primer bloque, pegado al tronco
-			glTranslatef(1.45, 0.0, 0.0);
-			brick.prisma(0.7, 0.9, 6.6, text);
-		glPopMatrix();
-		glPushMatrix();
-			// Union entre bloques
-			glTranslatef(2.15, 0.0, 0.0);
-			brick.prisma(0.7, 0.5, 0.5, text);
-			glPushMatrix();
-				//Segundo bloque, 2do crecimiento
-				glTranslatef(0.70, 0.0, 0.0);
-				brick.prisma(0.7, 0.9, 2.6, text);
-			glPopMatrix();
-		glPopMatrix();
-	glPopMatrix();
-}
-void layerSeis(GLuint text) {
-	glPushMatrix();
-		//Lado derecho
-		glPushMatrix();
-			// Primer bloque, pegado al tronco
-			glTranslatef(1.45, 0.0, 0.0);
-			brick.prisma(0.7, 0.9, 7.9, text);
-		glPopMatrix();
-		glPushMatrix();
-			// Union entre bloques
-			glTranslatef(2.15, 0.0, 0.0);
-			brick.prisma(0.7, 0.5, 0.5, text);
-			glPushMatrix();
-				//Segundo bloque
-				glTranslatef(0.70, 0.0, 0.0);
-				brick.prisma(0.7, 0.9, 3.9, text);
-				glPushMatrix();
-					//Union, 1a expansion
-					glTranslatef(0.45 + 0.15, 0.0, 0.0);
-					brick.prisma(0.7, 0.3, 0.3, text);
-				glPopMatrix();
-			glPopMatrix();
-		glPopMatrix();
-	glPopMatrix();
-}
-void layerSiete(GLuint text) {
-	glPushMatrix();
-		//Lado derecho
-		glPushMatrix();
-			// Primer bloque, pegado al tronco
-			glTranslatef(1.45, 0.0, 0.0);
-			brick.prisma(0.7, 0.9, 9.2, text);
-		glPopMatrix();
-		glPushMatrix();
-			// Union entre bloques
-			glTranslatef(2.15, 0.0, 0.0);
-			brick.prisma(0.7, 0.5, 0.5, text);
-			glPushMatrix();
-				//Segundo bloque
-				glTranslatef(0.70, 0.0, 0.0);
-				brick.prisma(0.7, 0.9, 5.2, text);
-				glPushMatrix();
-					//Union, 2a expansion
-					glTranslatef(0.45 + 0.25, 0.0, 0.0);
-					brick.prisma(0.7, 0.5, 0.5, text);
-				glPopMatrix();
-			glPopMatrix();
-		glPopMatrix();
-	glPopMatrix();
-}
-void layerOcho(GLuint text) {
-	glPushMatrix();
-		//Lado derecho
-		glPushMatrix();
-			// Primer bloque, pegado al tronco
-			glTranslatef(1.45, 0.0, 0.0);
-			brick.prisma(0.7, 0.9, 10.5, text);
-		glPopMatrix();
-		glPushMatrix();
-			// Union entre bloques
-			glTranslatef(2.15, 0.0, 0.0);
-			brick.prisma(0.7, 0.5, 0.5, text);
-			glPushMatrix();
-				//Segundo bloque
-				glTranslatef(0.70, 0.0, 0.0);
-				brick.prisma(0.7, 0.9, 6.5, text);
-				glPushMatrix();
-					//Union
-					glTranslatef(0.45 + 0.25, 0.0, 0.0);
-					brick.prisma(0.7, 0.5, 0.5, text);
-					glPushMatrix();
-						//Tercer bloque 1a exp
-						glTranslatef(0.25 + 0.15, 0.0, 0.0);
-						brick.prisma(0.7, 0.3, 1.3, text);
-					glPopMatrix();
-				glPopMatrix();
-			glPopMatrix();
-		glPopMatrix();
-	glPopMatrix();
-}
-void layerNueve(GLuint text) {
-	glPushMatrix();
-		//Lado derecho
-		glPushMatrix();
-			// Primer bloque, pegado al tronco
-			glTranslatef(1.45, 0.0, 0.0);
-			brick.prisma(0.7, 0.9, 11.8, text);
-		glPopMatrix();
-		glPushMatrix();
-			// Union entre bloques
-			glTranslatef(2.15, 0.0, 0.0);
-			brick.prisma(0.7, 0.5, 0.5, text);
-			glPushMatrix();
-				//Segundo bloque
-				glTranslatef(0.70, 0.0, 0.0);
-				brick.prisma(0.7, 0.9, 7.8, text);
-				glPushMatrix();
-					//Union
-					glTranslatef(0.45 + 0.25, 0.0, 0.0);
-					brick.prisma(0.7, 0.5, 0.5, text);
-					glPushMatrix();
-						//Tercer bloque 2a exp
-						glTranslatef(0.70, 0.0, 0.0);
-						brick.prisma(0.7, 0.9, 2.6, text);
-					glPopMatrix();
-				glPopMatrix();
-			glPopMatrix();
-		glPopMatrix();
-	glPopMatrix();
-}*/
 void layerGeneral(int layer,int lado, GLuint text, GLuint text2) {
 	float bloqueAz = 1.4, unionAB = 0.3, bloqueBz = 1.4, unionBC = 0.3, bloqueCz = 1.4, escalaX1 = 0.3, escalaX2 = 0.9;
 	float distTronco = 0.6;
@@ -2217,14 +2101,16 @@ void createBanos() {
 		createPuertas(t_madera.GLindex, -10.0);
 	glPopMatrix();
 }
-
-/*********** KIOSKO	 ***********/
-/*********** FUENTE	 ***********/
-/*********** FACHADA ***********/
-/*********** AVATAR1 ***********/
-/*********** AVATAR2 ***********/
 /*********** FAROLAS ***********/
-void createFarola(GLuint cuerpo, GLuint lampara, int source) {
+void createFarola(GLuint cuerpo, GLuint lampara, int source, float altoPalo) {
+	/*float largoEx = 0.0, largoIn = 0.0;
+	if (altoPalo == 16.0) {
+		largoEx = 3.0;
+		largoIn = 1.5;
+	}
+	else {
+		largoEx = 
+	}*/
 	glPushMatrix();
 		//glTranslatef(0.0 + trax, 0.0 + tray, 0.0 + traz);
 		glPushMatrix();
@@ -2236,8 +2122,8 @@ void createFarola(GLuint cuerpo, GLuint lampara, int source) {
 			brick.prisma(0.3, 1.5, 1.5, cuerpo);
 			//Palo
 			glTranslatef(0.0, 0.15, 0.0);
-			brick.cilindro(0.25, 16.0, 8, cuerpo);
-			glTranslatef(0.0, 16.0, 0.0);
+			brick.cilindro(0.25, altoPalo, 8, cuerpo);
+			glTranslatef(0.0, altoPalo, 0.0);
 			glPushMatrix();
 				glTranslatef(2.0, 0.25, 0.0);
 				brick.prisma(0.5, 4.0, 2.0, cuerpo);
@@ -2251,69 +2137,516 @@ void createFarola(GLuint cuerpo, GLuint lampara, int source) {
 					brick.brick1_1_1(lampara, t_blanco.GLindex);
 				glPopMatrix();
 				glTranslatef(0.0, -0.25 - 0.15 - 0.9, 0.0);
-				foc1(source);
+				if (source == 6)
+					foc2();
+				else if (source == 7)
+					foc3();
+				else
+					foc1(source);
+			glPopMatrix();
+		glPopMatrix();
+	glPopMatrix();
+}
+void createFarolaKeyFrame(GLuint cuerpo, GLuint lampara, int source, float altoPalo) {
+	glPushMatrix();
+		glPushMatrix();
+		/********	KEYFRAME	********/
+			glTranslatef(0.0 + traxFrame, 0.0 + trayFrame, -0.5 + trazFrame);
+			//glTranslatef(0.0 + trax, 0.0 + tray, -3.0 + traz);
+		/********	KEYFRAME	********/
+			set_material(obsidiana);
+			//Base
+			glTranslatef(0.0, 0.25, 0.0);
+			brick.prisma(0.5, 3.0, 3.0, cuerpo);
+			glTranslatef(0.0, 0.25 + 0.15, 0.0);
+			brick.prisma(0.3, 1.5, 1.5, cuerpo);
+			//Palo
+			glTranslatef(0.0, 0.15, 0.0);
+			brick.cilindro(0.25, altoPalo, 8, cuerpo);
+			glTranslatef(0.0, altoPalo, 0.0);
+			/********	KEYFRAME	********/
+			glRotatef(rotLampX, 1.0, 0.0, 0.0);
+			glRotatef(rotLampY, 0.0, 1.0, 0.0);
+			glRotatef(rotLampZ, 0.0, 0.0, 1.0);
+			/*glRotatef(scaleX, 1.0, 0.0, 0.0);
+			glRotatef(scaleY, 0.0, 1.0, 0.0);
+			glRotatef(scaleZ, 0.0, 0.0, 1.0);*/
+			/********	KEYFRAME	********/
+			glPushMatrix();
+				glTranslatef(2.0, 0.25, 0.0);
+				brick.prisma(0.5, 4.0, 2.0, cuerpo);
+				glTranslatef(1.0, -0.5, 0.0);
+				set_material(gold);
+				brick.prisma(0.5, 2.0, 1.4, lampara);
+				glTranslatef(0.0, -0.25, 0.0);
+				glPushMatrix();
+					glRotatef(180.0, 0.0, 0.0, 1.0);
+					set_material(perl);
+					brick.brick1_1_1(lampara, t_blanco.GLindex);
+				glPopMatrix();
+				glTranslatef(0.0, -0.25 - 0.15 - 0.9, 0.0);
+				if (source == 6)
+					foc2();
+				else if (source == 7)
+					foc3();
+				else
+					foc1(source);
 			glPopMatrix();
 		glPopMatrix();
 	glPopMatrix();
 }
 void createFarolas() {
 	glPushMatrix();
-	
-		//glTranslatef(0.0 + trax, 0.0 + tray, 0.0 + traz);
-		//Farola 1
-		glPushMatrix();
-			glTranslatef(-76.0, 0.0, -31.0);
-			//glRotatef(angleY1, 0.0, 1.0, 0.0);
-			createFarola(t_carbon.GLindex, t_amarillo2.GLindex,1);
-		glPopMatrix();
-		//Farola 2
-		glPushMatrix();
-			glTranslatef(-76.0, 0.0, 31.0);
-			//glRotatef(angleY1, 0.0, 1.0, 0.0);
-			createFarola(t_carbon.GLindex, t_amarillo2.GLindex,0);
-		glPopMatrix();
-		//Farola 3
-		//A
-		glPushMatrix();
-			glTranslatef(-38.5, 0.0, -12.0);
-			glRotatef(-90.0, 0.0, 1.0, 0.0);
-			createFarola(t_carbon.GLindex, t_amarillo2.GLindex,3);
-		glPopMatrix();
-		//B
-		glPushMatrix();
-			glTranslatef(-38.5, 0.0, 12.0);
-			glRotatef(90.0, 0.0, 1.0, 0.0);
-			createFarola(t_carbon.GLindex, t_amarillo2.GLindex,0);
-		glPopMatrix();
-		//Farola 4
-		glPushMatrix();
-			glTranslatef(-16.0, 0.0, -22.0);
-			//glRotatef(0.0, 0.0, 1.0, 0.0);
-			createFarola(t_carbon.GLindex, t_amarillo2.GLindex,4);
-		glPopMatrix();
+
+	//glTranslatef(0.0 + trax, 0.0 + tray, 0.0 + traz);
+	//Farola 1
+	glPushMatrix();
+	glTranslatef(-76.0, 0.0, -31.0);
+	//glRotatef(angleY1, 0.0, 1.0, 0.0);
+	createFarola(t_carbon.GLindex, t_amarillo2.GLindex, 1, 16.0);
+	glPopMatrix();
+	//Farola 2
+	glPushMatrix();
+	glTranslatef(-76.0, 0.0, 31.0);
+	//glRotatef(angleY1, 0.0, 1.0, 0.0);
+	createFarola(t_carbon.GLindex, t_amarillo2.GLindex, 0, 16.0);
+	glPopMatrix();
+	//Farola 3
+	//A
+	glPushMatrix();
+	glTranslatef(-38.5, 0.0, -12.0);
+	glRotatef(-90.0, 0.0, 1.0, 0.0);
+	createFarola(t_carbon.GLindex, t_amarillo2.GLindex, 3, 16.0);
+	glPopMatrix();
+	//B
+	glPushMatrix();
+	glTranslatef(-38.5, 0.0, 12.0);
+	glRotatef(90.0, 0.0, 1.0, 0.0);
+	createFarola(t_carbon.GLindex, t_amarillo2.GLindex, 0, 16.0);
+	glPopMatrix();
+	//Farola 4
+	glPushMatrix();
+	glTranslatef(-16.0, 0.0, -22.0);
+	//glRotatef(0.0, 0.0, 1.0, 0.0);
+	createFarola(t_carbon.GLindex, t_amarillo2.GLindex, 4, 16.0);
+	glPopMatrix();
+
+	//Farola 5
+	glPushMatrix();
+	glTranslatef(-0.5, 0.0, 25.0);
+	glRotatef(180.0, 0.0, 1.0, 0.0);
+	createFarola(t_carbon.GLindex, t_amarillo2.GLindex, 5, 16.0);
+	glPopMatrix();
+	//Farola 6
+
+	//A
+	glPushMatrix();
+	glTranslatef(36.0, 0.0, 12.0);
+	glRotatef(90.0, 0.0, 1.0, 0.0);
+	createFarola(t_carbon.GLindex, t_amarillo2.GLindex, 2, 16.0);
+	glPopMatrix();
+	//B
+	glPushMatrix();
+	glTranslatef(36.0, 0.0, -12.0);
+	glRotatef(-90.0, 0.0, 1.0, 0.0);
+	createFarola(t_carbon.GLindex, t_amarillo2.GLindex, 0, 16.0);
+	glPopMatrix();
+	glPopMatrix();
+}
+/*********** KIOSKO	 ***********/
+void baseLado(GLuint text) {
+	glPushMatrix();
+		//set_material(mat1);
 		
-		//Farola 5
+		//1*4 left
 		glPushMatrix();
-			glTranslatef(-0.5, 0.0, 25.0);
-			glRotatef(180.0, 0.0, 1.0, 0.0);
-			createFarola(t_carbon.GLindex, t_amarillo2.GLindex,5);
+			glTranslatef(-4.5, 0.5, 0.0);
+			glPushMatrix();
+				glTranslatef(0.0, 0.0, -1.0);
+				brick.prisma(1.0, 1.0, 2.0, text);
+				glTranslatef(0.0, 0.0, 2.0);
+				brick.prisma(1.0, 1.0, 2.0, text);
+			glPopMatrix();
+			glTranslatef(0.0, 1.0, 0.0);
+			glPushMatrix();
+				glTranslatef(0.0, 0.0, -1.0);
+				brick.prisma(1.0, 1.0, 2.0, text);
+				glTranslatef(0.0, 0.0, 2.0);
+				brick.prisma(1.0, 1.0, 2.0, text);
+			glPopMatrix();
 		glPopMatrix();
-		//Farola 6
-		
-		//A
+		//1*2 mid
 		glPushMatrix();
-			glTranslatef(36.0, 0.0, 12.0);
-			glRotatef(90.0, 0.0, 1.0, 0.0);
-			createFarola(t_carbon.GLindex, t_amarillo2.GLindex,2);
+			glTranslatef(-3.5, 0.5, 0.0);
+			glPushMatrix();
+				glTranslatef(0.0, 0.0, -2.0);
+				brick.prisma(1.0, 1.0, 2.0, text);
+				glTranslatef(0.0, 0.0, 4.0);
+				brick.prisma(1.0, 1.0, 2.0, text);
+			glPopMatrix();
+			glTranslatef(0.0, 1.0, 0.0);
+			glPushMatrix();
+				glTranslatef(0.0, 0.0, -2.0);
+				brick.prisma(1.0, 1.0, 2.0, text);
+				glTranslatef(0.0, 0.0, 4.0);
+				brick.prisma(1.0, 1.0, 2.0, text);
+			glPopMatrix();
 		glPopMatrix();
-		//B
+		//1*2 Right
 		glPushMatrix();
-			glTranslatef(36.0, 0.0, -12.0);
-			glRotatef(-90.0, 0.0, 1.0, 0.0);
-			createFarola(t_carbon.GLindex, t_amarillo2.GLindex,0);
+			glTranslatef(-2.5, 0.5, 0.0);
+			glPushMatrix();
+				glTranslatef(0.0, 0.0, -3.0);
+				brick.prisma(1.0, 1.0, 2.0, text);
+				glTranslatef(0.0, 0.0, 6.0);
+				brick.prisma(1.0, 1.0, 2.0, text);
+			glPopMatrix();
+			glTranslatef(0.0, 1.0, 0.0);
+			glPushMatrix();
+				glTranslatef(0.0, 0.0, -3.0);
+				brick.prisma(1.0, 1.0, 2.0, text);
+				glTranslatef(0.0, 0.0, 6.0);
+				brick.prisma(1.0, 1.0, 2.0, text);
+			glPopMatrix();
 		glPopMatrix();
 	glPopMatrix();
 }
+void createBase(GLuint text, materialStruct mat1) {
+	glPushMatrix();
+		set_material(mat1);
+		glPushMatrix();
+			baseLado(text);
+			glRotatef(180.0, 0.0, 1.0, 0.0);
+			baseLado(text);
+		glPopMatrix();
+		//Front-Back
+		glPushMatrix();
+			glTranslatef(0.0, 0.5, -4.5);
+			glPushMatrix();
+				glTranslatef(-1.0, 0.0, 0.0);
+				brick.prisma(1.0, 2.0, 1.0, text);
+				glTranslatef(2.0, 0.0, 0.0);
+				brick.prisma(1.0, 2.0, 1.0, text);
+			glPopMatrix();
+			glTranslatef(0.0, 1.0, 0.0);
+			glPushMatrix();
+				glTranslatef(-1.0, 0.0, 0.0);
+				brick.prisma(1.0, 2.0, 1.0, text);
+				glTranslatef(2.0, 0.0, 0.0);
+				brick.prisma(1.0, 2.0, 1.0, text);
+			glPopMatrix();
+		glPopMatrix();
+		glPushMatrix();
+			glRotatef(180.0, 0.0, 1.0, 0.0);
+			glTranslatef(0.0, 0.5, -4.5);
+			glPushMatrix();
+				glTranslatef(-1.0, 0.0, 0.0);
+				brick.prisma(1.0, 2.0, 1.0, text);
+				glTranslatef(2.0, 0.0, 0.0);
+				brick.prisma(1.0, 2.0, 1.0, text);
+			glPopMatrix();
+			glTranslatef(0.0, 1.0, 0.0);
+			glPushMatrix();
+				glTranslatef(-1.0, 0.0, 0.0);
+				brick.prisma(1.0, 2.0, 1.0, text);
+				glTranslatef(2.0, 0.0, 0.0);
+				brick.prisma(1.0, 2.0, 1.0, text);
+			glPopMatrix();
+		glPopMatrix();
+	glPopMatrix();
+}
+void pilaresIzqDer(GLuint text) {
+	float base = 1.2;
+	float radio = 0.3;
+	glPushMatrix();
+		glPushMatrix();
+			glTranslatef(-4.5, 0.0, -1.5);
+			glTranslatef(0.0, 0.25, 0.0);
+			brick.prisma(0.5, base, base, text);
+			glTranslatef(0.0, 0.25 + 0.15, 0.0);
+			brick.prisma(0.3, base / 2, base / 2, text);
+			brick.cilindro(radio, 16.0, 8, text);
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(-4.5, 0.0, 1.5);
+			glTranslatef(0.0, 0.25, 0.0);
+			brick.prisma(0.5, base, base, text);
+			glTranslatef(0.0, 0.25 + 0.15, 0.0);
+			brick.prisma(0.3, base / 2, base / 2, text);
+			brick.cilindro(radio, 16.0, 8, text);
+		glPopMatrix();
+	glPopMatrix();
+}
+void pilaresEntrada(GLuint text) {
+	float base = 1.2;
+	float radio = 0.3;
+	glPushMatrix();
+		glPushMatrix();
+			glTranslatef(-3.5, 0.0, -2.5);
+			glTranslatef(0.0, 0.25, 0.0);
+			brick.prisma(0.5, base, base, text);
+			glTranslatef(0.0, 0.25 + 0.15, 0.0);
+			brick.prisma(0.3, base / 2, base / 2, text);
+			brick.cilindro(radio, 16.0, 8, text);
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(-3.5, 0.0, 2.5);
+			glTranslatef(0.0, 0.25, 0.0);
+			brick.prisma(0.5, base, base, text);
+			glTranslatef(0.0, 0.25 + 0.15, 0.0);
+			brick.prisma(0.3, base / 2, base / 2, text);
+			brick.cilindro(radio, 16.0, 8, text);
+		glPopMatrix();
+	glPopMatrix();
+}
+void createPilares(GLuint text, materialStruct mat1) {
+	glPushMatrix();
+		//glTranslatef(0.0, 3.2, 0.0);
+		//Izq-Der
+		set_material(mat1);
+		glTranslatef(0.0, 0.0, 0.0);
+		glPushMatrix();
+			pilaresEntrada(text);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			pilaresIzqDer(text);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			pilaresIzqDer(text);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			pilaresIzqDer(text);
+		glPopMatrix();
+		//glTranslatef(-1.0 + trax, 0.0, -1.0 + traz);
+		//glRotatef(180.0, 0.0, 1.0, 0.0);
+	glPopMatrix();
+}
+void createEscaleras(GLuint text, materialStruct mat1, int level) {
+	glPushMatrix();
+		//glRotatef(90.0, 0.0, 0.0, 1.0);
+		for (int i = 0; i < 4; i++) {
+			glPushMatrix();
+				for (int j = 0; j < level; j++) {
+					brick.prisma(1.0, 1.0, 1.0, text);
+					glTranslatef(1.0, 0.0, 0.0);
+				}
+			glPopMatrix();
+			glTranslatef(0.0, 0.0, 1.0);
+		}
+	glPopMatrix();
+}
+void bardaDoble(GLuint text, GLuint text2, materialStruct mat1, materialStruct mat2) {
+	glPushMatrix();
+		glTranslatef(-0.5, 0.0, -4.5);
+		glPushMatrix();
+			set_material(mat1);
+			brick.prisma(1.0, 0.8, 0.8, text);
+			glTranslatef(0.0, 1.0, 0.0);
+			brick.prisma(1.0, 0.8, 0.8, text);
+			glTranslatef(0.0, 1.0, 0.0);
+			set_material(mat2);
+			brick.brick1_1_1(text, text2);
+		glPopMatrix();
+		glTranslatef(1.0, 0.0, 0.0);
+		glPushMatrix();
+			set_material(mat1);
+			brick.prisma(1.0, 0.8, 0.8, text);
+			glTranslatef(0.0, 1.0, 0.0);
+			brick.prisma(1.0, 0.8, 0.8, text);
+			glTranslatef(0.0, 1.0, 0.0);
+			set_material(mat2);
+			brick.brick1_1_1(text, text2);
+		glPopMatrix();
+	glPopMatrix();
+}
+void createBarda(GLuint text, GLuint text2, materialStruct mat1, materialStruct mat2) {
+	float largoX = 0.8;
+	glPushMatrix();
+		glTranslatef(2.5, 0.5, 4.5);
+		glPushMatrix();
+			set_material(mat1);
+			//brick.prisma(altura, largo, profundidad)
+			brick.prisma(1.0, largoX, largoX, text);
+			glTranslatef(0.0, 1.0, 0.0);
+			brick.prisma(1.0, largoX, largoX, text);
+			glTranslatef(0.0, 1.0, 0.0);
+			set_material(mat2);
+			brick.brick1_1_1(text, text2);
+		glPopMatrix();
+		glTranslatef(1.0, 1.0, 0.0);
+		set_material(mat1);
+		brick.brick1V(text, text2, 1.2, 1.0, 1.0);
+		glTranslatef(1.0, -1.0, 0.0);
+		glPushMatrix();
+			brick.prisma(1.0, largoX, largoX, text);
+			glTranslatef(0.0, 1.0, 0.0);
+			brick.prisma(1.0, largoX, largoX, text);
+			glTranslatef(0.0, 1.0, 0.0);
+			set_material(mat2);
+			brick.brick1_1_1(text, text2);
+		glPopMatrix();
+		glRotatef(90.0, 0.0, 1.0, 0.0);
+		glTranslatef(1.0, 1.0, 0.0);
+		brick.brick1V(text, text2, 1.2, 1.0, 1.0);
+		glTranslatef(1.0, -1.0, 0.0);
+		glPushMatrix();
+			set_material(mat1);
+			brick.prisma(1.0, largoX, largoX, text);
+			glTranslatef(0.0, 1.0, 0.0);
+			brick.prisma(1.0, largoX, largoX, text);
+			glTranslatef(0.0, 1.0, 0.0);
+			set_material(mat2);
+			brick.brick1_1_1(text, text2);
+		glPopMatrix();
+	glPopMatrix();
+}
+void createBardas(GLuint text, GLuint text2, materialStruct mat1, materialStruct mat2) {
+	glPushMatrix();
+		//Huecos
+		glPushMatrix();
+			//glTranslatef(-0.5 + trax, 0.0 + tray, -4.5 + traz);
+			bardaDoble(text, text2, mat1, mat2);
+			glRotatef(-90.0, 0.0, 1.0, 0.0);
+			bardaDoble(text, text2, mat1, mat2);
+			glRotatef(-90.0, 0.0, 1.0, 0.0);
+			bardaDoble(text, text2, mat1, mat2);
+		glPopMatrix();
+		//Rodeo
+		createBarda(text, text2, mat1, mat2);
+		glRotatef(90.0, 0.0, 1.0, 0.0);
+		createBarda(text, text2, mat1, mat2);
+		glRotatef(90.0, 0.0, 1.0, 0.0);
+		createBarda(text, text2, mat1, mat2);
+		glRotatef(90.0, 0.0, 1.0, 0.0);
+		createBarda(text, text2, mat1, mat2);
+	glPopMatrix();
+}
+void escalerasFull() {
+	glPushMatrix();
+	set_material(perl);
+		glTranslatef(-8.0, 0.5, 0.0);
+		glTranslatef(-5.5, 0.0, 1.5);
+		glRotatef(180.0, 0.0, 1.0, 0.0);
+		createEscaleras(t_blanco.GLindex, perl, 6);
+		glTranslatef(0.0, 1.0, 0.0);
+		createEscaleras(t_blanco.GLindex, perl, 5);
+		glTranslatef(0.0, 1.0, 0.0);
+		createEscaleras(t_madera.GLindex, polishedCopper, 4);
+		glTranslatef(0.0, 1.0, 0.0);
+		createEscaleras(t_madera.GLindex, polishedCopper, 3);
+		glTranslatef(0.0, 1.0, 0.0);
+		createEscaleras(t_maderaO.GLindex, madera, 2);
+		glTranslatef(0.0, 1.0, 0.0);
+		createEscaleras(t_maderaO.GLindex, madera, 1);
+	glPopMatrix();
+}
+void slopesTecho(GLuint text, GLuint text2, materialStruct mat1, float distCentro, float largo) {
+	bool cil = true;
+	if (distCentro == 3.5)
+		cil = false;
+	else
+		cil = true;
+	glPushMatrix();
+		set_material(mat1);
+		glTranslatef(0.0, 0.5, distCentro);
+		set_material(mat1);
+		brick.slopeV(largo, 1.0, 1.0, text, text2, cil);
+		glTranslatef(largo/2+0.5, 0.0, 0.0);
+		set_material(polishedCopper);
+		brick.brick2_2_1(t_madera.GLindex, t_naranja.GLindex);
+	glPopMatrix();
+}
+void techito(GLuint text, GLuint text2, materialStruct mat1, float x, float y) {
+	glPushMatrix();
+		glTranslatef(0.0, 0.1, 0.0);
+		set_material(mat1);
+		brick.flatV(x, y, text, text2);
+	glPopMatrix();
+}
+void salidaT(GLuint text, GLuint text2, materialStruct mat1) {
+	glPushMatrix();
+		set_material(mat1);
+		glTranslatef(0.0, -0.25, 5.0);
+		brick.flatV(6.0, 2.0, text, text2);
+	glPopMatrix();
+}
+void createFoco() {
+	glPushMatrix();
+		glPushMatrix();
+			glTranslatef(5.1, 0.4, 0.0);
+			glScalef(0.6, 0.6, 0.6);
+			createFarolaKeyFrame(t_carbon.GLindex, t_amarillo.GLindex, 6, 5.0);
+		glPopMatrix();
+		glPushMatrix();
+			glRotatef(180.0, 0.0, 1.0, 0.0);
+			glTranslatef(5.1, 0.4, 0.0);
+			glScalef(0.6, 0.6, 0.6);
+			createFarolaKeyFrame(t_carbon.GLindex, t_amarillo.GLindex, 7, 5.0);
+		glPopMatrix();
+	glPopMatrix();
+}
+void createTecho() {
+	glPushMatrix();
+		/*
+		techitos 4x4
+		slope 3.5 6
+		techo
+		slope 2.5 4
+		techo
+		*/
+		glTranslatef(0.0, 0.5, 0.0);
+		salidaT(t_maderaO.GLindex, t_maderaO2.GLindex, madera);
+		glPushMatrix();
+			for (int i = 0; i < 4; i++) {
+				salidaT(t_maderaO.GLindex, t_maderaO2.GLindex, madera);
+				slopesTecho(t_maderaO.GLindex, t_maderaO2.GLindex, madera, 3.5, 6.0);
+				glRotatef(90.0, 0.0, 1.0, 0.0);
+			}
+		glPopMatrix();
+		glTranslatef(0.0, 1.0, 0.0);
+		techito(t_madera.GLindex, t_naranja.GLindex, polishedCopper, 8.0, 8.0);
+		glTranslatef(0.0, 0.2, 0.0);
+		glPushMatrix();
+			for (int i = 0; i < 4; i++) {
+				slopesTecho(t_maderaO.GLindex, t_maderaO2.GLindex, madera, 2.5, 4.0);
+				glRotatef(90.0, 0.0, 1.0, 0.0);
+			}
+		glPopMatrix();
+		glTranslatef(0.0, 1.0, 0.0);
+		techito(t_madera.GLindex, t_naranja.GLindex, polishedCopper, 4.0, 4.0);
+	glPopMatrix();
+	glPushMatrix();
+		//glutSolidSphere(5.0, 10.0, 10.0);
+		createFoco();
+	glPopMatrix();
+}
+void createKiosko() {
+	glPushMatrix();
+		//Bases
+	//glScalef(scaleX, scaleX, scaleX);
+		glPushMatrix();
+			set_material(perl);
+			glTranslatef(-8.0, 0.0, 0.0);
+			createBase(t_blanco.GLindex, polishedSilver);
+			glTranslatef(0.0, 2.0, 0.0);
+			createBase(t_madera.GLindex, polishedCopper);
+			glTranslatef(0.0, 2.0, 0.0);
+			createBase(t_maderaO.GLindex, madera);
+			glTranslatef(0.0, 2.1, 0.0);
+			set_material(perl);
+			brick.flatV(10.0, 10.0, t_piso2.GLindex, t_piso.GLindex);
+			glTranslatef(0.0, 0.1, 0.0);
+			createBardas(t_madera.GLindex, t_maderaO.GLindex, polishedCopper, madera);
+			createPilares(t_carbon.GLindex, perl);
+			glTranslatef(0.0, 16.0, 0.0);
+			createTecho();
+		glPopMatrix();
+		glPushMatrix();
+			escalerasFull();
+		glPopMatrix();
+	glPopMatrix();
+}
+/*********** FUENTE	 ***********/
+/*********** FACHADA ***********/
+/*********** AVATAR1 ***********/
+
 
 
 /*********** PRINCIPAL ***********/
@@ -2353,6 +2686,7 @@ void display(void)   // Creamos la funcion donde se dibuja
 			createTiendas();
 			createBanos();
 			createFarolas();
+			createKiosko();
 		glPopMatrix();
 
 
@@ -2490,15 +2824,12 @@ void animacion()
 		else
 		{
 			//Draw animation
-			pBz += KeyFrame[playIndex].pBzInc;
-			pCx += KeyFrame[playIndex].pCxInc;
-			pCz += KeyFrame[playIndex].pCzInc;
-			pDx += KeyFrame[playIndex].pDxInc;
-			pDz += KeyFrame[playIndex].pDzInc;
-			pFx += KeyFrame[playIndex].pFxInc;
-			pFy += KeyFrame[playIndex].pFyInc;
-			pFz += KeyFrame[playIndex].pFzInc;
-			pGz += KeyFrame[playIndex].pGzInc;
+			traxFrame += KeyFrame[playIndex].traxFrameInc;
+			trayFrame += KeyFrame[playIndex].trayFrameInc;
+			trazFrame += KeyFrame[playIndex].trazFrameInc;
+			rotLampX += KeyFrame[playIndex].rotLampXInc;
+			rotLampY += KeyFrame[playIndex].rotLampYInc;
+			rotLampZ += KeyFrame[playIndex].rotLampZInc;
 
 			i_curr_steps++;
 		}
@@ -2780,83 +3111,136 @@ void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 			foco3 = !foco3;
 		break;
 
-	/*case 'c':
+	case 'V':
 		LightAngle += 2.0;
 		printf("Ang = %f\n", LightAngle);
 		break;
 	case 'v':
 		LightAngle -= 2.0;
 		printf("Ang = %f\n", LightAngle);
-		break;*/
+		break;
 
 	case 'j':
-		if(banderaVentana == true)
-			trax += 0.1;
+		if (banderaVentana == true)
+			//trax += 0.1;
+			traxFrame += 0.1;
 		else
-			trax += 1.0;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
+			//trax += 1.0;
+			traxFrame += 1.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
 		break;
 	case 'J':
 		if (banderaVentana == true)
-			trax -= 0.1;
+			//trax -= 0.1;
+			traxFrame -= 1.0;
 		else
-			trax -= 1.0;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
+			//trax -= 1.0;
+			traxFrame -= 1.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
 		break;
 	case 'k':
 		if (banderaVentana == true)
-			tray += 0.1;
+			//tray += 0.1;
+			trayFrame += 0.1;
 		else
 			tray += 1.0;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
+			trayFrame += 1.0;
+			printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
 		break;
 	case 'K':
 		if (banderaVentana == true)
-			tray -= 0.1;
+			//tray -= 0.1;
+			trayFrame -= 0.1;
 		else
-			tray -= 1.0;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
+			//tray -= 1.0;
+			trayFrame -= 1.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
 		break;
 	case 'i':
 		if (banderaVentana == true)
-			traz += 0.1;
+			//traz += 0.1;
+			trazFrame += 0.1;
 		else
-			traz += 1.0;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
+			//traz += 1.0;
+			trazFrame += 1.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
 		break;
 	case 'I':
 		if (banderaVentana == true)
-			traz -= 0.1;
+			//traz -= 0.1;
+			trazFrame -= 0.1;
 		else
-			traz -= 1.0;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
+			//traz -= 1.0;
+			trazFrame -= 1.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
 		break;
 	case 'z':
-		//scaleX += 0.001;
-		angleY1 += 15.0;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, angleY1);
+		rotLampX += 10.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
 		break;
 	case 'Z':
-		//scaleX -= 0.001;
-		angleY1 -= 15.0;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, angleY1);
+		rotLampX -= 10.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
 		break;
 	case 'x':
-		scaleY += 0.1;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
+		rotLampY += 10.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
 		break;
 	case 'X':
-		scaleY -= 0.1;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
+		rotLampY -= 10.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
 		break;
 	case 'c':
-		scaleZ += 0.1;
-		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
+		rotLampZ += 10.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
 		break;
 	case 'C':
-		scaleZ -= 0.1;
+		rotLampZ -= 10.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
+		break;
+	case 'b':
+		scaleZ += 10.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
+		break;
+	case 'B':
+		scaleZ -= 10.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nrotLampX = %f\nrotLampY = %f\nrotLampZ = %f\n\n", traxFrame, trayFrame, trazFrame, rotLampX, rotLampY, rotLampZ);
+		break;
+	case 'n':
+		scaleX += 10.0;
 		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
 		break;
+	case 'N':
+		scaleX -= 10.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
+		break;
+	case 'm':
+		scaleY += 10.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
+		break;
+	case 'M':
+		scaleY -= 10.0;
+		printf("traX = %f\ntraY = %f\ntraZ = %f\nscaleX = %f\nscaleY = %f\nscaleZ = %f\n\n", trax, tray, traz, scaleX, scaleY, scaleZ);
+		break;
+	/**********	KEYFRAMES	*********/
+	case ' ':	//Salvar Frame
+		if (FrameIndex < MAX_FRAMES)
+		{
+			saveFrame();
+		}
+
+		break;
+	case '.':
+		for (int i = 0; i < FrameIndex; i++) {
+			printf("Frame [%d]\n", i);
+			printf("traxFrame = %f  trayFrame = %f  trazFrame = %f  rotLampX = %f  rotLampY = %f  rotLampZ = %f\n", KeyFrame[i].traxFrame, KeyFrame[i].trayFrame, KeyFrame[i].trazFrame, KeyFrame[i].rotLampX, KeyFrame[i].rotLampY, KeyFrame[i].rotLampZ);
+
+			printf("\nIncrementos:\n\n");
+			printf("traxFrameInc = %f  trayFrameInc = %f  trazFrameInc = %f  rotLampXInc = %f  rotLampYInc = %f  rotLampZInc = %f\n", KeyFrame[i].traxFrameInc, KeyFrame[i].trayFrameInc, KeyFrame[i].trazFrameInc, KeyFrame[i].rotLampXInc, KeyFrame[i].rotLampYInc, KeyFrame[i].rotLampZInc);
+			printf("******************************************\n\n");
+		}
+		break;
+	/**********	KEYFRAMES	*********/
 	case 27:        // Cuando Esc es presionado...
 		exit(0);   // Salimos del programa
 		break;

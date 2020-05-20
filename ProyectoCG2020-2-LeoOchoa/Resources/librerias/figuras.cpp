@@ -659,6 +659,14 @@ void CFiguras::brick1_1_1(GLuint text, GLuint text2) {
 	glPopMatrix();
 }
 
+void CFiguras::brick1V(GLuint text, GLuint text2, float x, float y, float z) {
+	glPushMatrix();
+	prisma(y, x, z, text);
+	glTranslatef(0.0, y/2, 0.0);
+	cilindro(0.25, 0.3, 8, text2);
+	glPopMatrix();
+}
+
 void CFiguras::brick1_2_1(GLuint text, GLuint text2) {
 	glPushMatrix();
 		brick1_1_1(text,text2);

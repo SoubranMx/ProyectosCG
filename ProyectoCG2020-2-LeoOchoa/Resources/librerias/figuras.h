@@ -21,21 +21,24 @@ class CFiguras
 	void prisma2 (GLuint text, GLuint text2);
 	void prisma3 (GLuint text, GLuint text2);
 	void skybox(float altura, float largo, float profundidad, GLuint text);	//Funcion creacion cielo
-	
-
 	//void torus(GLfloat radioM, GLfloat radiom, int meridianos, int paralelos, GLuint text );
 	void torus(GLfloat radioM, GLfloat radiom, int meridianos, int paralelos);
 
-	void piso(GLuint text);
-	void mesa(GLuint text, float f, float lx, float ly);
-	void silla(GLuint text, float f, float lx, float ly);
-	void cuarto(GLuint pared1, GLuint pared2, GLuint piso, GLuint techo, float normal);
-	void puerta(GLuint text);
-	void ventana(GLuint text, float textX, float textY);
+	/***************	A MANO	***************/
+
+	void brick1_1_1(GLuint text, GLuint text2);	//Brick 1x1x1
+	void brick1V(GLuint text, GLuint text2, float x, float y, float z);	//Brick 1x1x1
+	void brick1_2_1(GLuint text, GLuint text2);	//Brick 1x2x1
+	void brick1_4_1(GLuint text, GLuint text2);	//Brick 1x4x1
+	void brick1_8_1(GLuint text, GLuint text2);	//Brick 1x8x1
+	void brick2_2_1(GLuint text, GLuint text2);	//Brick 2x2x1
+	void brick2_3_1(GLuint text, GLuint text2);	//Brick 2x3x1
+	void slope1_2(GLuint text, GLuint text2);
+	void flat4_4(GLuint text, GLuint text2);
+	void plancha(GLuint text, GLuint text2);
+	void flatV(float x, float z, GLuint text, GLuint text2);
+	void slopeV(float x, float y, float z, GLuint text, GLuint text2, bool cil);
+	void cornerV(float x, float y, float z, GLuint text, GLuint text2, bool cil);
+	void cara(float x, float y, float z, GLuint rostro, GLuint piel);
+	void calzon();
 };
-/*
-	00,01,11,10		0471	00,10,11,01
-	00,10,11,01		0354	00,10,11,01
-	01,11,10,00		6532	00,10,11,01
-	10,11,01,00		1762	00,10,11,01
-*/
